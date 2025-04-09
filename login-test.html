@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bully Hub Login Test</title>
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    button {
+      background-color: #4f46e5;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 10px 15px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #4338ca;
+    }
+    .error {
+      color: #ef4444;
+      margin-top: 10px;
+    }
+    .success {
+      color: #10b981;
+      margin-top: 10px;
+    }
+    #log {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #f9fafb;
+      border-radius: 4px;
+      font-family: monospace;
+      white-space: pre-wrap;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>Bully Hub Login Test</h1>
+  
+  <div class="card">
+    <h2>Login</h2>
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" value="test@example.com" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" value="password123" required>
+      </div>
+      <button type="submit">Login</button>
+    </form>
+    <div id="loginResult"></div>
+  </div>
+  
+  <div class="card">
+    <h2>Session</h2>
+    <button id="getSessionBtn">Get Current Session</button>
+    <div id="sessionResult"></div>
+  </div>
+  
+  <div class="card">
+    <h2>Log</h2>
+    <div id="log"></div>
+  </div>
+  
+  <script>
+    // Initialize Supabase client
+    const supabaseUrl = 'https://jpnfefhrsehxzcrrozpw.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpwbmZlZmhyc2VoeHpjcnJvenB3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM3MjIwMDEsImV4cCI6MjA1OTI5ODAwMX0.lBfrSd1DnPlpTn0MQwJlNacGouCz2on6kqEzDvK6AGM';
+    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+    
+    // Log function
+    function log(message) {
+      const logElement = document.getElementById('log');
+      const timestamp = new Date().toLocaleTimeString();
+      logElement.innerHTML += `[${timestamp}] ${message}\n`;
+      logElement.scrollTop = logElement.scrollHeight;
+    }
+    
+    // Login form
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const resultElement = document.getElementById('loginResult');
+      
+      resultElement.innerHTML = 'Logging in...';
+      log(`Attempting to sign in with email: ${email}`);
+      
+      try {
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email,
+          password
+        });
+        
+        if (error) {
+          log(`Login error: ${error.message}`);
+          resultElement.innerHTML = `<div class="error">${error.message}</div>`;
+          return;
+        }
+        
+        log(`Login successful! User: ${data.user.email}`);
+        resultElement.innerHTML = `<div class="success">Login successful! User: ${data.user.email}</div>`;
+        
+        // Try to get profile
+        try {
+          log('Checking for user profile...');
+          const { data: profileData, error: profileError } = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('id', data.user.id)
+            .single();
+          
+          if (profileError) {
+            log(`Profile error: ${profileError.message}`);
+          } else {
+            log(`Profile found: ${JSON.stringify(profileData)}`);
+          }
+        } catch (profileError) {
+          log(`Error checking profile: ${profileError.message}`);
+        }
+        
+      } catch (error) {
+        log(`Unexpected error: ${error.message}`);
+        resultElement.innerHTML = `<div class="error">Unexpected error: ${error.message}</div>`;
+      }
+    });
+    
+    // Get session button
+    document.getElementById('getSessionBtn').addEventListener('click', async () => {
+      const resultElement = document.getElementById('sessionResult');
+      
+      resultElement.innerHTML = 'Getting session...';
+      log('Getting current session...');
+      
+      try {
+        const { data, error } = await supabase.auth.getSession();
+        
+        if (error) {
+          log(`Session error: ${error.message}`);
+          resultElement.innerHTML = `<div class="error">${error.message}</div>`;
+          return;
+        }
+        
+        if (data.session) {
+          log(`Session found: User ${data.session.user.email}`);
+          resultElement.innerHTML = `<div class="success">Session found: User ${data.session.user.email}</div>`;
+        } else {
+          log('No active session');
+          resultElement.innerHTML = '<div class="error">No active session</div>';
+        }
+        
+      } catch (error) {
+        log(`Unexpected error: ${error.message}`);
+        resultElement.innerHTML = `<div class="error">Unexpected error: ${error.message}</div>`;
+      }
+    });
+    
+    // Check for existing session on page load
+    (async () => {
+      log('Checking for existing session...');
+      
+      try {
+        const { data, error } = await supabase.auth.getSession();
+        
+        if (error) {
+          log(`Session error: ${error.message}`);
+          return;
+        }
+        
+        if (data.session) {
+          log(`Existing session found: User ${data.session.user.email}`);
+          document.getElementById('sessionResult').innerHTML = 
+            `<div class="success">Existing session: User ${data.session.user.email}</div>`;
+        } else {
+          log('No existing session');
+        }
+        
+      } catch (error) {
+        log(`Unexpected error: ${error.message}`);
+      }
+    })();
+  </script>
+</body>
+</html>

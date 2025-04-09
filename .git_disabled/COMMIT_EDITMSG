@@ -1,0 +1,597 @@
+revamped dash 
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch main
+# Your branch and 'origin/main' have diverged,
+# and have 5 and 1 different commits each, respectively.
+#
+# Changes to be committed:
+#	deleted:    README.md
+#	modified:   package-lock.json
+#	modified:   package.json
+#	new file:   public/avatars/avatar style 2/avatar-1.png
+#	new file:   public/avatars/avatar style 2/avatar-10.png
+#	new file:   public/avatars/avatar style 2/avatar-11.png
+#	new file:   public/avatars/avatar style 2/avatar-12.png
+#	new file:   public/avatars/avatar style 2/avatar-13.png
+#	new file:   public/avatars/avatar style 2/avatar-14.png
+#	new file:   public/avatars/avatar style 2/avatar-15.png
+#	new file:   public/avatars/avatar style 2/avatar-2.png
+#	new file:   public/avatars/avatar style 2/avatar-3.png
+#	new file:   public/avatars/avatar style 2/avatar-4.png
+#	new file:   public/avatars/avatar style 2/avatar-5.png
+#	new file:   public/avatars/avatar style 2/avatar-6.png
+#	new file:   public/avatars/avatar style 2/avatar-7.png
+#	new file:   public/avatars/avatar style 2/avatar-8.png
+#	new file:   public/avatars/avatar style 2/avatar-9.png
+#	new file:   public/brands/asana.png
+#	new file:   public/brands/behance.png
+#	new file:   public/brands/dribbble.png
+#	new file:   public/brands/facebook.png
+#	new file:   public/brands/github.png
+#	new file:   public/brands/google.png
+#	new file:   public/brands/linkedin.png
+#	new file:   public/brands/mailchimp.png
+#	new file:   public/brands/slack.png
+#	new file:   public/brands/twitter.png
+#	new file:   public/cards/1.png
+#	new file:   public/cards/2.png
+#	new file:   public/cards/3.png
+#	new file:   public/cards/4.png
+#	new file:   public/cards/5.png
+#	new file:   public/cards/6.png
+#	new file:   public/cards/arrow-growth.png
+#	new file:   public/cards/arrow.png
+#	new file:   public/cards/atm-card.png
+#	new file:   public/cards/australia.png
+#	new file:   public/cards/band-primary-bg.png
+#	new file:   public/cards/brazil.png
+#	new file:   public/cards/briefcase-primary-bg.png
+#	new file:   public/cards/briefcase.png
+#	new file:   public/cards/cafe-badilico.png
+#	new file:   public/cards/chart-info-bg.png
+#	new file:   public/cards/chart-success-bg.png
+#	new file:   public/cards/china.png
+#	new file:   public/cards/comment-alt-lines.svg
+#	new file:   public/cards/credit-card-primary-bg.png
+#	new file:   public/cards/credit-card-warning-bg.png
+#	new file:   public/cards/credit-card-without-bg.png
+#	new file:   public/cards/credit-card.png
+#	new file:   public/cards/cube-secondary-bg.png
+#	new file:   public/cards/desktop-warning-bg.png
+#	new file:   public/cards/dinners-club-with-bg.png
+#	new file:   public/cards/france.png
+#	new file:   public/cards/graph-bar.svg
+#	new file:   public/cards/headphone-secondary-bg.png
+#	new file:   public/cards/heart-medical.svg
+#	new file:   public/cards/illustration-1.png
+#	new file:   public/cards/illustration-2.png
+#	new file:   public/cards/illustration-3.png
+#	new file:   public/cards/illustration-4.png
+#	new file:   public/cards/illustration-john-2.png
+#	new file:   public/cards/illustration-john.png
+#	new file:   public/cards/india.png
+#	new file:   public/cards/iphone-success-bg.png
+#	new file:   public/cards/laptop-secondary-bg.png
+#	new file:   public/cards/logo-credit-card-2.png
+#	new file:   public/cards/logo-mastercard-small.png
+#	new file:   public/cards/mac-warning-bg.png
+#	new file:   public/cards/mastercard-with-bg.png
+#	new file:   public/cards/meetup-img.png
+#	new file:   public/cards/mobile-alt-2-info-bg.png
+#	new file:   public/cards/mobile-alt-primary-bg.png
+#	new file:   public/cards/mobile-error-bg.png
+#	new file:   public/cards/mobile-success-bg.png
+#	new file:   public/cards/paypal-error-bg.png
+#	new file:   public/cards/paypal-primary.png
+#	new file:   public/cards/paypal-rounded.png
+#	new file:   public/cards/paypal-without-bg.png
+#	new file:   public/cards/paypal.png
+#	new file:   public/cards/pose-m-9.png
+#	new file:   public/cards/shared-event.png
+#	new file:   public/cards/timeline-card-header.png
+#	new file:   public/cards/trophy.png
+#	new file:   public/cards/us.png
+#	new file:   public/cards/user.svg
+#	new file:   public/cards/wallet-info-bg.png
+#	new file:   public/cards/wallet-primary-bg.png
+#	new file:   public/cards/wallet-success-bg.png
+#	new file:   public/cards/wallet-without-bg.png
+#	new file:   public/cards/wallet.png
+#	new file:   public/cards/watch-error-bg.png
+#	new file:   public/customizer-icons/border-light.svg
+#	new file:   public/customizer-icons/collapsed-light.svg
+#	new file:   public/customizer-icons/compact-light.svg
+#	new file:   public/customizer-icons/default-light.svg
+#	new file:   public/customizer-icons/horizontal-light.svg
+#	new file:   public/customizer-icons/ltr-light.svg
+#	new file:   public/customizer-icons/rtl-light.svg
+#	new file:   public/customizer-icons/wide-light.svg
+#	new file:   public/dashboards/learning center/1.png
+#	new file:   public/dashboards/learning center/10.png
+#	new file:   public/dashboards/learning center/11.png
+#	new file:   public/dashboards/learning center/12.png
+#	new file:   public/dashboards/learning center/13.png
+#	new file:   public/dashboards/learning center/14.png
+#	new file:   public/dashboards/learning center/15.png
+#	new file:   public/dashboards/learning center/16.png
+#	new file:   public/dashboards/learning center/17.png
+#	new file:   public/dashboards/learning center/18.png
+#	new file:   public/dashboards/learning center/19.png
+#	new file:   public/dashboards/learning center/2.png
+#	new file:   public/dashboards/learning center/20.png
+#	new file:   public/dashboards/learning center/21.png
+#	new file:   public/dashboards/learning center/22.png
+#	new file:   public/dashboards/learning center/23.png
+#	new file:   public/dashboards/learning center/24.png
+#	new file:   public/dashboards/learning center/25.png
+#	new file:   public/dashboards/learning center/26.png
+#	new file:   public/dashboards/learning center/27.png
+#	new file:   public/dashboards/learning center/28.png
+#	new file:   public/dashboards/learning center/29.png
+#	new file:   public/dashboards/learning center/3.png
+#	new file:   public/dashboards/learning center/4.png
+#	new file:   public/dashboards/learning center/5.png
+#	new file:   public/dashboards/learning center/6.png
+#	new file:   public/dashboards/learning center/7.png
+#	new file:   public/dashboards/learning center/8.png
+#	new file:   public/dashboards/learning center/9.png
+#	new file:   public/dashboards/learning center/hand-with-bulb-dark.png
+#	new file:   public/dashboards/learning center/hand-with-bulb-light.png
+#	new file:   public/front-pages/backgrounds/cta-bg-dark.png
+#	new file:   public/front-pages/backgrounds/cta-bg.png
+#	new file:   public/front-pages/backgrounds/footer-bg-dark.png
+#	new file:   public/front-pages/backgrounds/footer-bg-light.png
+#	new file:   public/front-pages/backgrounds/footer-bg.png
+#	new file:   public/front-pages/backgrounds/hero-bg-dark.png
+#	new file:   public/front-pages/backgrounds/hero-bg.png
+#	new file:   public/front-pages/icons/3d-select-solid.png
+#	new file:   public/front-pages/icons/bg-left-dark-icon.png
+#	new file:   public/front-pages/icons/bg-left-icon.png
+#	new file:   public/front-pages/icons/bg-right-dark-icon.png
+#	new file:   public/front-pages/icons/bg-right-icon.png
+#	new file:   public/front-pages/icons/edit.png
+#	new file:   public/front-pages/icons/google-docs.png
+#	new file:   public/front-pages/icons/laptop-charging.png
+#	new file:   public/front-pages/icons/lifebelt.png
+#	new file:   public/front-pages/icons/list-arrow-icon.png
+#	new file:   public/front-pages/icons/section-tilte-icon.png
+#	new file:   public/front-pages/icons/smiling-icon.png
+#	new file:   public/front-pages/icons/transition-up.png
+#	new file:   public/front-pages/landing-page/Admin Dashboard.png
+#	new file:   public/front-pages/landing-page/Admin Dashboard3.png
+#	new file:   public/front-pages/landing-page/Admin Dashboard4.png
+#	new file:   public/front-pages/landing-page/Admin Dashboard5.png
+#	new file:   public/front-pages/landing-page/Admin Dashboard6.png
+#	new file:   public/front-pages/landing-page/Admin Dashboard7.png
+#	new file:   public/front-pages/landing-page/RecallGenius Dashboard.png
+#	new file:   public/front-pages/landing-page/RecallGenius Dashboard2.png
+#	new file:   public/front-pages/landing-page/apple-icon.png
+#	new file:   public/front-pages/landing-page/bg-shape.png
+#	new file:   public/front-pages/landing-page/boy-sitting-with-laptop.png
+#	new file:   public/front-pages/landing-page/chat.png
+#	new file:   public/front-pages/landing-page/chris.png
+#	new file:   public/front-pages/landing-page/contact-border.png
+#	new file:   public/front-pages/landing-page/contact-customer-service.png
+#	new file:   public/front-pages/landing-page/customer-service.png
+#	new file:   public/front-pages/landing-page/faq-boy-with-logos.png
+#	new file:   public/front-pages/landing-page/get-started-bg-dark.png
+#	new file:   public/front-pages/landing-page/get-started-bg-light.png
+#	new file:   public/front-pages/landing-page/get-started-bg.png
+#	new file:   public/front-pages/landing-page/google-play-icon.png
+#	new file:   public/front-pages/landing-page/hero-bg-dark.png
+#	new file:   public/front-pages/landing-page/hero-bg-light.png
+#	new file:   public/front-pages/landing-page/hero-elements-dark.png
+#	new file:   public/front-pages/landing-page/hero-elements-light.png
+#	new file:   public/front-pages/landing-page/join-community-arrow.png
+#	new file:   public/front-pages/landing-page/lets-contact.png
+#	new file:   public/front-pages/landing-page/nannie.png
+#	new file:   public/front-pages/landing-page/paul.png
+#	new file:   public/front-pages/landing-page/pricing-arrow.png
+#	new file:   public/front-pages/landing-page/pricing-basic.png
+#	new file:   public/front-pages/landing-page/pricing-enterprise.png
+#	new file:   public/front-pages/landing-page/pricing-team.png
+#	new file:   public/front-pages/landing-page/sitting-girl-with-laptop.png
+#	new file:   public/front-pages/landing-page/sophie.png
+#	new file:   public/front-pages/landing-page/team-member-1.png
+#	new file:   public/front-pages/landing-page/team-member-2.png
+#	new file:   public/front-pages/landing-page/team-member-3.png
+#	new file:   public/front-pages/landing-page/team-member-4.png
+#	new file:   public/icons/Join-community-arrow.png
+#	new file:   public/icons/appstore.png
+#	new file:   public/icons/calendar.png
+#	new file:   public/icons/contact-border.png
+#	new file:   public/icons/countries/au.png
+#	new file:   public/icons/countries/br.png
+#	new file:   public/icons/countries/cn.png
+#	new file:   public/icons/countries/fr.png
+#	new file:   public/icons/countries/in.png
+#	new file:   public/icons/countries/us.png
+#	new file:   public/icons/dental/dental-calendar.svg
+#	new file:   public/icons/dental/dental-chart.svg
+#	new file:   public/icons/dental/dental-clock.svg
+#	new file:   public/icons/dental/dental-drill.svg
+#	new file:   public/icons/dental/dentist-chair.svg
+#	new file:   public/icons/dental/molar.svg
+#	new file:   public/icons/dental/tooth.svg
+#	new file:   public/icons/dental/toothbrush.svg
+#	new file:   public/icons/dna.png
+#	new file:   public/icons/doc.png
+#	new file:   public/icons/event.png
+#	new file:   public/icons/figma.png
+#	new file:   public/icons/file/txt.png
+#	new file:   public/icons/file/xls.png
+#	new file:   public/icons/googleplay.png
+#	new file:   public/icons/html5.png
+#	new file:   public/icons/js.png
+#	new file:   public/icons/mobile-bg.png
+#	new file:   public/icons/paper-airplane.png
+#	new file:   public/icons/payments/american-express.png
+#	new file:   public/icons/payments/img/ae-dark.png
+#	new file:   public/icons/payments/img/american-express.png
+#	new file:   public/icons/payments/img/dc-dark.png
+#	new file:   public/icons/payments/img/dc-light.png
+#	new file:   public/icons/payments/img/jcb-dark.png
+#	new file:   public/icons/payments/img/jcb-light.png
+#	new file:   public/icons/payments/img/master-dark.png
+#	new file:   public/icons/payments/img/mastercard.png
+#	new file:   public/icons/payments/img/paypal-dark.png
+#	new file:   public/icons/payments/img/paypal-light.png
+#	new file:   public/icons/payments/img/visa-dark.png
+#	new file:   public/icons/payments/img/visa-light.png
+#	new file:   public/icons/payments/mastercard-icon.png
+#	new file:   public/icons/payments/mastercard.png
+#	new file:   public/icons/payments/paypal-dark.png
+#	new file:   public/icons/payments/paypal-light.png
+#	new file:   public/icons/payments/visa.png
+#	new file:   public/icons/pdf-document.png
+#	new file:   public/icons/pdf.png
+#	new file:   public/icons/plane.png
+#	new file:   public/icons/prediction.png
+#	new file:   public/icons/pricing-plans-arrow.png
+#	new file:   public/icons/project-icons/calendar.png
+#	new file:   public/icons/project-icons/event.png
+#	new file:   public/icons/project-icons/figma.png
+#	new file:   public/icons/project-icons/help.png
+#	new file:   public/icons/project-icons/html5.png
+#	new file:   public/icons/project-icons/image 6.png
+#	new file:   public/icons/project-icons/marketing.png
+#	new file:   public/icons/project-icons/pdf.png
+#	new file:   public/icons/project-icons/python.png
+#	new file:   public/icons/project-icons/react.png
+#	new file:   public/icons/project-icons/sketch.png
+#	new file:   public/icons/project-icons/social.png
+#	new file:   public/icons/project-icons/support.png
+#	new file:   public/icons/project-icons/twitter.png
+#	new file:   public/icons/project-icons/vue.png
+#	new file:   public/icons/project-icons/xamarin.png
+#	new file:   public/icons/project-icons/xd.png
+#	new file:   public/icons/python.png
+#	new file:   public/icons/react.png
+#	new file:   public/icons/robot.png
+#	new file:   public/icons/section-title-icon.png
+#	new file:   public/icons/shuttle-rocket.png
+#	new file:   public/icons/sketch.png
+#	new file:   public/icons/social-bg.png
+#	new file:   public/icons/social.png
+#	new file:   public/icons/support-bg.png
+#	new file:   public/icons/support.png
+#	new file:   public/icons/twitter.png
+#	new file:   public/icons/txt.png
+#	new file:   public/icons/vue.png
+#	new file:   public/icons/xamarin.png
+#	new file:   public/icons/xd.png
+#	new file:   public/icons/xls.png
+#	new file:   public/illustrations/auth/v2-forgot-password-dark-border.png
+#	new file:   public/illustrations/auth/v2-forgot-password-dark.png
+#	new file:   public/illustrations/auth/v2-forgot-password-light-border.png
+#	new file:   public/illustrations/auth/v2-forgot-password-light.png
+#	new file:   public/illustrations/auth/v2-login-dark-border.png
+#	new file:   public/illustrations/auth/v2-login-dark.png
+#	new file:   public/illustrations/auth/v2-login-light-border.png
+#	new file:   public/illustrations/auth/v2-login-light.png
+#	new file:   public/illustrations/auth/v2-register-dark-border.png
+#	new file:   public/illustrations/auth/v2-register-dark.png
+#	new file:   public/illustrations/auth/v2-register-light-border.png
+#	new file:   public/illustrations/auth/v2-register-light.png
+#	new file:   public/illustrations/auth/v2-reset-password-dark-border.png
+#	new file:   public/illustrations/auth/v2-reset-password-dark.png
+#	new file:   public/illustrations/auth/v2-reset-password-light-border.png
+#	new file:   public/illustrations/auth/v2-reset-password-light.png
+#	new file:   public/illustrations/auth/v2-two-steps-dark-border.png
+#	new file:   public/illustrations/auth/v2-two-steps-dark.png
+#	new file:   public/illustrations/auth/v2-two-steps-light-border.png
+#	new file:   public/illustrations/auth/v2-two-steps-light.png
+#	new file:   public/illustrations/auth/v2-verify-email-dark-border.png
+#	new file:   public/illustrations/auth/v2-verify-email-dark.png
+#	new file:   public/illustrations/auth/v2-verify-email-light-border.png
+#	new file:   public/illustrations/auth/v2-verify-email-light.png
+#	new file:   public/illustrations/characters-with-objects/charaters w objects style 2/16.png
+#	new file:   public/illustrations/characters-with-objects/charaters w objects style 2/17.png
+#	new file:   public/illustrations/characters-with-objects/charaters w objects style 2/18.png
+#	new file:   public/illustrations/characters-with-objects/charaters w objects style 2/19.png
+#	new file:   public/illustrations/characters/charater style 2/10.png
+#	new file:   public/illustrations/characters/charater style 2/11.png
+#	new file:   public/illustrations/characters/charater style 2/12.png
+#	new file:   public/illustrations/characters/charater style 2/13.png
+#	new file:   public/illustrations/characters/charater style 2/14.png
+#	new file:   public/illustrations/characters/charater style 2/15.png
+#	new file:   public/illustrations/characters/charater style 2/3.png
+#	new file:   public/illustrations/characters/charater style 2/4.png
+#	new file:   public/illustrations/characters/charater style 2/5.png
+#	new file:   public/illustrations/characters/charater style 2/6.png
+#	new file:   public/illustrations/characters/charater style 2/7.png
+#	new file:   public/illustrations/characters/charater style 2/8.png
+#	new file:   public/illustrations/characters/charater style 2/9.png
+#	new file:   public/illustrations/objects/pricing-basic.png
+#	new file:   public/illustrations/objects/pricing-enterprise.png
+#	new file:   public/illustrations/objects/pricing-standard.png
+#	new file:   public/illustrations/objects/tree-1.png
+#	new file:   public/illustrations/objects/tree-2.png
+#	new file:   public/illustrations/objects/tree-3.png
+#	new file:   public/illustrations/pricing-illustration-dark.png
+#	new file:   public/illustrations/pricing-illustration-light.png
+#	new file:   public/images/9.png
+#	new file:   public/images/apple-iPhone.png
+#	new file:   public/images/arrow-star.png
+#	new file:   public/images/beats-headphone.png
+#	new file:   public/images/briefcase.png
+#	new file:   public/images/chart-info.png
+#	new file:   public/images/chart-success.png
+#	new file:   public/images/credit-card-primary.png
+#	new file:   public/images/credit-card-warning.png
+#	new file:   public/images/credit-card.png
+#	new file:   public/images/cube-secondary.png
+#	new file:   public/images/desktop-warning.png
+#	new file:   public/images/event.png
+#	new file:   public/images/fitbit-watch.png
+#	new file:   public/images/google-pixel.png
+#	new file:   public/images/hand-with-bulb-dark.png
+#	new file:   public/images/hand-with-bulb-light.png
+#	new file:   public/images/hp-envy.png
+#	new file:   public/images/logo-credit-card-2.png
+#	new file:   public/images/logo-mastercard-small.png
+#	new file:   public/images/microsoft-surface.png
+#	new file:   public/images/oneplus-nord-error.png
+#	new file:   public/images/oneplus-nord-success.png
+#	new file:   public/images/paypal-error.png
+#	new file:   public/images/paypal-primary.png
+#	new file:   public/images/paypal-rounded.png
+#	new file:   public/images/paypal.png
+#	new file:   public/images/trophy.png
+#	new file:   public/images/wallet-info.png
+#	new file:   public/images/wallet-primary.png
+#	new file:   public/images/wallet-success.png
+#	new file:   public/images/wallet.png
+#	new file:   public/images/xiaomi-band.png
+#	new file:   public/logos/3d advantage.png
+#	new file:   public/logos/Dental Lab Integrity Dental Lab.png
+#	new file:   public/logos/Weave_Logo.jpg
+#	new file:   public/logos/american-bank.png
+#	new file:   public/logos/american-express.png
+#	new file:   public/logos/angular.png
+#	new file:   public/logos/asana.png
+#	new file:   public/logos/aviato.png
+#	new file:   public/logos/aws.png
+#	new file:   public/logos/behance.png
+#	new file:   public/logos/bitbank.png
+#	new file:   public/logos/cent.png
+#	new file:   public/logos/chrome.png
+#	new file:   public/logos/citi-bank.png
+#	new file:   public/logos/dentalintell.png
+#	new file:   public/logos/digital-ocean.png
+#	new file:   public/logos/dinners-club.png
+#	new file:   public/logos/dribbble.png
+#	new file:   public/logos/edge.png
+#	new file:   public/logos/event-bg.png
+#	new file:   public/logos/facebook.png
+#	new file:   public/logos/fedora.png
+#	new file:   public/logos/figma-bg.png
+#	new file:   public/logos/firebase.png
+#	new file:   public/logos/firefox.png
+#	new file:   public/logos/github.png
+#	new file:   public/logos/glidewell.png
+#	new file:   public/logos/google.png
+#	new file:   public/logos/gumroad.png
+#	new file:   public/logos/html-bg.png
+#	new file:   public/logos/jcb.png
+#	new file:   public/logos/laravel.png
+#	new file:   public/logos/linkedin.png
+#	new file:   public/logos/mac.png
+#	new file:   public/logos/mailchimp.png
+#	new file:   public/logos/mastercard-label.png
+#	new file:   public/logos/mastercard.png
+#	new file:   public/logos/ngenius-logo.svg
+#	new file:   public/logos/opera.png
+#	new file:   public/logos/paypal.png
+#	new file:   public/logos/python-bg.png
+#	new file:   public/logos/react-bg.png
+#	new file:   public/logos/react.png
+#	new file:   public/logos/sOxEjnfY_400x400.jpg
+#	new file:   public/logos/safari.png
+#	new file:   public/logos/sketch-bg.png
+#	new file:   public/logos/slack.png
+#	new file:   public/logos/stripe.png
+#	new file:   public/logos/support-bg.png
+#	new file:   public/logos/twitter-bg.png
+#	new file:   public/logos/twitter.png
+#	new file:   public/logos/ubuntu.png
+#	new file:   public/logos/uc-browser.png
+#	new file:   public/logos/visa.png
+#	new file:   public/logos/vue-bg.png
+#	new file:   public/logos/vue.png
+#	new file:   public/logos/windows.png
+#	new file:   public/logos/xd-bg.png
+#	new file:   public/logos/zipcar.png
+#	new file:   public/pages/1.png
+#	new file:   public/pages/2.png
+#	new file:   public/pages/3.png
+#	new file:   public/pages/401.png
+#	new file:   public/pages/404.png
+#	new file:   public/pages/5.jpg
+#	new file:   public/pages/6.jpg
+#	new file:   public/pages/TimelineRectangle1.png
+#	new file:   public/pages/TimelineRectangle2.png
+#	new file:   public/pages/TimelineRectangle3.png
+#	new file:   public/pages/TimelineRectangle4.png
+#	new file:   public/pages/academy-course-illustration1.png
+#	new file:   public/pages/academy-course-illustration2-dark.png
+#	new file:   public/pages/academy-course-illustration2-light.png
+#	new file:   public/pages/app-academy-tutor-1.png
+#	new file:   public/pages/app-academy-tutor-2.png
+#	new file:   public/pages/app-academy-tutor-3.png
+#	new file:   public/pages/app-academy-tutor-4.png
+#	new file:   public/pages/app-academy-tutor-5.png
+#	new file:   public/pages/app-academy-tutor-6.png
+#	new file:   public/pages/app-search-header-bg-dark.png
+#	new file:   public/pages/app-search-header-bg-light.png
+#	new file:   public/pages/auth-v1-mask-dark.png
+#	new file:   public/pages/auth-v1-mask-light.png
+#	new file:   public/pages/auth-v2-forgot-password-illustration-dark-border.png
+#	new file:   public/pages/auth-v2-forgot-password-illustration-dark.png
+#	new file:   public/pages/auth-v2-forgot-password-illustration-light-border.png
+#	new file:   public/pages/auth-v2-forgot-password-illustration-light.png
+#	new file:   public/pages/auth-v2-login-illustration-bordered-dark.png
+#	new file:   public/pages/auth-v2-login-illustration-bordered-light.png
+#	new file:   public/pages/auth-v2-login-illustration-dark.png
+#	new file:   public/pages/auth-v2-login-illustration-light.png
+#	new file:   public/pages/auth-v2-mask-dark.png
+#	new file:   public/pages/auth-v2-mask-light.png
+#	new file:   public/pages/auth-v2-register-illustration-bordered-dark.png
+#	new file:   public/pages/auth-v2-register-illustration-bordered-light.png
+#	new file:   public/pages/auth-v2-register-illustration-dark.png
+#	new file:   public/pages/auth-v2-register-illustration-light.png
+#	new file:   public/pages/auth-v2-reset-password-illustration-bordered-dark.png
+#	new file:   public/pages/auth-v2-reset-password-illustration-bordered-light.png
+#	new file:   public/pages/auth-v2-reset-password-illustration-dark.png
+#	new file:   public/pages/auth-v2-reset-password-illustration-light.png
+#	new file:   public/pages/auth-v2-two-steps-illustration-border-dark.png
+#	new file:   public/pages/auth-v2-two-steps-illustration-border-light.png
+#	new file:   public/pages/auth-v2-two-steps-illustration-dark.png
+#	new file:   public/pages/auth-v2-two-steps-illustration-light.png
+#	new file:   public/pages/auth-v2-verify-email-illustration-border-dark.png
+#	new file:   public/pages/auth-v2-verify-email-illustration-border-light.png
+#	new file:   public/pages/auth-v2-verify-email-illustration-dark.png
+#	new file:   public/pages/auth-v2-verify-email-illustration-light.png
+#	new file:   public/pages/background-1.jpg
+#	new file:   public/pages/background-2.jpg
+#	new file:   public/pages/background-3.jpg
+#	new file:   public/pages/boy-academy-illustration.png
+#	new file:   public/pages/boy-illustration.png
+#	new file:   public/pages/create-deal-review-complete.png
+#	new file:   public/pages/empty-cart.png
+#	new file:   public/pages/faq-header.png
+#	new file:   public/pages/forgot-password-illustration.png
+#	new file:   public/pages/free-course-image1.png
+#	new file:   public/pages/free-course-image2.png
+#	new file:   public/pages/girl-academy-illustration.png
+#	new file:   public/pages/google-home.png
+#	new file:   public/pages/guitar-course.png
+#	new file:   public/pages/hero-bg.png
+#	new file:   public/pages/hero-dashboard-light.png
+#	new file:   public/pages/hero-elements-light.png
+#	new file:   public/pages/illustration-john.png
+#	new file:   public/pages/instructor-poster-image.png
+#	new file:   public/pages/iphone-11.png
+#	new file:   public/pages/mask-v2-dark.png
+#	new file:   public/pages/mask-v2-light.png
+#	new file:   public/pages/misc-coming-soon.png
+#	new file:   public/pages/misc-mask-dark.png
+#	new file:   public/pages/misc-mask-light.png
+#	new file:   public/pages/page-not-found-illustration.png
+#	new file:   public/pages/pose-fs-9.png
+#	new file:   public/pages/pose_m1.png
+#	new file:   public/pages/profile-banner.png
+#	new file:   public/pages/puma-shoes.jpeg
+#	new file:   public/pages/register-multi-step-illustration.png
+#	new file:   public/pages/section-title-icon.png
+#	new file:   public/pages/shopping-girl.png
+#	new file:   public/pages/singing-course.png
+#	new file:   public/pages/teamPerson1.png
+#	new file:   public/pages/teamPerson2.png
+#	new file:   public/pages/teamPerson3.png
+#	new file:   public/pages/teamPerson4.png
+#	new file:   public/pages/themeselection-qr.png
+#	new file:   public/pages/tree-pot.png
+#	new file:   public/pages/trophy.png
+#	new file:   public/pages/user-profile-header-bg.png
+#	new file:   public/svg/3d-select-solid.svg
+#	new file:   public/svg/Card.svg
+#	new file:   public/svg/Check.svg
+#	new file:   public/svg/Diamond.svg
+#	new file:   public/svg/Suitcase.svg
+#	new file:   public/svg/Wallet.svg
+#	new file:   public/svg/address.svg
+#	new file:   public/svg/auth-v1-bottom-shape.svg
+#	new file:   public/svg/auth-v1-top-shape.svg
+#	new file:   public/svg/cart.svg
+#	new file:   public/svg/check-circle.svg
+#	new file:   public/svg/checkbox-checked.svg
+#	new file:   public/svg/checkbox-indeterminate.svg
+#	new file:   public/svg/checkbox-unchecked.svg
+#	new file:   public/svg/discord.svg
+#	new file:   public/svg/edit.svg
+#	new file:   public/svg/gift.svg
+#	new file:   public/svg/google-docs.svg
+#	new file:   public/svg/home.svg
+#	new file:   public/svg/keyboard.svg
+#	new file:   public/svg/laptop-charging.svg
+#	new file:   public/svg/laptop.svg
+#	new file:   public/svg/layout-right.svg
+#	new file:   public/svg/lifebelt.svg
+#	new file:   public/svg/lightbulb.svg
+#	new file:   public/svg/list-arrow-icon.svg
+#	new file:   public/svg/medal.svg
+#	new file:   public/svg/office.svg
+#	new file:   public/svg/paper-send.svg
+#	new file:   public/svg/payment.svg
+#	new file:   public/svg/paypal.svg
+#	new file:   public/svg/people-tag.svg
+#	new file:   public/svg/radio-checked.svg
+#	new file:   public/svg/radio-unchecked.svg
+#	new file:   public/svg/rocket.svg
+#	new file:   public/svg/stepper-check.svg
+#	new file:   public/svg/transition-up.svg
+#	new file:   public/svg/trending.svg
+#	new file:   public/svg/user-info.svg
+#	new file:   public/svg/user.svg
+#	new file:   public/svg/vector.svg
+#	new file:   public/svg/wizard-account.svg
+#	new file:   public/svg/wizard-address.svg
+#	new file:   public/svg/wizard-personal.svg
+#	new file:   public/svg/wizard-social-link.svg
+#	new file:   public/svg/wizard-submit.svg
+#	new file:   src/app/api/breeding-programs/[id]/dogs/route.ts
+#	new file:   src/app/api/breeding-programs/[id]/litters/route.ts
+#	new file:   src/app/api/breeding-programs/[id]/route.ts
+#	new file:   src/app/api/breeding-programs/route.ts
+#	new file:   src/app/api/dogs/route.ts
+#	new file:   src/app/dashboard/ai-advisor/page.tsx
+#	new file:   src/app/dashboard/appointments/page.tsx
+#	new file:   src/app/dashboard/breeding-programs/[id]/add-dog/page.tsx
+#	new file:   src/app/dashboard/breeding-programs/[id]/add-litter/page.tsx
+#	new file:   src/app/dashboard/breeding-programs/[id]/edit-protocols/page.tsx
+#	new file:   src/app/dashboard/breeding-programs/[id]/edit/page.tsx
+#	new file:   src/app/dashboard/breeding-programs/[id]/page.tsx
+#	modified:   src/app/dashboard/breeding-programs/create/page.tsx
+#	modified:   src/app/dashboard/breeding-programs/page.tsx
+#	modified:   src/app/dashboard/dogs/page.tsx
+#	new file:   src/app/dashboard/gallery/page.tsx
+#	new file:   src/app/dashboard/health/page.tsx
+#	modified:   src/app/dashboard/layout.tsx
+#	new file:   src/app/dashboard/nutrition/page.tsx
+#	new file:   src/app/dashboard/training/page.tsx
+#	modified:   src/app/globals.css
+#	modified:   src/app/page.tsx
+#	new file:   src/components/ui/badge.tsx
+#	new file:   src/components/ui/checkbox.tsx
+#	new file:   src/components/ui/progress.tsx
+#	new file:   src/components/ui/sonner.css
+#	modified:   src/components/ui/sonner.tsx
+#	new file:   src/components/ui/tabs.tsx
+#	new file:   src/components/ui/use-toast.ts
+#	modified:   src/lib/utils.ts
+#	modified:   src/types/index.ts
+#	modified:   supabase/schema.sql
+#

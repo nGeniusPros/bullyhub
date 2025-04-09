@@ -1,0 +1,12 @@
+{
+  "functions": [
+    {
+      "function": "monitoring-dashboard",
+      "path": "/api/monitoring-dashboard"
+    },
+    {
+      "function": "color-prediction-cached",
+      "path": "/api/color-prediction"
+    }
+  ]
+}

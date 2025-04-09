@@ -1,0 +1,6 @@
+0000000000000000000000000000000000000000 82987482bbed9cf20835a0fda11efdd86bab9bb1 mibady <michaelianbady@gmail.com> 1743833420 -0700	commit (initial): Initial commit: Next.js project setup with TypeScript and Tailwind CSS
+82987482bbed9cf20835a0fda11efdd86bab9bb1 2c050892550bb38e0fab8e5cf366ab81c74c5286 mibady <michaelianbady@gmail.com> 1743834021 -0700	commit: Add Supabase and UI components
+2c050892550bb38e0fab8e5cf366ab81c74c5286 058bdcae673fdf1c15dffa7dfa0eb8231ff27600 mibady <michaelianbady@gmail.com> 1743835021 -0700	commit: Implement Bully Hub app with authentication, dashboard, and core features
+058bdcae673fdf1c15dffa7dfa0eb8231ff27600 cf917fc75040289b63b39d77d6e408c78a391d3a mibady <michaelianbady@gmail.com> 1743844203 -0700	commit: Implement authentication with Supabase
+cf917fc75040289b63b39d77d6e408c78a391d3a 58adc367dddee9cffc15b8d359fba969ca004778 mibady <michaelianbady@gmail.com> 1743879748 -0700	commit: Refactor Supabase integration and add test user script
+58adc367dddee9cffc15b8d359fba969ca004778 1b841f1d223fc96a23eb15d38ba171c65687ed91 mibady <michaelianbady@gmail.com> 1743991434 -0700	commit: revamped dash

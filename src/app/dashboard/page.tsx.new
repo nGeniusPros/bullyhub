@@ -1,0 +1,77 @@
+"use client";
+
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+
+export default function DashboardPage() {
+  return (
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+        <p className="text-muted-foreground">
+          Welcome to Bully Hub! Manage your dogs, DNA tests, and breeding programs.
+        </p>
+      </div>
+      
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle>My Dogs</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">3</div>
+            <p className="text-xs text-muted-foreground">
+              You have 3 dogs registered
+            </p>
+            <div className="mt-4">
+              <Link href="/dashboard/dogs">
+                <Button variant="outline" size="sm">
+                  View all
+                </Button>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+        
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle>DNA Tests</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">2</div>
+            <p className="text-xs text-muted-foreground">
+              You have 2 DNA tests on file
+            </p>
+            <div className="mt-4">
+              <Link href="/dashboard/dna-tests">
+                <Button variant="outline" size="sm">
+                  View all
+                </Button>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+        
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle>Breeding</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">1</div>
+            <p className="text-xs text-muted-foreground">
+              You have 1 breeding program
+            </p>
+            <div className="mt-4">
+              <Link href="/dashboard/breeding">
+                <Button variant="outline" size="sm">
+                  View all
+                </Button>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+}

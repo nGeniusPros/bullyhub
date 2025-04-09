@@ -1,0 +1,43 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+  functions = "netlify/functions"
+
+[dev]
+  command = "npm run dev"
+  port = 8888
+  targetPort = 3000
+  framework = "next"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Import custom headers from netlify/headers.js
+# Temporarily disabled due to package not found
+# [[plugins]]
+#   package = "netlify-plugin-inline-headers"
+#   [plugins.inputs]
+#     file = "netlify/headers.js"
+
+# Enable Netlify Edge Functions
+[build.environment]
+  NETLIFY_EDGE_FUNCTIONS = "true"
+
+# Enable Brotli compression
+[build.processing]
+  skip_processing = false
+[build.processing.css]
+  bundle = true
+  minify = true
+[build.processing.js]
+  bundle = true
+  minify = true
+[build.processing.html]
+  pretty_urls = true
+[build.processing.images]
+  compress = true

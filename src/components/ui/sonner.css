@@ -1,0 +1,5 @@
+.sonner-toast.destructive {
+  --normal-bg: var(--destructive);
+  --normal-text: var(--destructive-foreground);
+  --normal-border: var(--destructive);
+}
