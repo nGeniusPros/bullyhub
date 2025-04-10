@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { Session, User } from "@supabase/supabase-js";
-import { createBrowserSupabaseClient } from "@/lib/supabase-browser";
+import { getSafeSupabaseClient } from "@/lib/database";
 import { useRouter } from "next/navigation";
 
 type AuthContextType = {
@@ -27,9 +27,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
-  const supabase = createBrowserSupabaseClient();
+  let supabase;
+  try {
+    supabase = getSafeSupabaseClient();
+  } catch (error) {
+    console.error("Error creating Supabase client in AuthContext:", error);
+    // Set an error state that can be displayed to the user
+    setError("Failed to connect to the database. Please try again later.");
+  }
 
   useEffect(() => {
+    // If supabase client is not available, don't proceed
+    if (!supabase) {
+      setIsLoading(false);
+      return;
+    }
+
     const getSession = async () => {
       setIsLoading(true);
 
@@ -82,18 +95,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     getSession();
 
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-      setUser(session?.user || null);
-      setIsLoading(false);
-    });
+    let subscription;
+    try {
+      const { data } = supabase.auth.onAuthStateChange((_event, session) => {
+        setSession(session);
+        setUser(session?.user || null);
+        setIsLoading(false);
+      });
+      subscription = data.subscription;
+    } catch (error) {
+      console.error("Error setting up auth state change listener:", error);
+      setError("Failed to monitor authentication state. Please refresh the page.");
+    }
 
     return () => {
-      subscription.unsubscribe();
+      if (subscription) {
+        try {
+          subscription.unsubscribe();
+        } catch (error) {
+          console.error("Error unsubscribing from auth state changes:", error);
+        }
+      }
     };
-  }, []);
+  }, [supabase]); // Add supabase as a dependency
 
   const signUp = async (
     email: string,
@@ -102,6 +126,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   ) => {
     setIsLoading(true);
     setError(null);
+
+    // Check if supabase client is available
+    if (!supabase) {
+      setError("Database connection is not available. Please try again later.");
+      setIsLoading(false);
+      return;
+    }
 
     try {
       const { error } = await supabase.auth.signUp({
@@ -119,7 +150,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       router.push("/dashboard");
     } catch (error: any) {
       console.error("Error signing up:", error.message);
-      setError(error.message);
+      setError(error.message || "An error occurred during sign up. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -129,6 +160,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setIsLoading(true);
     setError(null);
     console.log("Attempting to sign in with email:", email);
+
+    // Check if supabase client is available
+    if (!supabase) {
+      setError("Database connection is not available. Please try again later.");
+      setIsLoading(false);
+      return;
+    }
 
     try {
       console.log("Calling Supabase auth.signInWithPassword");
@@ -175,6 +213,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setIsLoading(true);
     setError(null);
 
+    // Check if supabase client is available
+    if (!supabase) {
+      setError("Database connection is not available. Please try again later.");
+      setIsLoading(false);
+      return;
+    }
+
     try {
       const { error } = await supabase.auth.signOut();
 
@@ -185,7 +230,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       router.push("/");
     } catch (error: any) {
       console.error("Error signing out:", error.message);
-      setError(error.message);
+      setError(error.message || "An error occurred during sign out. Please try again.");
     } finally {
       setIsLoading(false);
     }

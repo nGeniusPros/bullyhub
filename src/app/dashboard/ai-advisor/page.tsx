@@ -7,16 +7,11 @@ import {
   Clock,
   MessageSquare,
   Bookmark,
-  AlertTriangle,
   Plus,
   Calendar,
-  Bell,
-  Check,
-  X,
-  Filter,
   Send,
   User,
-  Mic,
+  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -27,16 +22,6 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -45,6 +30,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
+import { supabase } from "@/lib/supabase";
 
 interface Message {
   role: "user" | "assistant";
@@ -75,15 +61,10 @@ export default function AiAdvisorPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isListening, setIsListening] = useState(false);
   const [savedAdvice, setSavedAdvice] = useState<
-    Array<{ message: string; response: string }>
+    Array<{ id: string; message: string; response: string }>
   >([]);
-  const [showAddReminder, setShowAddReminder] = useState(false);
-  const [showCalendarView, setShowCalendarView] = useState(false);
-  const [editingReminder, setEditingReminder] = useState<HealthReminder | null>(
-    null
-  );
+  const [healthReminders, setHealthReminders] = useState<HealthReminder[]>([]);
   const [filterCategory, setFilterCategory] = useState<
     HealthReminder["category"] | "all"
   >("all");
@@ -91,62 +72,7 @@ export default function AiAdvisorPage() {
     HealthReminder["priority"] | "all"
   >("all");
   const [sortBy, setSortBy] = useState<"dueDate" | "priority">("dueDate");
-
-  // Mock data for quick tips
-  const [quickTips] = useState([
-    {
-      title: "Daily Exercise",
-      content: "20-30 minutes of moderate activity is ideal for adult Bulldogs",
-      category: "exercise",
-      color: "rose",
-    },
-    {
-      title: "Wrinkle Care",
-      content: "Clean and dry wrinkles daily to prevent infections",
-      category: "grooming",
-      color: "sky",
-    },
-    {
-      title: "Temperature",
-      content: "Keep your Bulldog cool - they're sensitive to heat",
-      category: "health",
-      color: "orange",
-    },
-  ]);
-
-  // Mock data for health reminders
-  const [healthReminders, setHealthReminders] = useState<HealthReminder[]>([
-    {
-      id: "1",
-      title: "Annual Vaccination",
-      description: "Core vaccines renewal",
-      dueDate: new Date(new Date().setDate(new Date().getDate() + 14)),
-      category: "vaccination",
-      priority: "high",
-      completed: false,
-      notifyBefore: 7,
-    },
-    {
-      id: "2",
-      title: "Weight Check",
-      description: "Monthly weight monitoring",
-      dueDate: new Date(),
-      category: "checkup",
-      priority: "medium",
-      completed: false,
-      notifyBefore: 1,
-    },
-    {
-      id: "3",
-      title: "Heartworm Prevention",
-      description: "Monthly medication due",
-      dueDate: new Date(new Date().setDate(new Date().getDate() + 5)),
-      category: "medication",
-      priority: "high",
-      completed: false,
-      notifyBefore: 2,
-    },
-  ]);
+  const [userId, setUserId] = useState<string | null>(null);
 
   const suggestedQuestions = [
     "What are common health issues in Bulldogs?",
@@ -155,74 +81,150 @@ export default function AiAdvisorPage() {
     "How to prevent overheating in Bulldogs?",
   ];
 
-  // Function to extract follow-up questions from the AI response
-  const extractFollowUpQuestions = (response: string): string[] => {
-    // Look for questions in the response
-    const questions = response.match(/(?:\?|🤔)\s*([^.!?\n]+\?)/g) || [];
-    return questions
-      .map((q) => q.trim())
-      .filter((q) => q.length > 10 && q.length < 100)
-      .slice(0, 3);
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return;
+      setUserId(user.id);
 
-  // Function to extract health reminders from the AI response
-  const extractHealthReminders = (
-    response: string
-  ): Array<{
+      const { data: reminders } = await supabase
+        .from("health_reminders")
+        .select("*")
+        .eq("user_id", user.id);
+
+      if (reminders) {
+        setHealthReminders(
+          reminders.map((r) => ({
+            id: r.id,
+            title: r.title,
+            description: r.description,
+            dueDate: r.due_date ? new Date(r.due_date) : new Date(),
+            category: r.category,
+            priority: r.priority,
+            completed: r.completed,
+            notifyBefore: r.notify_before,
+          }))
+        );
+      }
+
+      const { data: advice } = await supabase
+        .from("saved_advice")
+        .select("*")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false });
+
+      if (advice) {
+        setSavedAdvice(
+          advice.map((a) => ({
+            id: a.id,
+            message: a.message,
+            response: a.response,
+          }))
+        );
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  const handleAddReminder = async (reminder: {
     title: string;
     description: string;
     category: string;
     priority: string;
-  }> => {
-    // Look for health-related keywords and surrounding context
-    const healthKeywords = [
-      "vaccination",
-      "checkup",
-      "medication",
-      "exercise",
-      "diet",
-      "grooming",
-    ];
-    const reminders: Array<{
-      title: string;
-      description: string;
-      category: string;
-      priority: string;
-    }> = [];
+  }) => {
+    if (!userId) return;
+    const dueDate = new Date();
+    dueDate.setDate(dueDate.getDate() + 7);
 
-    healthKeywords.forEach((keyword) => {
-      const regex = new RegExp(`[^.!?]*(?:${keyword})[^.!?]*[.!?]`, "gi");
-      const matches = response.match(regex) || [];
+    const { data, error } = await supabase.from("health_reminders").insert([
+      {
+        user_id: userId,
+        title: reminder.title,
+        description: reminder.description,
+        category: reminder.category,
+        priority: reminder.priority,
+        due_date: dueDate.toISOString(),
+        notify_before: 2,
+        completed: false,
+      },
+    ]).select().single();
 
-      matches.forEach((match) => {
-        if (match.length > 10) {
-          reminders.push({
-            title: `${
-              keyword.charAt(0).toUpperCase() + keyword.slice(1)
-            } Reminder`,
-            description: match.trim(),
-            category: keyword,
-            priority: match.toLowerCase().includes("important")
-              ? "high"
-              : "medium",
-          });
-        }
-      });
-    });
-
-    return reminders.slice(0, 2); // Limit to 2 suggestions at a time
+    if (!error && data) {
+      setHealthReminders((prev) => [
+        ...prev,
+        {
+          id: data.id,
+          title: data.title,
+          description: data.description,
+          dueDate: new Date(data.due_date),
+          category: data.category,
+          priority: data.priority,
+          completed: data.completed,
+          notifyBefore: data.notify_before,
+        },
+      ]);
+    }
   };
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  const handleToggleReminder = async (id: string) => {
+    const reminder = healthReminders.find((r) => r.id === id);
+    if (!reminder || !userId) return;
+
+    const { error } = await supabase
+      .from("health_reminders")
+      .update({ completed: !reminder.completed })
+      .eq("id", id)
+      .eq("user_id", userId);
+
+    if (!error) {
+      setHealthReminders((prev) =>
+        prev.map((r) =>
+          r.id === id ? { ...r, completed: !r.completed } : r
+        )
+      );
+    }
   };
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+  const handleDeleteReminder = async (id: string) => {
+    if (!userId) return;
+    const confirmed = window.confirm("Are you sure you want to delete this reminder?");
+    if (!confirmed) return;
 
-  const handleSaveAdvice = (message: string, response: string) => {
-    setSavedAdvice((prev) => [...prev, { message, response }]);
+    const { error } = await supabase
+      .from("health_reminders")
+      .delete()
+      .eq("id", id)
+      .eq("user_id", userId);
+
+    if (!error) {
+      setHealthReminders((prev) => prev.filter((r) => r.id !== id));
+    }
+  };
+
+  const handleSaveAdvice = async (message: string, response: string) => {
+    if (!userId) return;
+
+    const { data, error } = await supabase.from("saved_advice").insert([
+      {
+        user_id: userId,
+        message,
+        response,
+      },
+    ]).select().single();
+
+    if (!error && data) {
+      setSavedAdvice((prev) => [
+        { id: data.id, message: data.message, response: data.response },
+        ...prev,
+      ]);
+    }
   };
 
   const handleSave = (index: number) => {
@@ -236,45 +238,6 @@ export default function AiAdvisorPage() {
     }
   };
 
-  const handleAddReminder = (reminder: {
-    title: string;
-    description: string;
-    category: string;
-    priority: string;
-  }) => {
-    const newReminder: HealthReminder = {
-      id: Math.random().toString(36).substr(2, 9),
-      title: reminder.title,
-      description: reminder.description,
-      category: reminder.category as HealthReminder["category"],
-      priority: reminder.priority as HealthReminder["priority"],
-      dueDate: new Date(new Date().setDate(new Date().getDate() + 7)), // Set due date to a week from now by default
-      notifyBefore: 2, // Default notification setting
-      completed: false,
-    };
-    setHealthReminders((prev) => [...prev, newReminder]);
-    // Show a toast notification
-    alert("Health reminder added from AI suggestion!");
-  };
-
-  const handleToggleReminder = (id: string) => {
-    setHealthReminders((prev) =>
-      prev.map((reminder) =>
-        reminder.id === id
-          ? { ...reminder, completed: !reminder.completed }
-          : reminder
-      )
-    );
-  };
-
-  const handleDeleteReminder = (id: string) => {
-    if (window.confirm("Are you sure you want to delete this reminder?")) {
-      setHealthReminders((prev) =>
-        prev.filter((reminder) => reminder.id !== id)
-      );
-    }
-  };
-
   const handleSendMessage = async (messageText?: string) => {
     const textToSend = messageText || input;
     if (!textToSend.trim() || isLoading) return;
@@ -283,36 +246,26 @@ export default function AiAdvisorPage() {
     setInput("");
     setIsLoading(true);
 
-    // Add user message immediately
     setMessages((prev) => [...prev, { role: "user", content: userMessage }]);
 
     try {
-      // Prepare conversation history for context
-      const conversationHistory = messages.slice(-4); // Last 4 messages for context
+      const conversationHistory = messages.slice(-4);
 
-      // Call the AI advisor serverless function
       const response = await fetch("/.netlify/functions/ai-advisor", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           message: userMessage,
           conversationHistory,
         }),
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
+      if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
       const data = await response.json();
 
-      if (data.error) {
-        throw new Error(data.error);
-      }
+      if (data.error) throw new Error(data.error);
 
-      // Add assistant message to conversation
       setMessages((prev) => [
         ...prev,
         {
@@ -324,8 +277,6 @@ export default function AiAdvisorPage() {
       ]);
     } catch (error) {
       console.error("Failed to get response from AI advisor", error);
-
-      // Add error message to conversation
       setMessages((prev) => [
         ...prev,
         {
@@ -338,7 +289,6 @@ export default function AiAdvisorPage() {
     }
   };
 
-  // Filter and sort reminders
   const filteredAndSortedReminders = healthReminders
     .filter((reminder) => {
       if (filterCategory !== "all" && reminder.category !== filterCategory)
@@ -394,7 +344,6 @@ export default function AiAdvisorPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        {/* Main content */}
         <div className="lg:col-span-3 space-y-6">
           <Card className="overflow-hidden">
             <CardHeader className="pb-3">
@@ -404,7 +353,6 @@ export default function AiAdvisorPage() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              {/* Suggested Questions */}
               <div className="mb-6">
                 <h3 className="text-sm font-medium mb-3 flex items-center">
                   <MessageSquare className="w-4 h-4 mr-2 text-primary" />
@@ -424,7 +372,6 @@ export default function AiAdvisorPage() {
                 </div>
               </div>
 
-              {/* Chat Interface */}
               <div className="border rounded-lg overflow-hidden">
                 <div className="h-[400px] overflow-y-auto p-4 space-y-4">
                   {messages.map((message, index) => (
@@ -587,11 +534,33 @@ export default function AiAdvisorPage() {
               </div>
             </CardContent>
           </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Chat History</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {savedAdvice.length === 0 ? (
+                <p className="text-sm text-muted-foreground">
+                  No chat history yet.
+                </p>
+              ) : (
+                <div className="space-y-3 max-h-[300px] overflow-y-auto pr-1">
+                  {savedAdvice.map((item) => (
+                    <div key={item.id} className="p-3 bg-muted rounded-md">
+                      <p className="text-sm font-medium">{item.message}</p>
+                      <p className="text-xs text-muted-foreground mt-1 line-clamp-3">
+                        {item.response}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
         </div>
 
-        {/* Sidebar */}
         <div className="space-y-6">
-          {/* Saved Advice */}
           <Card>
             <CardHeader className="pb-3">
               <CardTitle className="flex items-center">
@@ -607,8 +576,8 @@ export default function AiAdvisorPage() {
                     save them here.
                   </p>
                 ) : (
-                  savedAdvice.map((item, index) => (
-                    <div key={index} className="p-3 bg-muted rounded-md">
+                  savedAdvice.map((item) => (
+                    <div key={item.id} className="p-3 bg-muted rounded-md">
                       <p className="text-sm font-medium">{item.message}</p>
                       <p className="text-xs text-muted-foreground mt-1 line-clamp-3">
                         {item.response}
@@ -620,7 +589,6 @@ export default function AiAdvisorPage() {
             </CardContent>
           </Card>
 
-          {/* Health Reminders */}
           <Card>
             <CardHeader className="pb-3">
               <div className="flex justify-between items-center">
@@ -632,14 +600,14 @@ export default function AiAdvisorPage() {
                   <Button
                     variant="ghost"
                     size="icon"
-                    onClick={() => setShowCalendarView(!showCalendarView)}
+                    onClick={() => {}}
                   >
                     <Calendar className="h-4 w-4" />
                   </Button>
                   <Button
                     variant="ghost"
                     size="icon"
-                    onClick={() => setShowAddReminder(!showAddReminder)}
+                    onClick={() => {}}
                   >
                     <Plus className="h-4 w-4" />
                   </Button>
@@ -647,7 +615,6 @@ export default function AiAdvisorPage() {
               </div>
             </CardHeader>
             <CardContent>
-              {/* Filter Controls */}
               <div className="flex flex-wrap gap-2 mb-4">
                 <Select
                   value={filterCategory}
@@ -748,33 +715,6 @@ export default function AiAdvisorPage() {
                     </div>
                   ))
                 )}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Quick Tips */}
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="flex items-center">
-                <Star className="h-4 w-4 mr-2" />
-                Quick Tips
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {quickTips.map((tip, index) => (
-                  <div key={index} className="p-3 bg-muted rounded-md">
-                    <div className="flex justify-between items-start">
-                      <h3 className="text-sm font-medium">{tip.title}</h3>
-                      <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full">
-                        {tip.category}
-                      </span>
-                    </div>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      {tip.content}
-                    </p>
-                  </div>
-                ))}
               </div>
             </CardContent>
           </Card>

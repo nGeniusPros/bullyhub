@@ -37,13 +37,15 @@ async function applySchema() {
     for (const statement of statements) {
       try {
         console.log(`Executing: ${statement.substring(0, 50)}...`);
-        const { error } = await supabase.rpc('exec_sql', { query: statement + ';' });
+        const { error } = await supabase.rpc('execute_sql', { query: statement + ';' });
         
         if (error) {
           console.error(`Error executing statement: ${error.message}`);
+          throw error;
         }
       } catch (error) {
         console.error(`Error executing statement: ${error.message}`);
+        throw error;
       }
     }
     

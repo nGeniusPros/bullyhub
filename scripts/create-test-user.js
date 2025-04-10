@@ -27,47 +27,44 @@ const password = 'password123';
 
 async function createTestUser() {
   try {
-    // Check if user already exists
-    const { data: existingUser } = await supabase
-      .from('auth.users')
-      .select('*')
-      .eq('email', email)
-      .single();
+    // List all users and find by email
+    const { data: users, error: listError } = await supabase.auth.admin.listUsers();
+    if (listError) {
+      throw listError;
+    }
+
+    const existingUser = users.users.find((u) => u.email === email);
 
     if (existingUser) {
       console.log(`User ${email} already exists. Updating...`);
-      
-      // Update user to confirm email
-      const { error: updateError } = await supabase.auth.admin.updateUserById(
-        existingUser.id,
-        { email_confirm: true }
-      );
-      
+
+      const { error: updateError } = await supabase.auth.admin.updateUser(existingUser.id, {
+        email_confirmed_at: new Date().toISOString(),
+      });
+
       if (updateError) {
         throw updateError;
       }
-      
+
       console.log(`User ${email} has been updated and email confirmed.`);
     } else {
-      // Create a new user
       const { data: newUser, error: createError } = await supabase.auth.admin.createUser({
         email,
         password,
-        email_confirm: true,
+        email_confirmed_at: new Date().toISOString(),
       });
-      
+
       if (createError) {
         throw createError;
       }
-      
-      console.log(`User ${email} has been created with confirmed email.`);
+
+      console.log(`Created new user: ${newUser.user.email}`);
     }
 
     console.log('\nTest User Credentials:');
     console.log(`Email: ${email}`);
     console.log(`Password: ${password}`);
     console.log('\nYou can now log in at http://localhost:3000/login with these credentials.');
-    
   } catch (error) {
     console.error('Error creating test user:', error.message);
   }

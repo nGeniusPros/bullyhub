@@ -38,50 +38,24 @@ interface Pet {
 
 export default function DogsPage() {
   const router = useRouter();
-  const [pets, setPets] = useState<Pet[]>([
-    {
-      id: "1",
-      name: "Max",
-      breed: "English Bulldog",
-      birthDate: "2020-05-15",
-      gender: "Male",
-      color: "Fawn and White",
-      weight: "50",
-      image: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e",
-      lastCheckup: "2023-12-01",
-      nextCheckup: "2024-03-01",
-      healthStatus: "healthy",
-      upcomingReminders: [
-        {
-          id: "r1",
-          type: "Vaccination",
-          date: "2024-02-15",
-          description: "Annual vaccination due",
-        },
-      ],
-    },
-    {
-      id: "2",
-      name: "Luna",
-      breed: "French Bulldog",
-      birthDate: "2021-03-10",
-      gender: "Female",
-      color: "Brindle",
-      weight: "28",
-      image: "https://images.unsplash.com/photo-1583511666407-5f06533f2113",
-      lastCheckup: "2023-11-15",
-      nextCheckup: "2024-02-15",
-      healthStatus: "attention",
-      upcomingReminders: [
-        {
-          id: "r2",
-          type: "Medication",
-          date: "2024-01-20",
-          description: "Heartworm prevention due",
-        },
-      ],
-    },
-  ]);
+  const [pets, setPets] = useState<Pet[]>([]);
+
+  useEffect(() => {
+    const fetchDogs = async () => {
+      try {
+        const response = await fetch("/api/dogs");
+        if (!response.ok) {
+          throw new Error("Failed to fetch dogs");
+        }
+        const data = await response.json();
+        setPets(data);
+      } catch (error) {
+        console.error("Error fetching dogs:", error);
+      }
+    };
+
+    fetchDogs();
+  }, []);
 
   const getStatusColor = (status: Pet["healthStatus"]) => {
     switch (status) {
@@ -211,7 +185,7 @@ export default function DogsPage() {
                     size="icon"
                     variant="outline"
                     onClick={() =>
-                      router.push(`/dashboard/appointments/${pet.id}`)
+                      router.push(`/dashboard/dogs/${pet.id}`)
                     }
                     title="Appointments"
                   >

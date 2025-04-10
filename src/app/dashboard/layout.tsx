@@ -122,6 +122,19 @@ export default function DashboardLayout({
                 My Dogs
               </Button>
             </Link>
+            <Link href="/dashboard/ai-advisor">
+              <Button
+                variant={
+                  pathname.startsWith("/dashboard/ai-advisor")
+                    ? "default"
+                    : "ghost"
+                }
+                className="w-full justify-start"
+              >
+                <Bot className="mr-2 h-4 w-4" />
+                AI Advisor
+              </Button>
+            </Link>
 
             <div className="mt-4 mb-2">
               <h3 className="text-sm font-medium text-muted-foreground px-4 py-2">
@@ -150,19 +163,6 @@ export default function DashboardLayout({
               >
                 <Target className="mr-2 h-4 w-4" />
                 Training
-              </Button>
-            </Link>
-            <Link href="/dashboard/ai-advisor">
-              <Button
-                variant={
-                  pathname.startsWith("/dashboard/ai-advisor")
-                    ? "default"
-                    : "ghost"
-                }
-                className="w-full justify-start"
-              >
-                <Bot className="mr-2 h-4 w-4" />
-                AI Advisor
               </Button>
             </Link>
             <Link href="/dashboard/nutrition">
@@ -207,9 +207,33 @@ export default function DashboardLayout({
 
             <div className="mt-4 mb-2">
               <h3 className="text-sm font-medium text-muted-foreground px-4 py-2">
-                Breeding
+                Kennel Owners
               </h3>
             </div>
+            <Link href="/dashboard/breeding">
+              <Button
+                variant={
+                  pathname === "/dashboard/breeding" ? "default" : "ghost"
+                }
+                className="w-full justify-start"
+              >
+                <Target className="mr-2 h-4 w-4" />
+                Breeding Dashboard
+              </Button>
+            </Link>
+            <Link href="/dashboard/breeding-programs">
+              <Button
+                variant={
+                  pathname.startsWith("/dashboard/breeding-programs")
+                    ? "default"
+                    : "ghost"
+                }
+                className="w-full justify-start"
+              >
+                <BookOpen className="mr-2 h-4 w-4" />
+                Breeding Programs
+              </Button>
+            </Link>
             <Link href="/dashboard/dna-tests">
               <Button
                 variant={
@@ -236,36 +260,6 @@ export default function DashboardLayout({
                 Health Clearances
               </Button>
             </Link>
-            <Link href="/dashboard/breeding">
-              <Button
-                variant={
-                  pathname === "/dashboard/breeding" ? "default" : "ghost"
-                }
-                className="w-full justify-start"
-              >
-                <Target className="mr-2 h-4 w-4" />
-                Breeding Dashboard
-              </Button>
-            </Link>
-            <Link href="/dashboard/breeding/planning">
-              <Button
-                variant={
-                  pathname.startsWith("/dashboard/breeding/planning")
-                    ? "default"
-                    : "ghost"
-                }
-                className="w-full justify-start"
-              >
-                <Sparkles className="mr-2 h-4 w-4" />
-                Breeding Planning
-                <Badge
-                  variant="outline"
-                  className="ml-auto bg-purple-500/10 text-purple-500 text-xs"
-                >
-                  New
-                </Badge>
-              </Button>
-            </Link>
             <Link href="/dashboard/breeding/compatibility">
               <Button
                 variant={
@@ -290,12 +284,6 @@ export default function DashboardLayout({
               >
                 <Palette className="mr-2 h-4 w-4" />
                 Color Prediction
-                <Badge
-                  variant="outline"
-                  className="ml-auto bg-amber-500/10 text-amber-500 text-xs"
-                >
-                  New
-                </Badge>
               </Button>
             </Link>
             <Link href="/dashboard/breeding/coi-calculator">
@@ -308,15 +296,10 @@ export default function DashboardLayout({
                 className="w-full justify-start"
               >
                 <PieChart className="mr-2 h-4 w-4" />
-                COI Calculator
-                <Badge
-                  variant="outline"
-                  className="ml-auto bg-green-500/10 text-green-500 text-xs"
-                >
-                  New
-                </Badge>
+                COII Calculator
               </Button>
             </Link>
+
             <div className="mt-4 mb-2">
               <h3 className="text-sm font-medium text-muted-foreground px-4 py-2">
                 Stud Services
@@ -330,7 +313,7 @@ export default function DashboardLayout({
                 className="w-full justify-start"
               >
                 <Heart className="mr-2 h-4 w-4" />
-                Stud Services
+                Stud Service Dashboard
               </Button>
             </Link>
             <Link href="/dashboard/stud-services/1/receptionist">
@@ -342,25 +325,6 @@ export default function DashboardLayout({
               >
                 <MessageSquare className="mr-2 h-4 w-4" />
                 AI Receptionist
-                <Badge
-                  variant="outline"
-                  className="ml-auto bg-blue-500/10 text-blue-500 text-xs"
-                >
-                  New
-                </Badge>
-              </Button>
-            </Link>
-            <Link href="/dashboard/breeding-programs">
-              <Button
-                variant={
-                  pathname.startsWith("/dashboard/breeding-programs")
-                    ? "default"
-                    : "ghost"
-                }
-                className="w-full justify-start"
-              >
-                <BookOpen className="mr-2 h-4 w-4" />
-                Breeding Programs
               </Button>
             </Link>
 
@@ -377,13 +341,7 @@ export default function DashboardLayout({
                 className="w-full justify-start"
               >
                 <BarChart className="mr-2 h-4 w-4" />
-                Marketing Suite
-                <Badge
-                  variant="outline"
-                  className="ml-auto bg-blue-500/10 text-blue-500 text-xs"
-                >
-                  New
-                </Badge>
+                Kennel Marketing Dashboard
               </Button>
             </Link>
             <Link href="/dashboard/marketing/branding">
@@ -410,19 +368,6 @@ export default function DashboardLayout({
               >
                 <Users className="mr-2 h-4 w-4" />
                 Client Management
-              </Button>
-            </Link>
-            <Link href="/dashboard/marketing/finances">
-              <Button
-                variant={
-                  pathname.startsWith("/dashboard/marketing/finances")
-                    ? "default"
-                    : "ghost"
-                }
-                className="w-full justify-start"
-              >
-                <DollarSign className="mr-2 h-4 w-4" />
-                Financial Management
               </Button>
             </Link>
             <Link href="/dashboard/marketing/education">
@@ -459,13 +404,7 @@ export default function DashboardLayout({
                 className="w-full justify-start"
               >
                 <Share2 className="mr-2 h-4 w-4" />
-                Social Media
-                <Badge
-                  variant="outline"
-                  className="ml-auto bg-blue-500/10 text-blue-500 text-xs"
-                >
-                  New
-                </Badge>
+                Social Media Marketing
               </Button>
             </Link>
             <Link href="/website-templates">
@@ -476,45 +415,39 @@ export default function DashboardLayout({
                 className="w-full justify-start"
               >
                 <Shield className="mr-2 h-4 w-4" />
-                Website Templates
+                Kennel Website Templates
               </Button>
             </Link>
 
             <div className="mt-4 mb-2">
               <h3 className="text-sm font-medium text-muted-foreground px-4 py-2">
-                Development
+                Kennel Management
               </h3>
             </div>
-            <Link href="/dashboard/netlify-functions">
+            <Link href="/dashboard/marketing/finances">
               <Button
                 variant={
-                  pathname.startsWith("/dashboard/netlify-functions")
+                  pathname.startsWith("/dashboard/marketing/finances")
+                    ? "default"
+                    : "ghost"
+                }
+                className="w-full justify-start"
+              >
+                <DollarSign className="mr-2 h-4 w-4" />
+                Financial Management
+              </Button>
+            </Link>
+            <Link href="/dashboard/marketplace">
+              <Button
+                variant={
+                  pathname.startsWith("/dashboard/marketplace")
                     ? "default"
                     : "ghost"
                 }
                 className="w-full justify-start"
               >
                 <ServerIcon className="mr-2 h-4 w-4" />
-                Netlify Functions
-              </Button>
-            </Link>
-            <Link href="/dashboard/monitoring">
-              <Button
-                variant={
-                  pathname.startsWith("/dashboard/monitoring")
-                    ? "default"
-                    : "ghost"
-                }
-                className="w-full justify-start"
-              >
-                <BarChart className="mr-2 h-4 w-4" />
-                Monitoring Dashboard
-                <Badge
-                  variant="outline"
-                  className="ml-auto bg-green-500/10 text-green-500 text-xs"
-                >
-                  New
-                </Badge>
+                Kennel Marketplace
               </Button>
             </Link>
 

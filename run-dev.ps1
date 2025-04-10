@@ -34,10 +34,10 @@ Write-Host "⏩ Skipping environment and database verification (Auth disabled)" 
 
 # Start the development server
 Write-Host "🚀 Starting development server..." -ForegroundColor Green
-Write-Host "📝 The application will be available at http://localhost:3000" -ForegroundColor Cyan
+Write-Host "📝 The application will be available at http://localhost:8888" -ForegroundColor Cyan
 Write-Host "💻 Press Ctrl+C to stop the server" -ForegroundColor Cyan
 Write-Host ""
 
-# Just use Next.js dev directly
-Write-Host "Using Next.js development server" -ForegroundColor Yellow
+# Use Netlify dev for local development
+Write-Host "Using Netlify development server" -ForegroundColor Yellow
 npm run dev

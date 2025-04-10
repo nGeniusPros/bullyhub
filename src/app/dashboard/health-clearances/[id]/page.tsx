@@ -8,9 +8,13 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import { HealthClearance } from '@/types';
 import Link from 'next/link';
+import { AlertTriangle, Calendar, Download, ExternalLink, FileText, Trash2 } from 'lucide-react';
+import { deleteDocument } from '@/lib/document-upload';
 
 export default function HealthClearanceDetailPage({ params }: { params: { id: string } }) {
   const router = useRouter();
@@ -33,11 +37,11 @@ export default function HealthClearanceDetailPage({ params }: { params: { id: st
     const fetchHealthClearance = async () => {
       try {
         const response = await fetch(`/api/health-clearances/${params.id}`);
-        
+
         if (!response.ok) {
           throw new Error('Failed to fetch health clearance');
         }
-        
+
         const data = await response.json();
         setHealthClearance(data);
         setFormData({
@@ -56,7 +60,7 @@ export default function HealthClearanceDetailPage({ params }: { params: { id: st
         setLoading(false);
       }
     };
-    
+
     fetchHealthClearance();
   }, [params.id]);
 
@@ -71,9 +75,9 @@ export default function HealthClearanceDetailPage({ params }: { params: { id: st
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     setSubmitting(true);
-    
+
     try {
       const response = await fetch(`/api/health-clearances/${params.id}`, {
         method: 'PUT',
@@ -82,11 +86,11 @@ export default function HealthClearanceDetailPage({ params }: { params: { id: st
         },
         body: JSON.stringify(formData),
       });
-      
+
       if (!response.ok) {
         throw new Error('Failed to update health clearance');
       }
-      
+
       const updatedData = await response.json();
       setHealthClearance(updatedData);
       setEditing(false);
@@ -99,28 +103,41 @@ export default function HealthClearanceDetailPage({ params }: { params: { id: st
     }
   };
 
+  const [confirmDelete, setConfirmDelete] = useState(false);
+
   const handleDelete = async () => {
-    if (!confirm('Are you sure you want to delete this health clearance? This action cannot be undone.')) {
-      return;
-    }
-    
     setDeleting(true);
-    
+
     try {
+      // Delete any associated documents first
+      if (healthClearance?.documents && healthClearance.documents.length > 0) {
+        toast.loading('Deleting associated documents...');
+
+        const deletePromises = healthClearance.documents.map(url =>
+          deleteDocument(url).catch(err => {
+            console.error(`Failed to delete document ${url}:`, err);
+            // Continue with other deletions even if one fails
+            return null;
+          })
+        );
+
+        await Promise.all(deletePromises);
+        toast.dismiss();
+      }
+
       const response = await fetch(`/api/health-clearances/${params.id}`, {
         method: 'DELETE',
       });
-      
+
       if (!response.ok) {
         throw new Error('Failed to delete health clearance');
       }
-      
+
       toast.success('Health clearance deleted successfully');
       router.push('/dashboard/health-clearances');
     } catch (error) {
       console.error('Error deleting health clearance:', error);
       toast.error('Failed to delete health clearance');
-    } finally {
       setDeleting(false);
     }
   };
@@ -176,9 +193,30 @@ export default function HealthClearanceDetailPage({ params }: { params: { id: st
               <Button variant="outline" onClick={() => setEditing(true)}>
                 Edit
               </Button>
-              <Button variant="destructive" onClick={handleDelete} disabled={deleting}>
-                {deleting ? 'Deleting...' : 'Delete'}
-              </Button>
+              <Dialog open={confirmDelete} onOpenChange={setConfirmDelete}>
+                <DialogTrigger asChild>
+                  <Button variant="destructive">
+                    <Trash2 className="mr-2 h-4 w-4" />
+                    Delete
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Delete Health Clearance</DialogTitle>
+                    <DialogDescription>
+                      Are you sure you want to delete this health clearance? This action cannot be undone.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <DialogFooter>
+                    <Button variant="outline" onClick={() => setConfirmDelete(false)}>
+                      Cancel
+                    </Button>
+                    <Button variant="destructive" onClick={handleDelete} disabled={deleting}>
+                      {deleting ? "Deleting..." : "Delete"}
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
             </>
           )}
         </div>
@@ -320,8 +358,8 @@ export default function HealthClearanceDetailPage({ params }: { params: { id: st
                 <div>
                   <h3 className="text-sm font-medium text-muted-foreground">Expiry Date</h3>
                   <p className="mt-1">
-                    {healthClearance.expiryDate 
-                      ? new Date(healthClearance.expiryDate).toLocaleDateString() 
+                    {healthClearance.expiryDate
+                      ? new Date(healthClearance.expiryDate).toLocaleDateString()
                       : 'N/A'}
                   </p>
                 </div>
@@ -334,11 +372,34 @@ export default function HealthClearanceDetailPage({ params }: { params: { id: st
                   <p className="mt-1">{healthClearance.verificationNumber}</p>
                 </div>
               </div>
-              
+
               {healthClearance.notes && (
                 <div className="mt-6">
                   <h3 className="text-sm font-medium text-muted-foreground">Notes</h3>
                   <p className="mt-1 whitespace-pre-line">{healthClearance.notes}</p>
+                </div>
+              )}
+
+              {healthClearance.documents && healthClearance.documents.length > 0 && (
+                <div className="mt-6">
+                  <h3 className="text-sm font-medium text-muted-foreground mb-2">Documents</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {healthClearance.documents.map((url, index) => (
+                      <a
+                        key={index}
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center p-3 bg-muted rounded-md hover:bg-muted/80 transition-colors"
+                      >
+                        <FileText className="h-5 w-5" />
+                        <span className="ml-2 text-sm truncate flex-1">
+                          {url.split('/').pop()?.replace(/^\d+-/, '')}
+                        </span>
+                        <ExternalLink className="h-4 w-4 ml-2 flex-shrink-0" />
+                      </a>
+                    ))}
+                  </div>
                 </div>
               )}
             </CardContent>

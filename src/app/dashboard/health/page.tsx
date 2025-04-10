@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -62,46 +62,43 @@ export default function HealthPage() {
   useEffect(() => {
     const fetchDogs = async () => {
       try {
-        const response = await fetch("/api/dogs");
-        if (!response.ok) {
-          throw new Error("Failed to fetch dogs");
-        }
-        const dogsData = await response.json();
+        const userId = "REPLACE_WITH_AUTH_USER_ID"; // TODO: dynamically get logged-in user id
 
-        // For each dog, fetch health records and medications
+        const dogsResponse = await fetch(`/api/get-dogs?user_id=${userId}`);
+        if (!dogsResponse.ok) throw new Error("Failed to fetch dogs");
+        const dogsData = await dogsResponse.json();
+
         const dogsWithHealth = await Promise.all(
-          dogsData.map(async (dog: any) => {
+          (dogsData || []).map(async (dog: any) => {
+            // Fetch health records
             const healthResponse = await fetch(
-              `/api/health-records?dogId=${dog.id}`
+              `/api/get-health-records?dog_id=${dog.id}`
             );
             const healthData = healthResponse.ok
               ? await healthResponse.json()
               : [];
 
-            const medResponse = await fetch(`/api/medications?dogId=${dog.id}`);
-            const medData = medResponse.ok ? await medResponse.json() : [];
+            // Fetch vaccinations
+            const vaxResponse = await fetch(
+              `/api/get-vaccinations?dog_id=${dog.id}`
+            );
+            const vaccinationsData = vaxResponse.ok
+              ? await vaxResponse.json()
+              : [];
 
-            // Mock vaccination data for now
-            const vaccinations = [
-              {
-                id: `v1-${dog.id}`,
-                name: "Rabies",
-                date: "2023-10-15",
-                nextDue: "2024-10-15",
-              },
-              {
-                id: `v2-${dog.id}`,
-                name: "DHPP",
-                date: "2023-09-01",
-                nextDue: "2024-09-01",
-              },
-            ];
+            // Placeholder for medications
+            const medData: any[] = [];
 
             return {
               ...dog,
               healthRecords: healthData,
               medications: medData,
-              vaccinations,
+              vaccinations: (vaccinationsData || []).map((vax: any) => ({
+                id: vax.id,
+                name: vax.vaccine_name,
+                date: vax.date_administered,
+                nextDue: vax.next_due_date,
+              })),
             };
           })
         );

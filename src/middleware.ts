@@ -3,6 +3,14 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
+  // DEVELOPMENT MODE - Authentication bypass
+  const DEVELOPMENT_MODE = true; // Set to true to bypass authentication
+
+  // If in development mode, skip authentication checks
+  if (DEVELOPMENT_MODE) {
+    return NextResponse.next();
+  }
+
   // AUTHENTICATION ENABLED
   // This middleware enforces authentication for protected routes
   let response = NextResponse.next({
@@ -62,6 +70,7 @@ export async function middleware(request: NextRequest) {
   } = await supabase.auth.getSession();
 
   // If the user is not signed in and the route is protected, redirect to login
+  // (This check is skipped in development mode)
   if (!session && request.nextUrl.pathname.startsWith("/dashboard")) {
     const redirectUrl = new URL("/login", request.url);
     return NextResponse.redirect(redirectUrl);

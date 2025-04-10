@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   Calendar,
@@ -107,7 +107,7 @@ export default function AppointmentsPage() {
   useEffect(() => {
     const fetchUpcomingAppointments = async () => {
       try {
-        const response = await fetch("/api/appointments?type=upcoming");
+        const response = await fetch("/.netlify/functions/get-appointments?type=upcoming&user_id=USER_ID");
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -133,7 +133,7 @@ export default function AppointmentsPage() {
   useEffect(() => {
     const fetchPastAppointments = async () => {
       try {
-        const response = await fetch("/api/appointments?type=past");
+        const response = await fetch("/.netlify/functions/get-appointments?type=past&user_id=USER_ID");
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -159,7 +159,7 @@ export default function AppointmentsPage() {
   useEffect(() => {
     const fetchVeterinarians = async () => {
       try {
-        const response = await fetch("/api/veterinarians");
+        const response = await fetch("/.netlify/functions/get-veterinarians?user_id=USER_ID");
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -717,7 +717,7 @@ export default function AppointmentsPage() {
                 </div>
               )}
             </div>
-          )
+          )}
         </TabsContent>
       </Tabs>
 

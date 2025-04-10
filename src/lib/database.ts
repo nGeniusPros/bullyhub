@@ -646,16 +646,33 @@ export type AIBreedingAdviceTemplate = {
 
 // Create a Supabase client for browser environments
 export const createBrowserSupabaseClient = () => {
-  const supabaseUrl = ENV.SUPABASE_URL;
-  const supabaseKey = ENV.SUPABASE_ANON_KEY;
+  try {
+    const supabaseUrl = ENV.SUPABASE_URL;
+    const supabaseKey = ENV.SUPABASE_ANON_KEY;
 
-  if (!supabaseUrl || !supabaseKey) {
-    console.error("Missing Supabase environment variables");
-    console.error("Missing variables:", ENV.getMissingVars());
-    throw new Error("Missing Supabase environment variables");
+    if (!supabaseUrl || !supabaseKey) {
+      console.error("Missing Supabase environment variables");
+      console.error("Missing variables:", ENV.getMissingVars());
+      throw new Error("Missing Supabase environment variables");
+    }
+
+    return createBrowserClient(supabaseUrl, supabaseKey);
+  } catch (error) {
+    console.error("Error creating Supabase client:", error);
+    // Provide a user-friendly error message
+    throw new Error("Failed to connect to the database. Please try again later.");
   }
+};
 
-  return createBrowserClient(supabaseUrl, supabaseKey);
+// Safe utility function to get a Supabase client with error handling
+export const getSafeSupabaseClient = () => {
+  try {
+    return createBrowserSupabaseClient();
+  } catch (error) {
+    console.error("Error getting Supabase client:", error);
+    // Provide a user-friendly error message
+    throw new Error("Failed to connect to the database. Please try again later.");
+  }
 };
 
 // Note: Server-side Supabase client is now in supabase-server.ts
@@ -663,7 +680,7 @@ export const createBrowserSupabaseClient = () => {
 // Helper function to check if the database connection is working
 export const checkDatabaseConnection = async () => {
   try {
-    const supabase = createBrowserSupabaseClient();
+    const supabase = getSafeSupabaseClient();
 
     // Try to fetch a small amount of data to verify connection
     const { data, error } = await supabase
@@ -673,16 +690,33 @@ export const checkDatabaseConnection = async () => {
 
     if (error) {
       console.error("Database connection error:", error);
-      return false;
+      return {
+        success: false,
+        error: error.message,
+        details: error
+      };
     }
 
-    return true;
-  } catch (error) {
+    return {
+      success: true,
+      data
+    };
+  } catch (error: any) {
     console.error("Unexpected error checking database connection:", error);
-    return false;
+    return {
+      success: false,
+      error: error.message || "Unknown error",
+      details: error
+    };
   }
 };
 
 // Export a default client for use in components
-export const supabase =
-  typeof window !== "undefined" ? createBrowserSupabaseClient() : null; // Will be null on server side
+export const supabase = (() => {
+  try {
+    return typeof window !== "undefined" ? getSafeSupabaseClient() : null; // Will be null on server side
+  } catch (error) {
+    console.error("Error initializing default Supabase client:", error);
+    return null;
+  }
+})();

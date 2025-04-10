@@ -1,16 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Target, 
   Award, 
   Bell, 
   Users, 
-  Play, 
-  CheckCircle, 
-  Clock, 
   Calendar,
-  ChevronRight,
   Plus
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -19,44 +15,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Progress } from '@/components/ui/progress';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
-// Mock training courses
-const trainingCourses = [
-  {
-    id: '1',
-    title: 'Basic Obedience',
-    description: 'Master essential commands like sit, stay, and come with techniques tailored for Bulldogs.',
-    level: 'Beginner',
-    duration: '4 weeks',
-    lessons: 8,
-    progress: 25,
-    image: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&q=80&w=300&h=200',
-    icon: Target
-  },
-  {
-    id: '2',
-    title: 'Socialization Skills',
-    description: 'Help your Bulldog become comfortable with other dogs, people, and various environments.',
-    level: 'Intermediate',
-    duration: '6 weeks',
-    lessons: 12,
-    progress: 0,
-    image: 'https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&q=80&w=300&h=200',
-    icon: Users
-  },
-  {
-    id: '3',
-    title: 'Advanced Commands',
-    description: 'Build on basic training with more complex commands and behaviors.',
-    level: 'Advanced',
-    duration: '8 weeks',
-    lessons: 16,
-    progress: 0,
-    image: 'https://images.unsplash.com/photo-1583337426008-2fef51aa2e8a?auto=format&fit=crop&q=80&w=300&h=200',
-    icon: Award
-  }
-];
-
-// Mock training tips
 const trainingTips = [
   {
     title: "Basic Commands",
@@ -80,30 +38,60 @@ const trainingTips = [
   },
 ];
 
-// Mock upcoming training sessions
-const upcomingSessions = [
-  {
-    id: '1',
-    title: 'Basic Obedience: Lesson 3',
-    date: new Date(new Date().setDate(new Date().getDate() + 2)),
-    time: '10:00 AM',
-    duration: '30 minutes',
-    course: 'Basic Obedience',
-    topics: ['Leash training', 'Walking without pulling', 'Heel command']
-  },
-  {
-    id: '2',
-    title: 'Group Training Session',
-    date: new Date(new Date().setDate(new Date().getDate() + 5)),
-    time: '11:00 AM',
-    duration: '45 minutes',
-    course: 'Socialization Skills',
-    topics: ['Meeting other dogs', 'Controlled greetings', 'Play behavior']
-  }
-];
-
 export default function TrainingPage() {
   const [activeTab, setActiveTab] = useState('courses');
+  const [courses, setCourses] = useState([]);
+  const [sessions, setSessions] = useState([]);
+  const [formData, setFormData] = useState({
+    course_id: '',
+    date: '',
+    time: '',
+    duration: '30',
+    notes: '',
+  });
+
+  useEffect(() => {
+    fetch('/.netlify/functions/get-training-courses')
+      .then(res => res.json())
+      .then(setCourses)
+      .catch(console.error);
+
+    fetch('/.netlify/functions/get-training-sessions')
+      .then(res => res.json())
+      .then(setSessions)
+      .catch(console.error);
+  }, []);
+
+  const handleSchedule = async () => {
+    if (!formData.course_id || !formData.date || !formData.time) {
+      alert('Please fill in all required fields');
+      return;
+    }
+
+    try {
+      const res = await fetch('/.netlify/functions/create-training-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setSessions(prev => [...prev, data]);
+        setFormData({
+          course_id: '',
+          date: '',
+          time: '',
+          duration: '30',
+          notes: '',
+        });
+      } else {
+        alert(data.error || 'Failed to schedule session');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Unexpected error');
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -128,9 +116,13 @@ export default function TrainingPage() {
             <div className="space-y-4 py-4">
               <div className="space-y-2">
                 <label className="text-sm font-medium">Course</label>
-                <select className="w-full p-2 border rounded-md">
+                <select
+                  className="w-full p-2 border rounded-md"
+                  value={formData.course_id}
+                  onChange={e => setFormData({ ...formData, course_id: e.target.value })}
+                >
                   <option value="">Select a course</option>
-                  {trainingCourses.map(course => (
+                  {courses.map(course => (
                     <option key={course.id} value={course.id}>{course.title}</option>
                   ))}
                 </select>
@@ -138,29 +130,48 @@ export default function TrainingPage() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Date</label>
-                  <input type="date" className="w-full p-2 border rounded-md" />
+                  <input
+                    type="date"
+                    className="w-full p-2 border rounded-md"
+                    value={formData.date}
+                    onChange={e => setFormData({ ...formData, date: e.target.value })}
+                  />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Time</label>
-                  <input type="time" className="w-full p-2 border rounded-md" />
+                  <input
+                    type="time"
+                    className="w-full p-2 border rounded-md"
+                    value={formData.time}
+                    onChange={e => setFormData({ ...formData, time: e.target.value })}
+                  />
                 </div>
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium">Duration</label>
-                <select className="w-full p-2 border rounded-md">
+                <select
+                  className="w-full p-2 border rounded-md"
+                  value={formData.duration}
+                  onChange={e => setFormData({ ...formData, duration: e.target.value })}
+                >
                   <option value="15">15 minutes</option>
-                  <option value="30" selected>30 minutes</option>
+                  <option value="30">30 minutes</option>
                   <option value="45">45 minutes</option>
                   <option value="60">60 minutes</option>
                 </select>
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium">Notes</label>
-                <textarea className="w-full p-2 border rounded-md h-20" placeholder="Any specific goals or focus areas for this session?"></textarea>
+                <textarea
+                  className="w-full p-2 border rounded-md h-20"
+                  placeholder="Any specific goals or focus areas for this session?"
+                  value={formData.notes}
+                  onChange={e => setFormData({ ...formData, notes: e.target.value })}
+                />
               </div>
             </div>
             <div className="flex justify-end">
-              <Button>Schedule</Button>
+              <Button onClick={handleSchedule}>Schedule</Button>
             </div>
           </DialogContent>
         </Dialog>
@@ -172,16 +183,16 @@ export default function TrainingPage() {
           <TabsTrigger value="tips">Training Tips</TabsTrigger>
           <TabsTrigger value="schedule">Schedule</TabsTrigger>
         </TabsList>
-        
+
         <TabsContent value="courses" className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {trainingCourses.map((course) => {
-              const Icon = course.icon;
+            {courses.map((course) => {
+              const Icon = Target; // Default icon
               return (
                 <Card key={course.id} className="overflow-hidden">
                   <div className="aspect-video relative">
                     <img 
-                      src={course.image} 
+                      src={course.image_url} 
                       alt={course.title} 
                       className="object-cover w-full h-full"
                     />
@@ -212,14 +223,14 @@ export default function TrainingPage() {
                     <div className="space-y-2">
                       <div className="flex justify-between text-sm">
                         <span>Progress</span>
-                        <span>{course.progress}%</span>
+                        <span>0%</span>
                       </div>
-                      <Progress value={course.progress} className="h-2" />
+                      <Progress value={0} className="h-2" />
                     </div>
                   </CardContent>
                   <CardFooter>
-                    <Button className="w-full" variant={course.progress > 0 ? "default" : "outline"}>
-                      {course.progress > 0 ? "Continue Course" : "Start Course"}
+                    <Button className="w-full" variant="outline">
+                      Start Course
                     </Button>
                   </CardFooter>
                 </Card>
@@ -227,7 +238,7 @@ export default function TrainingPage() {
             })}
           </div>
         </TabsContent>
-        
+
         <TabsContent value="tips" className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {trainingTips.map((tip) => {
@@ -249,47 +260,8 @@ export default function TrainingPage() {
               );
             })}
           </div>
-          
-          <Card>
-            <CardHeader>
-              <CardTitle>Bulldog-Specific Training Considerations</CardTitle>
-              <CardDescription>
-                Important factors to keep in mind when training Bulldogs
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <h3 className="font-medium">Temperature Sensitivity</h3>
-                <p className="text-sm text-muted-foreground">
-                  Bulldogs are prone to overheating. Keep training sessions short and avoid training during hot weather. 
-                  Watch for signs of heat stress like excessive panting or drooling.
-                </p>
-              </div>
-              <div>
-                <h3 className="font-medium">Respiratory Challenges</h3>
-                <p className="text-sm text-muted-foreground">
-                  Due to their brachycephalic (flat-faced) structure, Bulldogs may have breathing difficulties. 
-                  Allow for frequent breaks during training and don't push them too hard physically.
-                </p>
-              </div>
-              <div>
-                <h3 className="font-medium">Stubbornness</h3>
-                <p className="text-sm text-muted-foreground">
-                  Bulldogs can be stubborn and independent-minded. Use positive reinforcement, be consistent, 
-                  and keep sessions engaging. Avoid repetitive drills that might bore them.
-                </p>
-              </div>
-              <div>
-                <h3 className="font-medium">Food Motivation</h3>
-                <p className="text-sm text-muted-foreground">
-                  Most Bulldogs are highly food-motivated, which can be leveraged for training. However, be mindful 
-                  of their tendency toward obesity and use low-calorie treats or portion control.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
         </TabsContent>
-        
+
         <TabsContent value="schedule" className="space-y-4">
           <Card>
             <CardHeader>
@@ -299,26 +271,21 @@ export default function TrainingPage() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              {upcomingSessions.length > 0 ? (
+              {sessions.length > 0 ? (
                 <div className="space-y-4">
-                  {upcomingSessions.map((session) => (
+                  {sessions.map((session) => (
                     <div key={session.id} className="flex items-start space-x-4 p-4 border rounded-lg">
                       <div className="bg-primary/10 p-3 rounded-full">
                         <Calendar className="h-5 w-5 text-primary" />
                       </div>
                       <div className="flex-1">
-                        <h3 className="font-medium">{session.title}</h3>
+                        <h3 className="font-medium">{session.training_courses?.title || 'Training Session'}</h3>
                         <p className="text-sm text-muted-foreground">
-                          {session.date.toLocaleDateString()} at {session.time} ({session.duration})
+                          {session.date} at {session.time} ({session.duration} minutes)
                         </p>
-                        <div className="mt-2">
-                          <p className="text-xs font-medium text-muted-foreground">Topics:</p>
-                          <ul className="text-xs list-disc list-inside">
-                            {session.topics.map((topic, index) => (
-                              <li key={index}>{topic}</li>
-                            ))}
-                          </ul>
-                        </div>
+                        {session.notes && (
+                          <p className="mt-2 text-sm">{session.notes}</p>
+                        )}
                       </div>
                       <div className="flex space-x-2">
                         <Button variant="outline" size="sm">
@@ -340,49 +307,6 @@ export default function TrainingPage() {
                   </Button>
                 </div>
               )}
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardHeader>
-              <CardTitle>Training Progress</CardTitle>
-              <CardDescription>
-                Track your training journey
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span className="flex items-center">
-                      <Target className="h-4 w-4 mr-2 text-primary" />
-                      Basic Obedience
-                    </span>
-                    <span>2/8 lessons completed</span>
-                  </div>
-                  <Progress value={25} className="h-2" />
-                </div>
-                <div className="space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span className="flex items-center">
-                      <Users className="h-4 w-4 mr-2 text-primary" />
-                      Socialization Skills
-                    </span>
-                    <span>0/12 lessons completed</span>
-                  </div>
-                  <Progress value={0} className="h-2" />
-                </div>
-                <div className="space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span className="flex items-center">
-                      <Award className="h-4 w-4 mr-2 text-primary" />
-                      Advanced Commands
-                    </span>
-                    <span>0/16 lessons completed</span>
-                  </div>
-                  <Progress value={0} className="h-2" />
-                </div>
-              </div>
             </CardContent>
           </Card>
         </TabsContent>

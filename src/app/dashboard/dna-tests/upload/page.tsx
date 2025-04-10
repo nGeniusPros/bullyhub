@@ -88,27 +88,28 @@ export default function UploadDNATestPage() {
       return;
     }
 
+    if (!formData.dogId || !formData.provider || !formData.testDate) {
+      toast.error("Please fill in all required fields");
+      return;
+    }
+
     setSubmitting(true);
 
     try {
-      // First, parse the file to extract DNA markers
-      // This is a simplified example - in a real app, you'd need to parse different file formats
-      const fileContent = await readFileAsText(selectedFile);
+      // Show parsing status
+      toast.loading("Parsing DNA test file...");
 
-      // Mock parsing - in a real app, you'd parse the file based on its format and provider
-      const mockMarkers = [
-        { locus: "A Locus", alleles: ["at", "at"], description: "Tan points" },
-        {
-          locus: "B Locus",
-          alleles: ["B", "b"],
-          description: "Carrier for chocolate/liver",
-        },
-      ];
+      // Import the parser dynamically to reduce initial load time
+      const { parseDNATestFile } = await import("@/lib/dna-test-parser");
 
-      const mockHealthMarkers = [
-        { condition: "Hip Dysplasia", status: "Clear" },
-        { condition: "Degenerative Myelopathy", status: "Clear" },
-      ];
+      // Parse the file based on the provider
+      const { markers, healthMarkers } = await parseDNATestFile(
+        selectedFile,
+        formData.provider
+      );
+
+      toast.dismiss();
+      toast.loading("Uploading DNA test results...");
 
       // Create the DNA test record
       const response = await fetch("/api/dna-tests", {
@@ -118,20 +119,25 @@ export default function UploadDNATestPage() {
         },
         body: JSON.stringify({
           ...formData,
-          markers: mockMarkers,
-          healthMarkers: mockHealthMarkers,
+          markers,
+          healthMarkers,
         }),
       });
 
       if (!response.ok) {
-        throw new Error("Failed to create DNA test");
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to create DNA test");
       }
 
+      toast.dismiss();
       toast.success("DNA test uploaded successfully");
       router.push("/dashboard/dna-tests");
     } catch (error) {
       console.error("Error uploading DNA test:", error);
-      toast.error("Failed to upload DNA test");
+      toast.dismiss();
+      toast.error(typeof error === 'object' && error !== null && 'message' in error
+        ? (error as Error).message
+        : "Failed to upload DNA test");
     } finally {
       setSubmitting(false);
     }

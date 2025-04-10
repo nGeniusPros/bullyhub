@@ -23,6 +23,8 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { Dog } from "@/types";
+import { FileText, Upload, X } from "lucide-react";
+import { uploadDocument } from "@/lib/document-upload";
 
 export default function AddHealthClearancePage() {
   const router = useRouter();
@@ -38,7 +40,11 @@ export default function AddHealthClearancePage() {
     expiryDate: "",
     verificationNumber: "",
     notes: "",
+    documents: [] as string[],
   });
+
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     const fetchDogs = async () => {
@@ -81,31 +87,81 @@ export default function AddHealthClearancePage() {
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const newFiles = Array.from(e.target.files);
+      setSelectedFiles(prev => [...prev, ...newFiles]);
+    }
+  };
+
+  const removeFile = (index: number) => {
+    setSelectedFiles(prev => prev.filter((_, i) => i !== index));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     setSubmitting(true);
 
     try {
+      // Upload documents if any
+      if (selectedFiles.length > 0) {
+        setUploading(true);
+        toast.loading("Uploading documents...");
+
+        const uploadPromises = selectedFiles.map(file =>
+          uploadDocument(file, 'health-clearances')
+        );
+
+        const documentUrls = await Promise.all(uploadPromises);
+
+        // Update form data with document URLs
+        setFormData(prev => ({
+          ...prev,
+          documents: documentUrls
+        }));
+
+        toast.dismiss();
+        setUploading(false);
+      }
+
+      toast.loading("Saving health clearance...");
+
+      // Submit the form data with document URLs
+      const dataToSubmit = {
+        ...formData,
+        documents: selectedFiles.length > 0 ?
+          // If we just uploaded files, use those URLs
+          await Promise.all(selectedFiles.map(file => uploadDocument(file, 'health-clearances'))) :
+          // Otherwise use any existing URLs
+          formData.documents
+      };
+
       const response = await fetch("/api/health-clearances", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(dataToSubmit),
       });
 
       if (!response.ok) {
-        throw new Error("Failed to create health clearance");
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to create health clearance");
       }
 
+      toast.dismiss();
       toast.success("Health clearance added successfully");
       router.push("/dashboard/health-clearances");
     } catch (error) {
       console.error("Error adding health clearance:", error);
-      toast.error("Failed to add health clearance");
+      toast.dismiss();
+      toast.error(typeof error === 'object' && error !== null && 'message' in error
+        ? (error as Error).message
+        : "Failed to add health clearance");
     } finally {
       setSubmitting(false);
+      setUploading(false);
     }
   };
 
@@ -246,6 +302,58 @@ export default function AddHealthClearancePage() {
                     onChange={handleInputChange}
                   />
                 </div>
+
+                <div className="space-y-2">
+                  <Label>Documents</Label>
+                  <div className="border-2 border-dashed rounded-md p-6 flex flex-col items-center justify-center">
+                    <FileText className="h-8 w-8 text-muted-foreground mb-2" />
+                    <p className="text-sm text-muted-foreground mb-2">
+                      Upload certification documents, reports, or images
+                    </p>
+                    <p className="text-xs text-muted-foreground mb-4">
+                      Supported formats: PDF, JPG, PNG
+                    </p>
+                    <Input
+                      id="documents"
+                      type="file"
+                      className="hidden"
+                      accept=".pdf,.jpg,.jpeg,.png"
+                      onChange={handleFileChange}
+                      multiple
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => document.getElementById("documents")?.click()}
+                    >
+                      <Upload className="mr-2 h-4 w-4" />
+                      Select Files
+                    </Button>
+                  </div>
+
+                  {selectedFiles.length > 0 && (
+                    <div className="mt-4">
+                      <h4 className="text-sm font-medium mb-2">Selected Files:</h4>
+                      <div className="space-y-2">
+                        {selectedFiles.map((file, index) => (
+                          <div key={index} className="flex items-center justify-between bg-muted p-2 rounded">
+                            <div className="flex items-center">
+                              <FileText className="h-4 w-4 mr-2" />
+                              <span className="text-sm truncate max-w-[200px]">{file.name}</span>
+                            </div>
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => removeFile(index)}
+                            >
+                              <X className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
               </>
             )}
           </CardContent>
@@ -257,11 +365,11 @@ export default function AddHealthClearancePage() {
             >
               Cancel
             </Button>
-            <Button type="submit" disabled={submitting || loading}>
-              {submitting ? (
+            <Button type="submit" disabled={submitting || loading || uploading}>
+              {submitting || uploading ? (
                 <>
                   <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-b-transparent"></div>
-                  Saving...
+                  {uploading ? "Uploading..." : "Saving..."}
                 </>
               ) : (
                 "Save Health Clearance"

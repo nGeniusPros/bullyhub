@@ -31,10 +31,12 @@ export interface Dog {
 export interface DNATestResult {
   id: string;
   dogId: string;
+  dogName: string;
   provider: "AnimalGenetics" | "Embark" | "Other";
   testDate: string;
   markers: GeneticMarker[];
   healthMarkers: HealthMarker[];
+  documents?: string[];
   createdAt: string;
 }
 

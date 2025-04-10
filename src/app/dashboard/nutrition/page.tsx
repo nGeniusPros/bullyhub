@@ -65,7 +65,9 @@ export default function NutritionPage() {
     const fetchData = async () => {
       try {
         // Fetch dogs
-        const dogsResponse = await fetch("/api/dogs");
+        const userId = "test-user-id";
+
+        const dogsResponse = await fetch(`/.netlify/functions/get-dogs?user_id=${userId}`);
         if (!dogsResponse.ok) {
           throw new Error("Failed to fetch dogs");
         }
@@ -77,7 +79,7 @@ export default function NutritionPage() {
         const dogsWithNutrition = await Promise.all(
           dogsData.map(async (dog: any) => {
             const mealPlansResponse = await fetch(
-              `/api/nutrition/meal-plans?dogId=${dog.id}`
+              `/.netlify/functions/get-meal-plans?user_id=${userId}&dogId=${dog.id}`
             );
             const mealPlansData = mealPlansResponse.ok
               ? await mealPlansResponse.json()
@@ -96,7 +98,7 @@ export default function NutritionPage() {
         }
 
         // Fetch nutrition guides
-        const guidesResponse = await fetch("/api/nutrition/guides");
+        const guidesResponse = await fetch("/.netlify/functions/get-nutrition-guides");
         if (guidesResponse.ok) {
           const guidesData = await guidesResponse.json();
           setNutritionGuides(guidesData);

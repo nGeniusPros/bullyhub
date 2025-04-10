@@ -1,9 +1,9 @@
 # Bully Hub Codebase Audit Report
 
-Found 24 potential issues:
+Found 21 potential issues:
 - 12 high severity issues
-- 7 medium severity issues
-- 5 low severity issues
+- 6 medium severity issues
+- 3 low severity issues
 
 ## HIGH SEVERITY ISSUES
 
@@ -84,11 +84,6 @@ Found 24 potential issues:
 - **Occurrences**: 1
 - **Suggestion**: Check if component is mounted before updating state in async operations
 
-### src\components\EnvChecker.tsx
-- **Issue**: Potential state update after unmount
-- **Occurrences**: 1
-- **Suggestion**: Check if component is mounted before updating state in async operations
-
 ### src\components\GlobalErrorHandler.tsx
 - **Issue**: Missing dependency arrays in useEffect
 - **Occurrences**: 1
@@ -106,19 +101,9 @@ Found 24 potential issues:
 
 ## LOW SEVERITY ISSUES
 
-### src\app\api\breeding-programs\route.ts
+### src\components\EnvChecker.tsx
 - **Issue**: Console.log statements
 - **Occurrences**: 3
-- **Suggestion**: Remove console.log statements in production code
-
-### src\app\api\breeding-programs\[id]\route.ts
-- **Issue**: Console.log statements
-- **Occurrences**: 4
-- **Suggestion**: Remove console.log statements in production code
-
-### src\app\api\stud-services\receptionist\route.ts
-- **Issue**: Console.log statements
-- **Occurrences**: 1
 - **Suggestion**: Remove console.log statements in production code
 
 ### src\contexts\AuthContext.tsx
