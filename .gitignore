@@ -42,3 +42,10 @@ next-env.d.ts
 
 # Local Netlify folder
 .netlify
+netlify/.next/
+netlify/functions_backup/
+
+# Temporary files
+.roo/
+.roomodes
+fix-functions*.js
