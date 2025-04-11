@@ -7,10 +7,10 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-export async function handler(event, context) {
+export async function handler(event) {
   // Only allow POST requests
   if (event.httpMethod !== 'POST') {
-    return createResponse(405, { error: 'Method Not Allowed' });
+    return createResponse(405, { error: 'Method Not Allowed' })
   }
 
   try {
@@ -19,7 +19,7 @@ export async function handler(event, context) {
     const { dogId, breedingProgramId } = data;
 
     if (!dogId || !breedingProgramId) {
-      return createResponse(400, { error: 'Missing required fields' });
+      return createResponse(400, { error: 'Missing required fields' })
     }
 
     // Get dog details with health clearances and DNA tests
@@ -41,7 +41,7 @@ export async function handler(event, context) {
 
     if (dogError) {
       console.error('Error fetching dog:', dogError);
-      return createResponse(500, { error: 'Failed to fetch dog details' });
+      return createResponse(500, { error: 'Failed to fetch dog details' })
     }
 
     // Get breeding program details
@@ -53,7 +53,7 @@ export async function handler(event, context) {
 
     if (programError) {
       console.error('Error fetching breeding program:', programError);
-      return createResponse(500, { error: 'Failed to fetch breeding program details' });
+      return createResponse(500, { error: 'Failed to fetch breeding program details' })
     }
 
     // Get health testing requirements
@@ -221,9 +221,10 @@ function checkHealthCompatibility(dog, breedingProgram, healthRequirements) {
           test: clearance.test,
           result: clearance.result,
           status: clearance.status
-        });
+        })
       }
-    });
+    }
+    );
   }
   
   // Find missing tests
@@ -231,7 +232,7 @@ function checkHealthCompatibility(dog, breedingProgram, healthRequirements) {
     if (!dogTests.has(test)) {
       result.missingTests.push(test);
     }
-  });
+  })
   
   // Dog is health compatible if there are no missing or failed tests
   result.compatible = result.missingTests.length === 0 && result.failedTests.length === 0;

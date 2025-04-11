@@ -35,7 +35,7 @@ When responding:
 
 export async function handler(event, context) {
   // Handle OPTIONS request for CORS preflight
-  if (event.httpMethod === 'OPTIONS') {
+  if (event.httpMethod === "OPTIONS") {
     return handleOptions();
   }
 
@@ -55,17 +55,20 @@ export async function handler(event, context) {
 
     // Prepare messages for OpenAI
     const messages = [
-      { role: 'system', content: SYSTEM_PROMPT },
-      ...conversationHistory.map(msg => ({ role: msg.role, content: msg.content })),
-      { role: 'user', content: message }
+      { role: "system", content: SYSTEM_PROMPT },
+      ...conversationHistory.map((msg) => ({
+        role: msg.role,
+        content: msg.content,
+      })),
+      { role: "user", content: message },
     ];
 
     // Call OpenAI API
     const completion = await openai.chat.completions.create({
-      model: 'gpt-4',
+      model: "gpt-4",
       messages: messages,
       temperature: 0.7,
-      max_tokens: 800
+      max_tokens: 800,
     });
 
     // Extract the response
@@ -79,11 +82,11 @@ export async function handler(event, context) {
 
     // Save the conversation to the database (optional)
     // This would be implemented in a real application
-    
+
     return createResponse(200, {
       message: aiResponse,
       followUpQuestions,
-      healthReminders
+      healthReminders,
     });
   } catch (error) {
     console.error("Error processing request:", error);
@@ -96,28 +99,37 @@ function extractFollowUpQuestions(response) {
   // Look for questions in the response
   const questions = response.match(/(?:\?|🤔)\s*([^.!?\n]+\?)/g) || [];
   return questions
-    .map(q => q.trim())
-    .filter(q => q.length > 10 && q.length < 100)
+    .map((q) => q.trim())
+    .filter((q) => q.length > 10 && q.length < 100)
     .slice(0, 3);
 }
 
 // Helper function to extract health reminders from AI response
 function extractHealthReminders(response) {
   // Look for health-related keywords and surrounding context
-  const healthKeywords = ['vaccination', 'checkup', 'medication', 'exercise', 'diet', 'grooming'];
+  const healthKeywords = [
+    "vaccination",
+    "checkup",
+    "medication",
+    "exercise",
+    "diet",
+    "grooming",
+  ];
   const reminders = [];
 
-  healthKeywords.forEach(keyword => {
-    const regex = new RegExp(`[^.!?]*(?:${keyword})[^.!?]*[.!?]`, 'gi');
+  healthKeywords.forEach((keyword) => {
+    const regex = new RegExp(`[^.!?]*(?:${keyword})[^.!?]*[.!?]`, "gi");
     const matches = response.match(regex) || [];
-    
-    matches.forEach(match => {
+
+    matches.forEach((match) => {
       if (match.length > 10) {
         reminders.push({
           title: `${keyword.charAt(0).toUpperCase() + keyword.slice(1)} Reminder`,
           description: match.trim(),
           category: keyword,
-          priority: match.toLowerCase().includes('important') ? 'high' : 'medium'
+          priority: match.toLowerCase().includes("important")
+            ? "high"
+            : "medium",
         });
       }
     });

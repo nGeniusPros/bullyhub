@@ -5,7 +5,7 @@ const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABAS
 
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-exports.handler = async (event, context) => {
+exports.handler = async (event) => {
   try {
     // TODO: Extract user ID from JWT or session
     // For now, use a placeholder user ID for testing

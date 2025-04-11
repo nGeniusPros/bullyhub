@@ -7,7 +7,7 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-export async function handler(event, context) {
+export async function handler(event) {
   // Allow both GET and POST requests
   if (event.httpMethod !== 'GET' && event.httpMethod !== 'POST') {
     return createResponse(405, { error: 'Method Not Allowed' });

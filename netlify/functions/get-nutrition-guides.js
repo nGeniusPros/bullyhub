@@ -1,11 +1,11 @@
-const { createClient } = require("@supabase/supabase-js");
+import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY;
 
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-exports.handler = async (event, context) => {
+export async function handler(event) {
   try {
     const { data, error } = await supabase
       .from("nutrition_guides")
@@ -31,4 +31,4 @@ exports.handler = async (event, context) => {
       body: JSON.stringify({ error: "Unexpected error" }),
     };
   }
-};
+}

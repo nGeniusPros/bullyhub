@@ -7,9 +7,9 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-export async function handler(event, context) {
+export async function handler(event) {
   // Handle OPTIONS request for CORS preflight
-  if (event.httpMethod === 'OPTIONS') {
+  if (event.httpMethod === "OPTIONS") {
     return handleOptions();
   }
 
@@ -142,7 +142,7 @@ function calculateCOI(sirePedigree, damPedigree) {
 
       const pathContribution = Math.pow(
         0.5,
-        ancestor.sireGenerations + ancestor.damGenerations + 1
+        ancestor.sireGenerations + ancestor.damGenerations + 1,
       );
       const ancestorContribution = 1 + (ancestor.inbreedingCoefficient || 0);
 
@@ -278,7 +278,7 @@ function generateCOIResult(coiPercentage, commonAncestors) {
 function calculateAncestorContribution(ancestor) {
   const pathContribution = Math.pow(
     0.5,
-    ancestor.sireGenerations + ancestor.damGenerations + 1
+    ancestor.sireGenerations + ancestor.damGenerations + 1,
   );
   const ancestorContribution = 1 + (ancestor.inbreedingCoefficient || 0);
 

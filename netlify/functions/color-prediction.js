@@ -9,7 +9,7 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export async function handler(event, context) {
   // Handle OPTIONS request for CORS preflight
-  if (event.httpMethod === 'OPTIONS') {
+  if (event.httpMethod === "OPTIONS") {
     return handleOptions();
   }
 
@@ -42,7 +42,7 @@ export async function handler(event, context) {
           test_date,
           genetic_markers(id, locus, alleles, description)
         )
-      `
+      `,
       )
       .eq("id", sireId)
       .single();
@@ -67,7 +67,7 @@ export async function handler(event, context) {
           test_date,
           genetic_markers(id, locus, alleles, description)
         )
-      `
+      `,
       )
       .eq("id", damId)
       .single();
@@ -101,7 +101,7 @@ export async function handler(event, context) {
       sire,
       dam,
       colorGenetics,
-      colorInheritance
+      colorInheritance,
     );
 
     return createResponse(200, {
@@ -126,7 +126,7 @@ function predictColors(sire, dam, colorGenetics, colorInheritance) {
       sire,
       dam,
       colorGenetics,
-      colorInheritance
+      colorInheritance,
     );
   }
 
@@ -155,10 +155,10 @@ function predictColorsFromGenetics(sire, dam, colorGenetics, colorInheritance) {
 
   // Try to find a matching color inheritance record
   const sireColor = colorGenetics.find(
-    (cg) => cg.color_name.toLowerCase() === sire.color.toLowerCase()
+    (cg) => cg.color_name.toLowerCase() === sire.color.toLowerCase(),
   );
   const damColor = colorGenetics.find(
-    (cg) => cg.color_name.toLowerCase() === dam.color.toLowerCase()
+    (cg) => cg.color_name.toLowerCase() === dam.color.toLowerCase(),
   );
 
   if (sireColor && damColor) {
@@ -167,7 +167,7 @@ function predictColorsFromGenetics(sire, dam, colorGenetics, colorInheritance) {
         (ci.parent1_color_id === sireColor.id &&
           ci.parent2_color_id === damColor.id) ||
         (ci.parent1_color_id === damColor.id &&
-          ci.parent2_color_id === sireColor.id)
+          ci.parent2_color_id === sireColor.id),
     );
 
     if (inheritanceRecord && inheritanceRecord.possible_offspring_colors) {
@@ -203,7 +203,7 @@ function basicColorPrediction(sireColor, damColor) {
       color: capitalizeFirstLetter(sireColor),
       percentage: 70,
       description: `Same color as parents (${capitalizeFirstLetter(
-        sireColor
+        sireColor,
       )})`,
     });
 
