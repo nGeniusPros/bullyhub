@@ -1,233 +1,221 @@
 import MainLayout from '@/components/layout/MainLayout';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 
 export default function AboutPage() {
   return (
     <MainLayout>
       {/* Hero Section */}
-      <section className="py-20 md:py-28 bg-gradient-to-b from-background to-muted">
+      <section className="py-20 md:py-28 bg-gradient-to-b from-white to-[#E8F4FC]">
         <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center space-y-4 text-center">
-            <div className="space-y-2">
-              <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl">
-                About Bully Hub
-              </h1>
-              <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-                Our mission is to revolutionize dog breeding through genetic science and technology
+          <div className="flex flex-col items-center text-center space-y-6 max-w-4xl mx-auto">
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-[#333333]">
+              About PetPals Dog Hub
+            </h1>
+            <p className="text-xl text-[#555555]">
+              Our mission is to revolutionize dog care through technology, community, and expertise
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Story Section */}
+      <section className="py-16 md:py-20 bg-white">
+        <div className="container px-4 md:px-6">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <Image
+                src="/images/about-team.jpg"
+                alt="Pet Pals Dog Hub Team"
+                width={500}
+                height={350}
+                className="rounded-lg shadow-lg"
+              />
+            </div>
+            <div className="space-y-6">
+              <h2 className="text-3xl font-semibold text-[#333333]">Our Story</h2>
+              <p className="text-[#555555]">
+                PetPals Dog Hub was founded in 2023 by a team of passionate dog breeders, veterinarians, and technology experts who saw a need for better tools to manage dog health and breeding programs.
+              </p>
+              <p className="text-[#555555]">
+                What started as a simple health tracking app has evolved into a comprehensive platform that connects breeders, pet owners, and veterinarians in a collaborative ecosystem focused on improving dog health and wellbeing.
+              </p>
+              <p className="text-[#555555]">
+                Today, PetPals Dog Hub is used by thousands of breeders and pet owners across the country, helping to raise healthier dogs and create stronger connections between everyone involved in a dog's life.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Our Story Section */}
-      <section className="py-16 md:py-24">
+      {/* Our Mission Section */}
+      <section className="py-16 md:py-20 bg-[#E8F4FC]">
         <div className="container px-4 md:px-6">
-          <div className="grid gap-12 md:grid-cols-2 md:gap-16 items-center">
-            <div className="space-y-4">
-              <h2 className="text-3xl font-bold tracking-tighter">Our Story</h2>
-              <p className="text-muted-foreground md:text-lg">
-                Bully Hub was founded by a team of passionate dog breeders and technology experts who recognized the need for better tools in the breeding community.
-              </p>
-              <p className="text-muted-foreground md:text-lg">
-                After years of breeding American Bullies and struggling with fragmented tools for genetic analysis, stud management, and breeding program planning, we decided to create a comprehensive solution that would bring all these essential functions together.
-              </p>
-              <p className="text-muted-foreground md:text-lg">
-                Our platform is built on the belief that responsible breeding starts with understanding genetics and making informed decisions based on data, not just appearance.
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-semibold text-[#333333]">Our Mission</h2>
+            <p className="text-xl text-[#555555] mt-4 max-w-3xl mx-auto">
+              We're on a mission to transform dog care through technology, community, and expertise
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <div className="bg-white p-6 rounded-lg shadow-sm">
+              <div className="flex justify-center mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#29ABE2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12">
+                  <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-medium text-[#333333] text-center mb-4">Better Health Outcomes</h3>
+              <p className="text-[#555555] text-center">
+                We believe that better information leads to better health decisions. Our platform provides the tools and insights needed to improve dog health outcomes.
               </p>
             </div>
-            <div className="rounded-lg border bg-card p-8 shadow-sm">
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <h3 className="text-xl font-bold">Our Values</h3>
-                </div>
-                <div className="space-y-4">
-                  <div className="flex items-start space-x-4">
-                    <div className="rounded-full bg-primary/10 p-2">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="h-4 w-4 text-primary"
-                      >
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h4 className="font-bold">Ethical Breeding</h4>
-                      <p className="text-sm text-muted-foreground">
-                        We promote responsible breeding practices that prioritize health, temperament, and genetic diversity.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-start space-x-4">
-                    <div className="rounded-full bg-primary/10 p-2">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="h-4 w-4 text-primary"
-                      >
-                        <path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h4 className="font-bold">Dog Welfare</h4>
-                      <p className="text-sm text-muted-foreground">
-                        We believe in breeding for health and quality of life, not just appearance or profit.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-start space-x-4">
-                    <div className="rounded-full bg-primary/10 p-2">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="h-4 w-4 text-primary"
-                      >
-                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h4 className="font-bold">Education</h4>
-                      <p className="text-sm text-muted-foreground">
-                        We're committed to educating breeders and pet owners about genetics and responsible breeding.
-                      </p>
-                    </div>
-                  </div>
-                </div>
+
+            <div className="bg-white p-6 rounded-lg shadow-sm">
+              <div className="flex justify-center mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#29ABE2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
               </div>
+              <h3 className="text-xl font-medium text-[#333333] text-center mb-4">Connected Community</h3>
+              <p className="text-[#555555] text-center">
+                We're building bridges between breeders, pet owners, and veterinarians to create a collaborative approach to dog care.
+              </p>
+            </div>
+
+            <div className="bg-white p-6 rounded-lg shadow-sm">
+              <div className="flex justify-center mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#29ABE2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-medium text-[#333333] text-center mb-4">Ethical Breeding</h3>
+              <p className="text-[#555555] text-center">
+                We promote responsible breeding practices that prioritize health, genetic diversity, and temperament over appearance.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Team Section */}
-      <section className="py-16 md:py-24 bg-muted">
+      <section className="py-16 md:py-20 bg-white">
         <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center space-y-4 text-center">
-            <div className="space-y-2">
-              <h2 className="text-3xl font-bold tracking-tighter">Our Team</h2>
-              <p className="mx-auto max-w-[700px] text-muted-foreground md:text-lg">
-                Meet the passionate people behind Bully Hub
-              </p>
-            </div>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-semibold text-[#333333]">Meet Our Team</h2>
+            <p className="text-xl text-[#555555] mt-4 max-w-3xl mx-auto">
+              Our diverse team brings together expertise in veterinary medicine, dog breeding, and technology
+            </p>
           </div>
-          <div className="grid gap-8 mt-12 md:grid-cols-3">
-            <div className="flex flex-col items-center text-center">
-              <div className="w-32 h-32 rounded-full bg-muted-foreground/20 mb-4"></div>
-              <h3 className="text-xl font-bold">Michael Bady</h3>
-              <p className="text-primary">Founder & CEO</p>
-              <p className="text-sm text-muted-foreground mt-2">
-                American Bully breeder with 10+ years of experience and a passion for genetics.
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <div className="text-center">
+              <div className="mb-4 relative w-48 h-48 mx-auto overflow-hidden rounded-full">
+                <Image
+                  src="/images/team-member-1.jpg"
+                  alt="Dr. Sarah Johnson"
+                  fill
+                  style={{ objectFit: 'cover' }}
+                  className="rounded-full"
+                />
+              </div>
+              <h3 className="text-xl font-medium text-[#333333]">Dr. Sarah Johnson</h3>
+              <p className="text-[#555555]">Co-Founder & Chief Veterinary Officer</p>
+              <p className="text-[#555555] mt-2">
+                Veterinarian with 15+ years of experience specializing in canine genetics and health
               </p>
             </div>
-            <div className="flex flex-col items-center text-center">
-              <div className="w-32 h-32 rounded-full bg-muted-foreground/20 mb-4"></div>
-              <h3 className="text-xl font-bold">Sarah Johnson</h3>
-              <p className="text-primary">Chief Genetics Officer</p>
-              <p className="text-sm text-muted-foreground mt-2">
-                Canine geneticist with a Ph.D. in Veterinary Genetics and a focus on coat color inheritance.
+
+            <div className="text-center">
+              <div className="mb-4 relative w-48 h-48 mx-auto overflow-hidden rounded-full">
+                <Image
+                  src="/images/team-member-2.jpg"
+                  alt="Michael Roberts"
+                  fill
+                  style={{ objectFit: 'cover' }}
+                  className="rounded-full"
+                />
+              </div>
+              <h3 className="text-xl font-medium text-[#333333]">Michael Roberts</h3>
+              <p className="text-[#555555]">Co-Founder & CEO</p>
+              <p className="text-[#555555] mt-2">
+                Professional dog breeder with 20+ years of experience and technology enthusiast
               </p>
             </div>
-            <div className="flex flex-col items-center text-center">
-              <div className="w-32 h-32 rounded-full bg-muted-foreground/20 mb-4"></div>
-              <h3 className="text-xl font-bold">David Chen</h3>
-              <p className="text-primary">CTO</p>
-              <p className="text-sm text-muted-foreground mt-2">
-                Software engineer with expertise in AI and machine learning applications.
+
+            <div className="text-center">
+              <div className="mb-4 relative w-48 h-48 mx-auto overflow-hidden rounded-full">
+                <Image
+                  src="/images/team-member-3.jpg"
+                  alt="Jennifer Chen"
+                  fill
+                  style={{ objectFit: 'cover' }}
+                  className="rounded-full"
+                />
+              </div>
+              <h3 className="text-xl font-medium text-[#333333]">Jennifer Chen</h3>
+              <p className="text-[#555555]">CTO</p>
+              <p className="text-[#555555] mt-2">
+                AI and software development expert with a passion for applying technology to animal health
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Mission Section */}
-      <section className="py-16 md:py-24">
+      {/* Impact Section */}
+      <section className="py-16 md:py-20 bg-[#E8F4FC]">
         <div className="container px-4 md:px-6">
-          <div className="grid gap-12 md:grid-cols-2 md:gap-16 items-center">
-            <div className="rounded-lg border bg-card p-8 shadow-sm order-2 md:order-1">
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <h3 className="text-xl font-bold">Our Impact</h3>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="rounded-md bg-muted p-4 text-center">
-                    <div className="text-3xl font-bold text-primary">500+</div>
-                    <p className="text-sm text-muted-foreground">Breeders Using Our Platform</p>
-                  </div>
-                  <div className="rounded-md bg-muted p-4 text-center">
-                    <div className="text-3xl font-bold text-primary">5,000+</div>
-                    <p className="text-sm text-muted-foreground">Dogs Registered</p>
-                  </div>
-                  <div className="rounded-md bg-muted p-4 text-center">
-                    <div className="text-3xl font-bold text-primary">2,500+</div>
-                    <p className="text-sm text-muted-foreground">DNA Tests Analyzed</p>
-                  </div>
-                  <div className="rounded-md bg-muted p-4 text-center">
-                    <div className="text-3xl font-bold text-primary">300+</div>
-                    <p className="text-sm text-muted-foreground">Breeding Programs</p>
-                  </div>
-                </div>
-              </div>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-semibold text-[#333333]">Our Impact</h2>
+            <p className="text-xl text-[#555555] mt-4 max-w-3xl mx-auto">
+              Growing every day to improve the lives of dogs and their owners
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+            <div className="bg-white p-6 rounded-lg shadow-sm text-center">
+              <div className="text-4xl font-bold text-[#29ABE2] mb-2">5,000+</div>
+              <p className="text-[#555555]">Dogs Registered</p>
             </div>
-            <div className="space-y-4 order-1 md:order-2">
-              <h2 className="text-3xl font-bold tracking-tighter">Our Mission</h2>
-              <p className="text-muted-foreground md:text-lg">
-                At Bully Hub, our mission is to revolutionize dog breeding through the power of genetic science and technology.
-              </p>
-              <p className="text-muted-foreground md:text-lg">
-                We aim to provide breeders with the tools they need to make informed decisions that improve the health, temperament, and quality of dogs while preserving the unique characteristics of each breed.
-              </p>
-              <p className="text-muted-foreground md:text-lg">
-                By making genetic information accessible and actionable, we're helping create a future where all dogs are bred responsibly, with a focus on health and genetic diversity.
-              </p>
+
+            <div className="bg-white p-6 rounded-lg shadow-sm text-center">
+              <div className="text-4xl font-bold text-[#29ABE2] mb-2">2,500+</div>
+              <p className="text-[#555555]">Active Breeders</p>
+            </div>
+
+            <div className="bg-white p-6 rounded-lg shadow-sm text-center">
+              <div className="text-4xl font-bold text-[#29ABE2] mb-2">10,000+</div>
+              <p className="text-[#555555]">Pet Owners</p>
+            </div>
+
+            <div className="bg-white p-6 rounded-lg shadow-sm text-center">
+              <div className="text-4xl font-bold text-[#29ABE2] mb-2">98%</div>
+              <p className="text-[#555555]">Customer Satisfaction</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-20 bg-muted">
+      <section className="py-16 md:py-20 bg-white">
         <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center">
-            <div className="space-y-2">
-              <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">
-                Join the Bully Hub Community
-              </h2>
-              <p className="mx-auto max-w-[600px] text-muted-foreground md:text-xl">
-                Be part of the revolution in dog breeding and genetics
-              </p>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/register">
-                <Button size="lg">Sign Up Now</Button>
-              </Link>
-              <Link href="/contact">
-                <Button variant="outline" size="lg">Contact Us</Button>
-              </Link>
-            </div>
+          <div className="bg-[#E8F4FC] rounded-lg shadow-lg p-8 md:p-12 max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl font-bold text-[#333333] mb-4">
+              Join Our Mission
+            </h2>
+            <p className="text-xl text-[#555555] mb-8">
+              Be part of the revolution in dog care and breeding
+            </p>
+            <Link href="/register">
+              <Button size="lg" style={{ backgroundColor: "#FF8C00", color: "white", fontWeight: "bold" }} className="shadow-md hover:scale-105 transition-transform">
+                Start Your Free Trial
+              </Button>
+            </Link>
           </div>
         </div>
       </section>

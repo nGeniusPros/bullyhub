@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 
@@ -8,42 +9,42 @@ export default function Navbar() {
   const { user, signOut, isLoading } = useAuth();
 
   return (
-    <nav className="border-b">
-      <div className="container flex h-16 items-center justify-between px-4 md:px-6">
+    <nav className="border-b bg-white">
+      <div className="container flex h-16 items-center justify-between px-6 md:px-6">
         <Link href="/" className="flex items-center gap-2 font-bold text-xl">
-          Bully Hub
+          <span className="text-primary font-bold text-2xl">PetPals Dog Hub</span>
         </Link>
         <div className="flex items-center gap-4">
           <div className="hidden md:flex gap-4">
             <Link
               href="/features"
-              className="text-sm font-medium hover:underline underline-offset-4"
+              className="text-base font-medium hover:underline underline-offset-4"
             >
               Features
             </Link>
             <Link
-              href="/website-templates"
-              className="text-sm font-medium hover:underline underline-offset-4"
+              href="/for-breeders"
+              className="text-base font-medium hover:underline underline-offset-4"
             >
-              Website Templates
+              For Breeders
             </Link>
             <Link
-              href="/pricing"
-              className="text-sm font-medium hover:underline underline-offset-4"
+              href="/for-owners"
+              className="text-base font-medium hover:underline underline-offset-4"
             >
-              Pricing
+              For Owners
             </Link>
             <Link
               href="/about"
-              className="text-sm font-medium hover:underline underline-offset-4"
+              className="text-base font-medium hover:underline underline-offset-4"
             >
-              About
+              About Us
             </Link>
             <Link
-              href="/database-test"
-              className="text-sm font-medium hover:underline underline-offset-4"
+              href="/contact"
+              className="text-base font-medium hover:underline underline-offset-4"
             >
-              Database Test
+              Contact
             </Link>
           </div>
           <div className="flex items-center gap-2">
@@ -62,7 +63,7 @@ export default function Navbar() {
                   <Button variant="outline">Log In</Button>
                 </Link>
                 <Link href="/register">
-                  <Button>Sign Up</Button>
+                  <Button style={{ backgroundColor: "#FF8C00" }}>Start Your Free Trial</Button>
                 </Link>
               </>
             )}
