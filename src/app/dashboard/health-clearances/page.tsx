@@ -38,11 +38,11 @@ export default function HealthClearancesPage() {
   const getStatusBadgeClass = (status: string) => {
     switch (status) {
       case 'passed':
-        return 'bg-green-100 text-green-700';
+        return 'badge-success';
       case 'pending':
-        return 'bg-yellow-100 text-yellow-700';
+        return 'badge-secondary';
       case 'failed':
-        return 'bg-red-100 text-red-700';
+        return 'badge-danger';
       default:
         return 'bg-gray-100 text-gray-700';
     }
@@ -50,33 +50,35 @@ export default function HealthClearancesPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Health Clearances</h1>
-          <p className="text-muted-foreground">
+      <div className="welcome-header bg-success-gradient-3color mb-6">
+        <div className="flex flex-col space-y-2 z-10 relative max-w-[60%]">
+          <h1 className="text-3xl font-bold tracking-tight text-white">Health Clearances</h1>
+          <p className="text-white/90">
             Manage health clearances and certifications for your dogs
           </p>
+          <div className="mt-4">
+            <Link href="/dashboard/health-clearances/add">
+              <Button className="btn-secondary-gradient-3color">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="mr-2 h-4 w-4"
+                >
+                  <path d="M5 12h14" />
+                  <path d="M12 5v14" />
+                </svg>
+                Add Clearance
+              </Button>
+            </Link>
+          </div>
         </div>
-        <Link href="/dashboard/health-clearances/add">
-          <Button>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="mr-2 h-4 w-4"
-            >
-              <path d="M5 12h14" />
-              <path d="M12 5v14" />
-            </svg>
-            Add Clearance
-          </Button>
-        </Link>
       </div>
 
       {loading ? (
@@ -93,11 +95,11 @@ export default function HealthClearancesPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {healthClearances.map((clearance) => (
             <Link key={clearance.id} href={`/dashboard/health-clearances/${clearance.id}`}>
-              <Card className="h-full hover:bg-muted/50 transition-colors cursor-pointer border-2 hover:border-primary/20">
+              <Card className="pet-card pet-card-gradient pet-card-gradient-success h-full cursor-pointer">
                 <CardHeader className="pb-2">
                   <div className="flex justify-between items-start">
                     <CardTitle className="text-xl">{clearance.test}</CardTitle>
-                    <span className={`px-2 py-1 rounded text-xs font-medium ${getStatusBadgeClass(clearance.status)}`}>
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusBadgeClass(clearance.status)}`}>
                       {clearance.status.charAt(0).toUpperCase() + clearance.status.slice(1)}
                     </span>
                   </div>
@@ -107,43 +109,59 @@ export default function HealthClearancesPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
-                    <div className="grid grid-cols-2 gap-2">
-                      <div>
-                        <p className="text-xs text-muted-foreground">Test Date</p>
-                        <p className="text-sm font-medium">{new Date(clearance.date).toLocaleDateString()}</p>
+                    <div className="pet-card-stats">
+                      <div className="pet-stat">
+                        <span className="pet-stat-value">{new Date(clearance.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
+                        <span className="pet-stat-label">Test Date</span>
                       </div>
                       {clearance.expiryDate && (
-                        <div>
-                          <p className="text-xs text-muted-foreground">Expiry Date</p>
-                          <p className="text-sm font-medium">
-                            {new Date(clearance.expiryDate).toLocaleDateString()}
+                        <div className="pet-stat">
+                          <span className="pet-stat-value">
+                            {new Date(clearance.expiryDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                             {new Date(clearance.expiryDate) < new Date() && (
                               <span className="ml-2 text-red-500 text-xs">(Expired)</span>
                             )}
-                          </p>
+                          </span>
+                          <span className="pet-stat-label">Expiry Date</span>
                         </div>
                       )}
+                      <div className="pet-stat">
+                        <span className="pet-stat-value">{clearance.certificationNumber ? clearance.certificationNumber.substring(0, 6) : 'N/A'}</span>
+                        <span className="pet-stat-label">Cert #</span>
+                      </div>
                     </div>
 
-                    <div>
-                      <p className="text-xs text-muted-foreground">Result</p>
-                      <p className="text-sm font-medium">{clearance.result}</p>
+                    <div className="mt-4">
+                      <div className="flex justify-between items-center mb-1">
+                        <span className="text-xs font-medium">Result</span>
+                        <span className="text-xs font-medium">{clearance.status === 'passed' ? '100%' : clearance.status === 'pending' ? '50%' : '0%'}</span>
+                      </div>
+                      <div className="w-full bg-gray-200 rounded-full h-1.5">
+                        <div className={`progress-bar ${clearance.status === 'passed' ? 'progress-bar-health' : clearance.status === 'pending' ? 'progress-bar-training' : 'progress-bar-nutrition'}`} style={{ width: clearance.status === 'passed' ? '100%' : clearance.status === 'pending' ? '50%' : '0%' }}></div>
+                      </div>
+                      <p className="text-sm font-medium mt-2">{clearance.result}</p>
                     </div>
 
                     {clearance.verificationNumber && (
-                      <div>
-                        <p className="text-xs text-muted-foreground">Verification Number</p>
-                        <p className="text-sm font-mono">{clearance.verificationNumber}</p>
+                      <div className="bg-info-gradient rounded-lg p-3 text-xs text-white mt-3">
+                        <div className="flex items-center gap-2 mb-1">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                            <polyline points="22 4 12 14.01 9 11.01" />
+                          </svg>
+                          <p className="font-medium">Verification Number</p>
+                        </div>
+                        <p className="text-white/80 font-mono">{clearance.verificationNumber}</p>
                       </div>
                     )}
 
                     {clearance.documents && clearance.documents.length > 0 && (
-                      <div className="mt-2 flex items-center text-sm text-muted-foreground">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1">
+                      <div className="mt-3 flex items-center text-sm bg-primary-gradient text-white px-3 py-2 rounded-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
                           <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
                           <polyline points="14 2 14 8 20 8"/>
                         </svg>
-                        {clearance.documents.length} document{clearance.documents.length > 1 ? 's' : ''}
+                        {clearance.documents.length} document{clearance.documents.length > 1 ? 's' : ''} available
                       </div>
                     )}
                   </div>

@@ -2,7 +2,70 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
+// Helper function to extract subdomain from hostname
+function getSubdomain(hostname: string): string | null {
+  // For local development
+  if (hostname === 'localhost' || hostname.includes('127.0.0.1')) {
+    // Check if using a test subdomain pattern like 'mykennel.localhost:3000'
+    const localParts = hostname.split('.');
+    if (localParts.length > 1 && !localParts[0].includes('127')) {
+      return localParts[0];
+    }
+    return null;
+  }
+
+  // For production
+  const rootDomain = process.env.ROOT_DOMAIN || 'petpals.com';
+  if (hostname === rootDomain || hostname === `www.${rootDomain}`) {
+    return null; // Main domain, not a subdomain
+  }
+
+  // Extract subdomain from hostname
+  if (hostname.endsWith(`.${rootDomain}`)) {
+    return hostname.replace(`.${rootDomain}`, '');
+  }
+
+  return null;
+}
+
 export async function middleware(request: NextRequest) {
+  // Extract hostname and check for subdomain
+  const hostname = request.headers.get('host') || '';
+  const subdomain = getSubdomain(hostname);
+  const url = request.nextUrl.clone();
+
+  // If this is a kennel subdomain request, handle it
+  if (subdomain) {
+    // Clone the request headers to add the subdomain
+    const requestHeaders = new Headers(request.headers);
+    requestHeaders.set('x-subdomain', subdomain);
+
+    // For API routes that need to know the subdomain
+    if (url.pathname.startsWith('/api/')) {
+      return NextResponse.next({
+        request: {
+          headers: requestHeaders,
+        },
+      });
+    }
+
+    // For non-dashboard routes, we'll render the public kennel site
+    // Skip authentication for public kennel sites
+    if (!url.pathname.startsWith('/dashboard') &&
+        !url.pathname.startsWith('/login') &&
+        !url.pathname.startsWith('/register')) {
+      // Rewrite the URL to the kennel-site catch-all route
+      url.pathname = `/kennel-site${url.pathname}`;
+
+      // Pass the subdomain in the request headers
+      return NextResponse.rewrite(url, {
+        request: {
+          headers: requestHeaders,
+        },
+      });
+    }
+  }
+
   // DEVELOPMENT MODE - Authentication bypass
   const DEVELOPMENT_MODE = true; // Set to true to bypass authentication
 

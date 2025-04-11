@@ -25,8 +25,10 @@ if (-not (Test-Path node_modules)) {
     }
 
     Write-Host "✅ Dependencies installed successfully." -ForegroundColor Green
-} else {
+}
+else {
     Write-Host "✅ Dependencies already installed." -ForegroundColor Green
+}
 }
 
 # Skip all verification and testing

@@ -1,53 +1,147 @@
-import MainLayout from '@/components/layout/MainLayout';
+"use client";
+import React, { useState } from "react";
+import InternalLayout from "@/components/layout/InternalLayout";
 
+// Placeholder imports for modular components (to be implemented)
+import TemplatePreview from "@/components/website-builder/TemplatePreview";
+import FeatureComparisonChart from "@/components/website-builder/FeatureComparisonChart";
+import CustomizationDashboard from "@/components/website-builder/CustomizationDashboard";
+import PublishSettings from "@/components/website-builder/PublishSettings";
+
+// Template metadata (expand as needed)
+const TEMPLATES = [
+  {
+    id: "professional-breeder",
+    name: "Professional Breeder",
+    description: "Ideal for established kennels with extensive breeding programs.",
+  },
+  {
+    id: "show-kennel",
+    name: "Show Kennel",
+    description: "Perfect for competition-focused kennels with champion dogs.",
+  },
+  {
+    id: "family-breeder",
+    name: "Family Breeder",
+    description: "Great for smaller, home-based kennels focused on companion animals.",
+  },
+  {
+    id: "multi-service-kennel",
+    name: "Multi-Service Kennel",
+    description: "For kennels offering breeding, training, boarding, and more.",
+  },
+];
+
+// Main Website Builder Page
 export default function WebsiteTemplatesPage() {
+  // Step: 0 = Select Template, 1 = Customize, 2 = Publish
+  const [step, setStep] = useState(0);
+  const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
+  // Customization state (to be expanded)
+  const [customization, setCustomization] = useState<any>({});
+
+  // Handler for template selection
+  const handleTemplateSelect = (templateId: string) => {
+    setSelectedTemplate(templateId);
+    setStep(1);
+  };
+
+  // Handler for moving to publish step
+  const handleProceedToPublish = () => setStep(2);
+
+  // Handler for returning to previous step
+  const handleBack = () => setStep((prev) => Math.max(0, prev - 1));
+
   return (
-    <MainLayout>
-      {/* Hero Section */}
-      <section className="py-20 md:py-28 bg-gradient-to-b from-background to-muted text-center space-y-6">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter">
-          Kennel Website Template System
-        </h1>
-        <p className="mx-auto max-w-3xl text-muted-foreground md:text-xl">
-          Launch a professional, customizable website for your kennel business with seamless integration into The Bully Hub App.
-        </p>
-      </section>
+    <InternalLayout>
+      <h1 className="text-2xl font-bold mb-1">Kennel Website Template System</h1>
+      <p className="text-muted-foreground mb-4">
+        Build a professional website for your kennel using your data from the PetPals Dog Hub app.
+      </p>
 
-      {/* Executive Summary */}
-      <section className="py-16 md:py-24 container space-y-6">
-        <h2 className="text-3xl font-bold tracking-tighter">Executive Summary</h2>
-        <p>
-          The Kennel Website Template System provides Bully Hub users with professionally designed, customizable website templates tailored for dog kennels and breeding businesses. Breeders can quickly deploy websites without technical expertise, fully integrated with app features like stud marketing, genetic data, and reproductive services.
-        </p>
-      </section>
+      {/* Step Navigation */}
+      <div className="container flex justify-center gap-4 my-6">
+        <button
+          className={`px-4 py-2 rounded ${step === 0 ? "bg-primary text-white" : "bg-muted"}`}
+          onClick={() => setStep(0)}
+        >
+          1. Select Template
+        </button>
+        <button
+          className={`px-4 py-2 rounded ${step === 1 ? "bg-primary text-white" : "bg-muted"}`}
+          disabled={!selectedTemplate}
+          onClick={() => selectedTemplate && setStep(1)}
+        >
+          2. Customize
+        </button>
+        <button
+          className={`px-4 py-2 rounded ${step === 2 ? "bg-primary text-white" : "bg-muted"}`}
+          disabled={!selectedTemplate}
+          onClick={() => selectedTemplate && setStep(2)}
+        >
+          3. Publish
+        </button>
+      </div>
 
-      {/* Template Selection Grid */}
-      <section className="py-20 md:py-28 bg-muted">
-        <div className="container px-4 md:px-6 text-center space-y-6">
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tighter">Choose Your Kennel Website Template</h2>
-          <p className="max-w-3xl mx-auto text-muted-foreground md:text-xl">
-            Select a professionally designed template to customize for your kennel business.
-          </p>
-        </div>
-        <div className="container px-4 md:px-6 py-16 grid grid-cols-1 md:grid-cols-2 gap-8">
-          <a href="/kennel-sites/templates/professional-breeder" className="border rounded-lg p-6 hover:shadow-lg transition">
-            <h3 className="text-2xl font-semibold mb-2">Professional Breeder</h3>
-            <p>Ideal for established kennels with extensive breeding programs.</p>
-          </a>
-          <a href="/kennel-sites/templates/show-kennel" className="border rounded-lg p-6 hover:shadow-lg transition">
-            <h3 className="text-2xl font-semibold mb-2">Show Kennel</h3>
-            <p>Perfect for competition-focused kennels with champion dogs.</p>
-          </a>
-          <a href="/kennel-sites/templates/family-breeder" className="border rounded-lg p-6 hover:shadow-lg transition">
-            <h3 className="text-2xl font-semibold mb-2">Family Breeder</h3>
-            <p>Great for smaller, home-based kennels focused on companion animals.</p>
-          </a>
-          <a href="/kennel-sites/templates/multi-service-kennel" className="border rounded-lg p-6 hover:shadow-lg transition">
-            <h3 className="text-2xl font-semibold mb-2">Multi-Service Kennel</h3>
-            <p>For kennels offering breeding, training, boarding, and more.</p>
-          </a>
-        </div>
-      </section>
-    </MainLayout>
+      {/* Step 1: Template Selection */}
+      {step === 0 && (
+        <section className="container py-4 space-y-6">
+          <h2 className="text-xl font-semibold mb-2">Choose Your Kennel Website Template</h2>
+          <div className="bg-white rounded shadow border p-4">
+            <FeatureComparisonChart templates={TEMPLATES} />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
+            {TEMPLATES.map((tpl) => (
+              <div
+                key={tpl.id}
+                className={`border rounded-lg p-6 hover:shadow-lg transition cursor-pointer ${
+                  selectedTemplate === tpl.id ? "ring-2 ring-primary" : ""
+                }`}
+                onClick={() => handleTemplateSelect(tpl.id)}
+              >
+                <h3 className="text-2xl font-semibold mb-2">{tpl.name}</h3>
+                <p className="mb-4">{tpl.description}</p>
+                {/* Responsive Preview */}
+                <TemplatePreview templateId={tpl.id} />
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Step 2: Customization Dashboard */}
+      {step === 1 && selectedTemplate && (
+        <CustomizationDashboard
+          templateId={selectedTemplate}
+          customization={customization}
+          setCustomization={setCustomization}
+          onBack={handleBack}
+          onProceed={handleProceedToPublish}
+        />
+      )}
+
+      {/* Step 3: Publish/Settings */}
+      {step === 2 && selectedTemplate && (
+        <PublishSettings
+          templateId={selectedTemplate}
+          customization={customization}
+          onBack={handleBack}
+        />
+      )}
+
+      {/* Integration Points & Documentation */}
+      {/* 
+        Integration Points:
+        - TemplatePreview: Renders a live, responsive preview of the selected template, populated with sample or real data.
+        - FeatureComparisonChart: Displays a comparison of features for each template.
+        - CustomizationDashboard: Allows users to reorder sections, edit text, upload images, and select color schemes (limited to pre-defined options).
+        - PublishSettings: Handles domain connection, SSL, publish/update workflow, and backup/restore.
+        - Data Integration: All templates and customization dashboards should pull data from the app's backend via secure API endpoints (Kennel Settings, Dog Database, Litter Management, Service Settings, etc.).
+        - Form Integration: Ensure inquiry/application forms are embedded and linked to app's lead capture.
+        - Security: All publishing actions must be secure, with SSL and user data protection.
+        - Responsiveness: All previews and templates must be fully responsive.
+        - Documentation: Each component should be documented for maintainability and future expansion.
+      */}
+    </InternalLayout>
   );
 }

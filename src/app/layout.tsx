@@ -8,6 +8,7 @@ import { EnvChecker } from "@/components/EnvChecker";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import Script from "next/script";
 import "./globals.css";
+import "@/styles/theme.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

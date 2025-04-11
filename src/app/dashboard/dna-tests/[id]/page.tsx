@@ -146,7 +146,7 @@ export default function DNATestDetailPage({ params }: { params: { id: string } }
         </TabsList>
 
         <TabsContent value="genetic" className="space-y-4">
-          <Card>
+          <Card className="card-gradient card-gradient-primary">
             <CardHeader>
               <CardTitle>Coat Color & Type Genes</CardTitle>
               <CardDescription>
@@ -174,7 +174,7 @@ export default function DNATestDetailPage({ params }: { params: { id: string } }
         </TabsContent>
 
         <TabsContent value="health" className="space-y-4">
-          <Card>
+          <Card className="card-gradient card-gradient-secondary">
             <CardHeader>
               <CardTitle>Health Markers</CardTitle>
               <CardDescription>
@@ -216,7 +216,7 @@ export default function DNATestDetailPage({ params }: { params: { id: string } }
         </TabsContent>
 
         <TabsContent value="summary" className="space-y-4">
-          <Card>
+          <Card className="card-gradient card-gradient-success">
             <CardHeader>
               <CardTitle>Test Summary</CardTitle>
               <CardDescription>
@@ -277,8 +277,7 @@ export default function DNATestDetailPage({ params }: { params: { id: string } }
                     This DNA test can be used in our breeding compatibility tools to help make informed breeding decisions.
                   </p>
                   <Button
-                    variant="outline"
-                    className="mt-2"
+                    className="btn-gradient-3color text-white mt-2"
                     onClick={() => router.push(`/dashboard/breeding/compatibility?dogId=${dnaTest.dogId}`)}
                   >
                     Check Breeding Compatibility

@@ -281,7 +281,7 @@ export default function StudReceptionistPage() {
               <div className="flex items-center space-x-4">
                 <Avatar className="h-16 w-16">
                   <AvatarImage
-                    src="/placeholder-dog.jpg"
+                    src="/avatars/avatar style 2/avatar-2.png"
                     alt={studService?.dogName}
                   />
                   <AvatarFallback>

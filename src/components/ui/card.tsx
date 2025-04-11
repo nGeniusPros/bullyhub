@@ -7,7 +7,7 @@ function Card({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="card"
       className={cn(
-        "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm",
+        "bg-card-gradient-primary text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm hover:shadow-md transition-all duration-300",
         className
       )}
       {...props}
@@ -15,12 +15,17 @@ function Card({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
+function CardHeader({ className, gradient, ...props }: React.ComponentProps<"div"> & { gradient?: 'primary' | 'secondary' | 'success' | 'info' | boolean }) {
   return (
     <div
       data-slot="card-header"
       className={cn(
         "@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6",
+        gradient === 'primary' && "bg-gradient-primary text-white rounded-t-xl -mt-6 -mx-px mb-4",
+        gradient === 'secondary' && "bg-gradient-secondary text-white rounded-t-xl -mt-6 -mx-px mb-4",
+        gradient === 'success' && "bg-gradient-success text-white rounded-t-xl -mt-6 -mx-px mb-4",
+        gradient === 'info' && "bg-gradient-info text-white rounded-t-xl -mt-6 -mx-px mb-4",
+        gradient === true && "bg-gradient-primary text-white rounded-t-xl -mt-6 -mx-px mb-4",
         className
       )}
       {...props}

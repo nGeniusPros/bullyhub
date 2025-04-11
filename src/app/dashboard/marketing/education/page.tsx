@@ -272,12 +272,12 @@ export default function EducationalContent() {
 
 function ContentCard({ content }) {
   return (
-    <Card className="overflow-hidden flex flex-col">
+    <Card className="overflow-hidden flex flex-col h-full">
       <div className="aspect-video w-full overflow-hidden bg-muted">
         {content.thumbnailUrl ? (
-          <img 
-            src={content.thumbnailUrl} 
-            alt={content.title} 
+          <img
+            src={content.thumbnailUrl}
+            alt={content.title}
             className="h-full w-full object-cover"
           />
         ) : (
@@ -292,75 +292,77 @@ function ContentCard({ content }) {
           </div>
         )}
       </div>
-      <CardHeader className="pb-2">
-        <div className="flex justify-between items-start">
-          <div className="flex items-center space-x-2">
-            {getContentTypeIcon(content.contentType)}
-            {getStatusBadge(content.status)}
-            {content.aiGenerated && (
-              <Badge variant="outline" className="text-purple-600 border-purple-300 bg-purple-50">
-                <Sparkles className="mr-1 h-3 w-3" />
-                AI Generated
+      <div className="flex flex-col flex-1 p-4">
+        <div>
+          <div className="flex justify-between items-start">
+            <div className="flex items-center space-x-2">
+              {getContentTypeIcon(content.contentType)}
+              {getStatusBadge(content.status)}
+              {content.aiGenerated && (
+                <Badge variant="outline" className="text-purple-600 border-purple-300 bg-purple-50">
+                  <Sparkles className="mr-1 h-3 w-3" />
+                  AI Generated
+                </Badge>
+              )}
+            </div>
+          </div>
+          <div className="text-lg font-semibold mt-2">{content.title}</div>
+          <div className="text-sm text-muted-foreground line-clamp-2 mb-2">
+            {content.description || "No description provided"}
+          </div>
+        </div>
+        <div>
+          <div className="flex flex-wrap gap-2 mb-2">
+            {content.tags && content.tags.map((tag, index) => (
+              <Badge key={index} variant="secondary" className="text-xs">
+                {tag}
               </Badge>
+            ))}
+          </div>
+          <div className="flex items-center text-sm text-muted-foreground space-x-4 mb-2">
+            {content.readingTime && (
+              <div className="flex items-center">
+                <Clock className="mr-1 h-4 w-4" />
+                <span>{content.readingTime} min read</span>
+              </div>
+            )}
+            {content.viewCount && (
+              <div className="flex items-center">
+                <Eye className="mr-1 h-4 w-4" />
+                <span>{content.viewCount} views</span>
+              </div>
+            )}
+            {content.targetAudience && (
+              <div className="flex items-center">
+                <Users className="mr-1 h-4 w-4" />
+                <span>
+                  {content.targetAudience === "pet_owners" ? "Pet Owners" :
+                    content.targetAudience === "breeders" ? "Breeders" :
+                      content.targetAudience === "veterinarians" ? "Vets" : "General"}
+                </span>
+              </div>
             )}
           </div>
         </div>
-        <CardTitle className="text-lg mt-2">{content.title}</CardTitle>
-        <CardDescription className="line-clamp-2">
-          {content.description || "No description provided"}
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="pb-2 flex-grow">
-        <div className="flex flex-wrap gap-2 mb-4">
-          {content.tags && content.tags.map((tag, index) => (
-            <Badge key={index} variant="secondary" className="text-xs">
-              {tag}
-            </Badge>
-          ))}
-        </div>
-        <div className="flex items-center text-sm text-muted-foreground space-x-4">
-          {content.readingTime && (
-            <div className="flex items-center">
-              <Clock className="mr-1 h-4 w-4" />
-              <span>{content.readingTime} min read</span>
+        <div className="flex items-center justify-between mt-auto pt-2 border-t">
+          <div className="flex items-center space-x-2">
+            <Avatar className="h-6 w-6">
+              <AvatarImage src="/avatars/avatar style 2/avatar-1.png" alt="Avatar" />
+              <AvatarFallback>U</AvatarFallback>
+            </Avatar>
+            <div className="text-xs text-muted-foreground">
+              {content.publishedAt ? (
+                <span>Published {format(new Date(content.publishedAt), "MMM d, yyyy")}</span>
+              ) : (
+                <span>Updated {format(new Date(content.updatedAt), "MMM d, yyyy")}</span>
+              )}
             </div>
-          )}
-          {content.viewCount && (
-            <div className="flex items-center">
-              <Eye className="mr-1 h-4 w-4" />
-              <span>{content.viewCount} views</span>
-            </div>
-          )}
-          {content.targetAudience && (
-            <div className="flex items-center">
-              <Users className="mr-1 h-4 w-4" />
-              <span>
-                {content.targetAudience === "pet_owners" ? "Pet Owners" :
-                 content.targetAudience === "breeders" ? "Breeders" :
-                 content.targetAudience === "veterinarians" ? "Vets" : "General"}
-              </span>
-            </div>
-          )}
-        </div>
-      </CardContent>
-      <CardFooter className="pt-2 border-t flex justify-between items-center">
-        <div className="flex items-center space-x-2">
-          <Avatar className="h-6 w-6">
-            <AvatarImage src="/avatars/01.png" alt="Avatar" />
-            <AvatarFallback>U</AvatarFallback>
-          </Avatar>
-          <div className="text-xs text-muted-foreground">
-            {content.publishedAt ? (
-              <span>Published {format(new Date(content.publishedAt), "MMM d, yyyy")}</span>
-            ) : (
-              <span>Updated {format(new Date(content.updatedAt), "MMM d, yyyy")}</span>
-            )}
           </div>
+          <Link href={`/dashboard/marketing/education/${content.id}`}>
+            <Button size="sm" variant="ghost">View</Button>
+          </Link>
         </div>
-        <Link href={`/dashboard/marketing/education/${content.id}`}>
-          <Button size="sm" variant="ghost">View</Button>
-        </Link>
-      </CardFooter>
+      </div>
     </Card>
   );
 }

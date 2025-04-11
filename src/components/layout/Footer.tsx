@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Facebook, Instagram, Twitter } from 'lucide-react';
+import "@/app/dashboard/dashboard.css";
 
 export default function Footer() {
   return (
@@ -9,7 +10,7 @@ export default function Footer() {
           {/* Column 1 - Company */}
           <div className="flex flex-col space-y-4">
             <Link href="/" className="text-lg font-bold">
-              PetPals Dog Hub
+              <span className="gradient-text">PetPals</span>
             </Link>
             <p className="text-sm">AI-Powered Platform for Breeders and Pet Owners</p>
             <p className="text-sm">1234 Tech Avenue, Riverside, CA 92501</p>
@@ -60,7 +61,7 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="border-t border-white/20 mt-12 pt-6 text-center text-sm">
-          &copy; {new Date().getFullYear()} PetPals Dog Hub. All Rights Reserved.
+          &copy; {new Date().getFullYear()} PetPals. All Rights Reserved.
         </div>
       </div>
     </footer>

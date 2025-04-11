@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 import MainLayout from '@/components/layout/MainLayout';
 import { toast } from 'sonner';
+import "@/app/dashboard/dashboard.css";
 
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -33,10 +34,10 @@ export default function ContactPage() {
       <section className="py-20 md:py-28 bg-gradient-to-b from-white to-[#E8F4FC]">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center text-center space-y-6 max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-[#333333]">
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">
               Contact Us
             </h1>
-            <p className="text-xl text-[#555555]">
+            <p className="text-xl text-muted-foreground">
               Have questions or need assistance? We're here to help!
             </p>
           </div>
@@ -97,8 +98,7 @@ export default function ContactPage() {
                 <CardFooter>
                   <Button
                     type="submit"
-                    className="w-full hover:scale-105 transition-transform"
-                    style={{ backgroundColor: "#FF8C00", color: "white" }}
+                    className="w-full hover:scale-105 transition-transform btn-gradient-3color"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? 'Sending...' : 'Send Message'}
@@ -130,11 +130,11 @@ export default function ContactPage() {
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-medium text-[#333333]">Phone</h3>
-              <p className="text-[#555555] mt-2">
+              <h3 className="text-xl font-medium text-foreground">Phone</h3>
+              <p className="text-muted-foreground mt-2">
                 (951) 555-1234
               </p>
-              <p className="text-[#555555]">
+              <p className="text-muted-foreground">
                 Monday - Friday, 9am - 5pm PST
               </p>
             </div>
@@ -156,11 +156,11 @@ export default function ContactPage() {
                   <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
                 </svg>
               </div>
-              <h3 className="text-xl font-medium text-[#333333]">Email</h3>
-              <p className="text-[#555555] mt-2">
+              <h3 className="text-xl font-medium text-foreground">Email</h3>
+              <p className="text-muted-foreground mt-2">
                 info@petpalsdoghub.com
               </p>
-              <p className="text-[#555555]">
+              <p className="text-muted-foreground">
                 We typically respond within 24 hours
               </p>
             </div>
@@ -182,11 +182,11 @@ export default function ContactPage() {
                   <circle cx="12" cy="10" r="3" />
                 </svg>
               </div>
-              <h3 className="text-xl font-medium text-[#333333]">Office</h3>
-              <p className="text-[#555555] mt-2">
+              <h3 className="text-xl font-medium text-foreground">Office</h3>
+              <p className="text-muted-foreground mt-2">
                 1234 Tech Avenue
               </p>
-              <p className="text-[#555555]">
+              <p className="text-muted-foreground">
                 Riverside, CA 92501
               </p>
             </div>
@@ -197,10 +197,10 @@ export default function ContactPage() {
       <section className="py-16 md:py-20 bg-white">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center space-y-6 text-center">
-            <h2 className="text-3xl font-semibold text-[#333333]">
+            <h2 className="text-3xl font-semibold text-foreground">
               Follow Us
             </h2>
-            <p className="mx-auto max-w-[600px] text-[#555555] text-lg">
+            <p className="mx-auto max-w-[600px] text-muted-foreground text-lg">
               Stay connected with us on social media for updates, tips, and community stories
             </p>
             <div className="flex space-x-6">

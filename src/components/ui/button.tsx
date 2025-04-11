@@ -10,15 +10,27 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90",
+          "bg-gradient-to-r from-[#29ABE2] to-[#6A3DE8] text-primary-foreground shadow-xs hover:shadow-md hover:translate-y-[-1px]",
         destructive:
           "bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
         outline:
           "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
         secondary:
-          "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
+          "bg-gradient-to-r from-[#FFDA63] to-[#FF8C00] text-secondary-foreground shadow-xs hover:shadow-md hover:translate-y-[-1px]",
+        success:
+          "bg-gradient-to-r from-[#8FBC8F] to-[#2E8B57] text-white shadow-xs hover:shadow-md hover:translate-y-[-1px]",
+        info:
+          "bg-gradient-to-r from-[#6A3DE8] to-[#29ABE2] text-white shadow-xs hover:shadow-md hover:translate-y-[-1px]",
+        primary3color:
+          "bg-gradient-primary-3color text-white shadow-xs hover:shadow-md hover:translate-y-[-1px]",
+        secondary3color:
+          "bg-gradient-secondary-3color text-white shadow-xs hover:shadow-md hover:translate-y-[-1px]",
+        success3color:
+          "bg-gradient-success-3color text-white shadow-xs hover:shadow-md hover:translate-y-[-1px]",
+        info3color:
+          "bg-gradient-info-3color text-white shadow-xs hover:shadow-md hover:translate-y-[-1px]",
         ghost:
-          "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
+          "hover:bg-[rgba(41,171,226,0.2)] hover:text-[#29ABE2] dark:hover:bg-[rgba(41,171,226,0.3)]",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {

@@ -23,6 +23,7 @@ import {
 import MainLayout from "@/components/layout/MainLayout";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
+import "@/app/dashboard/dashboard.css";
 
 export default function RegisterPage() {
   const [firstName, setFirstName] = useState("");
@@ -147,7 +148,7 @@ export default function RegisterPage() {
               </div>
             </CardContent>
             <CardFooter className="flex flex-col space-y-4">
-              <Button type="submit" className="w-full" disabled={isLoading}>
+              <Button type="submit" className="w-full btn-gradient-3color" disabled={isLoading}>
                 {isLoading ? "Creating account..." : "Create account"}
               </Button>
               <div className="text-center text-sm">

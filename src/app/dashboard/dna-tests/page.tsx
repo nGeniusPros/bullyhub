@@ -45,34 +45,36 @@ export default function DNATestsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">DNA Tests</h1>
-          <p className="text-muted-foreground">
+      <div className="welcome-header bg-info-gradient-3color mb-6">
+        <div className="flex flex-col space-y-2 z-10 relative max-w-[60%]">
+          <h1 className="text-3xl font-bold tracking-tight text-white">DNA Tests</h1>
+          <p className="text-white/90">
             View and manage DNA test results for your dogs
           </p>
+          <div className="mt-4">
+            <Link href="/dashboard/dna-tests/upload">
+              <Button className="btn-secondary-gradient-3color">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="mr-2 h-4 w-4"
+                >
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="17 8 12 3 7 8" />
+                  <line x1="12" x2="12" y1="3" y2="15" />
+                </svg>
+                Upload Test
+              </Button>
+            </Link>
+          </div>
         </div>
-        <Link href="/dashboard/dna-tests/upload">
-          <Button>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="mr-2 h-4 w-4"
-            >
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-              <polyline points="17 8 12 3 7 8" />
-              <line x1="12" x2="12" y1="3" y2="15" />
-            </svg>
-            Upload Test
-          </Button>
-        </Link>
       </div>
       {loading ? (
         <div className="flex justify-center items-center py-12">
@@ -88,11 +90,11 @@ export default function DNATestsPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {dnaTests.map((test) => (
             <Link key={test.id} href={`/dashboard/dna-tests/${test.id}`}>
-              <Card className="h-full hover:bg-muted/50 transition-colors cursor-pointer border-2 hover:border-primary/20">
+              <Card className="pet-card pet-card-gradient pet-card-gradient-primary h-full cursor-pointer">
                 <CardHeader className="pb-2">
                   <div className="flex justify-between items-start">
                     <CardTitle className="text-xl">{test.dogName}</CardTitle>
-                    <div className="px-2 py-1 rounded text-xs bg-primary/10 text-primary font-medium">
+                    <div className="badge-gradient">
                       {test.provider}
                     </div>
                   </div>
@@ -110,19 +112,19 @@ export default function DNATestsPage() {
                             {test.healthMarkers.slice(0, 3).map((marker, index) => (
                               <div
                                 key={index}
-                                className={`px-2 py-1 rounded text-xs font-medium ${
+                                className={`px-2 py-1 rounded-full text-xs font-medium ${
                                   marker.status === "Clear"
-                                    ? "bg-green-100 text-green-800"
+                                    ? "badge-success"
                                     : marker.status === "Carrier"
-                                    ? "bg-yellow-100 text-yellow-800"
-                                    : "bg-red-100 text-red-800"
+                                    ? "badge-secondary"
+                                    : "badge-danger"
                                 }`}
                               >
                                 {marker.condition}: {marker.status}
                               </div>
                             ))}
                             {test.healthMarkers.length > 3 && (
-                              <div className="px-2 py-1 rounded text-xs bg-gray-100 text-gray-800">
+                              <div className="px-2 py-1 rounded-full text-xs bg-info-gradient text-white">
                                 +{test.healthMarkers.length - 3} more
                               </div>
                             )}
@@ -141,13 +143,13 @@ export default function DNATestsPage() {
                             {test.markers.slice(0, 2).map((marker, index) => (
                               <div
                                 key={index}
-                                className="px-2 py-1 rounded text-xs font-medium bg-blue-100 text-blue-800"
+                                className="px-2 py-1 rounded-full text-xs font-medium bg-primary-gradient text-white"
                               >
                                 {marker.locus}: {marker.alleles.join('/')}
                               </div>
                             ))}
                             {test.markers.length > 2 && (
-                              <div className="px-2 py-1 rounded text-xs bg-gray-100 text-gray-800">
+                              <div className="px-2 py-1 rounded-full text-xs bg-info-gradient text-white">
                                 +{test.markers.length - 2} more
                               </div>
                             )}

@@ -10,10 +10,10 @@ export default function ForOwnersPage() {
       <section className="py-20 md:py-28 bg-gradient-to-b from-white to-[#E8F4FC]">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center text-center space-y-6 max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-[#333333]">
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">
               The Ultimate Platform for Dog Owners
             </h1>
-            <p className="text-xl text-[#555555]">
+            <p className="text-xl text-muted-foreground">
               Manage your dog's health, connect with experts, and join a community of passionate dog owners
             </p>
             <div className="pt-6">
@@ -38,7 +38,7 @@ export default function ForOwnersPage() {
               Our platform provides everything you need to give your dog the best care possible
             </p>
           </div>
-          
+
           <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
             <div className="space-y-4">
               <h3 className="text-2xl font-medium text-[#333333]">Complete Health Management</h3>
@@ -67,24 +67,24 @@ export default function ForOwnersPage() {
               </ul>
             </div>
             <div>
-              <Image 
-                src="/images/health-management.jpg" 
-                alt="Health management dashboard" 
-                width={500} 
+              <Image
+                src="/images/health-management.jpg"
+                alt="Health management dashboard"
+                width={500}
                 height={350}
-                className="rounded-lg shadow-lg" 
+                className="rounded-lg shadow-lg"
               />
             </div>
           </div>
-          
+
           <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
             <div className="order-2 md:order-1">
-              <Image 
-                src="/images/community-features.jpg" 
-                alt="Community features" 
-                width={500} 
+              <Image
+                src="/images/community-features.jpg"
+                alt="Community features"
+                width={500}
                 height={350}
-                className="rounded-lg shadow-lg" 
+                className="rounded-lg shadow-lg"
               />
             </div>
             <div className="space-y-4 order-1 md:order-2">
@@ -114,7 +114,7 @@ export default function ForOwnersPage() {
               </ul>
             </div>
           </div>
-          
+
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-4">
               <h3 className="text-2xl font-medium text-[#333333]">AI-Powered Care Recommendations</h3>
@@ -143,12 +143,12 @@ export default function ForOwnersPage() {
               </ul>
             </div>
             <div>
-              <Image 
-                src="/images/ai-recommendations.jpg" 
-                alt="AI care recommendations" 
-                width={500} 
+              <Image
+                src="/images/ai-recommendations.jpg"
+                alt="AI care recommendations"
+                width={500}
                 height={350}
-                className="rounded-lg shadow-lg" 
+                className="rounded-lg shadow-lg"
               />
             </div>
           </div>
@@ -159,11 +159,11 @@ export default function ForOwnersPage() {
       <section className="py-16 md:py-20 bg-[#E8F4FC]">
         <div className="container px-4 md:px-6">
           <div className="bg-white rounded-lg shadow-lg p-8 md:p-12 max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-[#333333] mb-4">
+            <h2 className="text-3xl font-bold text-foreground mb-4">
               Give Your Dog the Care They Deserve
             </h2>
-            <p className="text-xl text-[#555555] mb-8">
-              Join thousands of dog owners already using Pet Pals Dog Hub
+            <p className="text-xl text-muted-foreground mb-8">
+              Join thousands of dog owners already using PetPals Dog Hub
             </p>
             <Link href="/register">
               <Button size="lg" style={{ backgroundColor: "#FF8C00", color: "white", fontWeight: "bold" }} className="shadow-md hover:scale-105 transition-transform">

@@ -1,12 +1,13 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { DatabaseConnectionError } from "@/components/DatabaseConnectionError";
 import { useDatabase } from "@/contexts/DatabaseContext";
+import "./dashboard.css";
 import {
   LayoutDashboard,
   Dog,
@@ -23,19 +24,19 @@ import {
   Dna,
   GitMerge,
   Award,
-  Dumbbell,
   MessageSquare,
   Palette,
   PieChart,
-  Sparkles,
   Server as ServerIcon,
   Globe,
   Users,
   DollarSign,
   FileText,
-  Video,
   BarChart,
   Share2,
+  ChevronLeft,
+  ChevronRight,
+  Menu,
 } from "lucide-react";
 
 export default function DashboardLayout({
@@ -45,14 +46,48 @@ export default function DashboardLayout({
 }>) {
   const pathname = usePathname();
   const { isConnected } = useDatabase();
+  const [collapsed, setCollapsed] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [sidebarVisible, setSidebarVisible] = useState(true);
+
+  // Check if we're on mobile and hide sidebar by default on mobile
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+      setSidebarVisible(window.innerWidth >= 768);
+    };
+
+    // Initial check
+    checkIfMobile();
+
+    // Add event listener for window resize
+    window.addEventListener('resize', checkIfMobile);
+
+    // Cleanup
+    return () => window.removeEventListener('resize', checkIfMobile);
+  }, []);
+
+  const toggleSidebar = () => {
+    if (isMobile) {
+      setSidebarVisible(!sidebarVisible);
+    } else {
+      setCollapsed(!collapsed);
+    }
+  };
 
   return (
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background">
         <div className="container flex h-16 items-center justify-between px-4 md:px-6">
-          <Link href="/" className="flex items-center gap-2 font-bold text-xl">
-            Bully Hub
-          </Link>
+          <div className="flex items-center gap-4">
+            <Button variant="ghost" size="icon" onClick={toggleSidebar} className="md:flex">
+              <Menu className="h-5 w-5" />
+              <span className="sr-only">Toggle Sidebar</span>
+            </Button>
+            <Link href="/" className="flex items-center gap-2 font-bold text-xl">
+              <span className="gradient-text">PetPals</span>
+            </Link>
+          </div>
           <nav className="flex items-center gap-4">
             <Button variant="ghost" size="sm">
               <svg
@@ -95,20 +130,34 @@ export default function DashboardLayout({
         </div>
       </header>
       <div className="flex flex-1">
-        <aside className="w-64 border-r bg-muted/40 hidden md:block">
-          <nav className="flex flex-col gap-2 p-4">
-            <div className="mb-2">
-              <h3 className="text-sm font-medium text-muted-foreground px-4 py-2">
-                Main
-              </h3>
-            </div>
+        <aside
+          className={`${collapsed ? 'w-16' : 'w-64'} border-r bg-muted/40 shadow-lg transition-all duration-300 ease-in-out ${sidebarVisible ? 'block' : 'hidden'} fixed md:relative h-[calc(100vh-4rem)] z-40 md:z-0 relative`}
+        >
+          <div className="hidden md:block sidebar-toggle" onClick={toggleSidebar}>
+            {collapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
+          </div>
+          <div className="flex justify-end p-2 md:hidden">
+            <Button variant="ghost" size="icon" onClick={toggleSidebar}>
+              {collapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
+            </Button>
+          </div>
+          <div className={`border-b border-gray-200 dark:border-gray-700 mb-2 ${collapsed ? 'mx-2' : 'mx-4'}`}></div>
+          <nav className={`flex flex-col gap-2 ${collapsed ? 'px-2' : 'p-4'} overflow-y-auto h-[calc(100%-3rem)]`}>
+            {!collapsed && (
+              <div className="mb-2">
+                <h3 className="text-sm font-medium gradient-text px-4 py-2">
+                  Main
+                </h3>
+              </div>
+            )}
             <Link href="/dashboard">
               <Button
                 variant={pathname === "/dashboard" ? "default" : "ghost"}
-                className="w-full justify-start"
+                className={`${collapsed ? 'sidebar-collapsed-btn' : 'w-full justify-start'} ${pathname === "/dashboard" ? "btn-primary" : "hover:bg-[rgba(41,171,226,0.2)] hover:text-[#29ABE2]"}`}
+                title="Dashboard"
               >
-                <LayoutDashboard className="mr-2 h-4 w-4" />
-                Dashboard
+                <LayoutDashboard className={collapsed ? "" : "mr-2 h-4 w-4"} />
+                {!collapsed && "Dashboard"}
               </Button>
             </Link>
             <Link href="/dashboard/dogs">
@@ -116,10 +165,11 @@ export default function DashboardLayout({
                 variant={
                   pathname.startsWith("/dashboard/dogs") ? "default" : "ghost"
                 }
-                className="w-full justify-start"
+                className={`${collapsed ? 'sidebar-collapsed-btn' : 'w-full justify-start'} ${pathname.startsWith("/dashboard/dogs") ? "btn-primary" : "hover:bg-[rgba(41,171,226,0.2)] hover:text-[#29ABE2]"}`}
+                title="My Dogs"
               >
-                <Dog className="mr-2 h-4 w-4" />
-                My Dogs
+                <Dog className={collapsed ? "" : "mr-2 h-4 w-4"} />
+                {!collapsed && "My Dogs"}
               </Button>
             </Link>
             <Link href="/dashboard/ai-advisor">
@@ -129,27 +179,31 @@ export default function DashboardLayout({
                     ? "default"
                     : "ghost"
                 }
-                className="w-full justify-start"
+                className={`${collapsed ? 'sidebar-collapsed-btn' : 'w-full justify-start'} ${pathname.startsWith("/dashboard/ai-advisor") ? "btn-primary" : "hover:bg-[rgba(41,171,226,0.2)] hover:text-[#29ABE2]"}`}
+                title="AI Advisor"
               >
-                <Bot className="mr-2 h-4 w-4" />
-                AI Advisor
+                <Bot className={collapsed ? "" : "mr-2 h-4 w-4"} />
+                {!collapsed && "AI Advisor"}
               </Button>
             </Link>
 
-            <div className="mt-4 mb-2">
-              <h3 className="text-sm font-medium text-muted-foreground px-4 py-2">
-                Pet Owner
-              </h3>
-            </div>
+            {!collapsed && (
+              <div className="mt-4 mb-2">
+                <h3 className="text-sm font-medium gradient-text px-4 py-2">
+                  Pet Owner
+                </h3>
+              </div>
+            )}
             <Link href="/dashboard/health">
               <Button
                 variant={
                   pathname.startsWith("/dashboard/health") ? "default" : "ghost"
                 }
-                className="w-full justify-start"
+                className={`${collapsed ? 'sidebar-collapsed-btn' : 'w-full justify-start'}`}
+                title="Health"
               >
-                <Stethoscope className="mr-2 h-4 w-4" />
-                Health
+                <Stethoscope className={collapsed ? "" : "mr-2 h-4 w-4"} />
+                {!collapsed && "Health"}
               </Button>
             </Link>
             <Link href="/dashboard/training">
@@ -205,11 +259,13 @@ export default function DashboardLayout({
               </Button>
             </Link>
 
-            <div className="mt-4 mb-2">
-              <h3 className="text-sm font-medium text-muted-foreground px-4 py-2">
-                Kennel Owners
-              </h3>
-            </div>
+            {!collapsed && (
+              <div className="mt-4 mb-2">
+                <h3 className="text-sm font-medium gradient-text px-4 py-2">
+                  Kennel Owners
+                </h3>
+              </div>
+            )}
             <Link href="/dashboard/breeding">
               <Button
                 variant={
@@ -296,15 +352,17 @@ export default function DashboardLayout({
                 className="w-full justify-start"
               >
                 <PieChart className="mr-2 h-4 w-4" />
-                COII Calculator
+                COI Calculator
               </Button>
             </Link>
 
-            <div className="mt-4 mb-2">
-              <h3 className="text-sm font-medium text-muted-foreground px-4 py-2">
-                Stud Services
-              </h3>
-            </div>
+            {!collapsed && (
+              <div className="mt-4 mb-2">
+                <h3 className="text-sm font-medium gradient-text px-4 py-2">
+                  Stud Services
+                </h3>
+              </div>
+            )}
             <Link href="/dashboard/stud-services">
               <Button
                 variant={
@@ -328,11 +386,13 @@ export default function DashboardLayout({
               </Button>
             </Link>
 
-            <div className="mt-4 mb-2">
-              <h3 className="text-sm font-medium text-muted-foreground px-4 py-2">
-                Marketing
-              </h3>
-            </div>
+            {!collapsed && (
+              <div className="mt-4 mb-2">
+                <h3 className="text-sm font-medium gradient-text px-4 py-2">
+                  Marketing
+                </h3>
+              </div>
+            )}
             <Link href="/dashboard/marketing">
               <Button
                 variant={
@@ -407,10 +467,10 @@ export default function DashboardLayout({
                 Social Media Marketing
               </Button>
             </Link>
-            <Link href="/website-templates">
+            <Link href="/dashboard/website-templates">
               <Button
                 variant={
-                  pathname === "/website-templates" ? "default" : "ghost"
+                  pathname === "/dashboard/website-templates" ? "default" : "ghost"
                 }
                 className="w-full justify-start"
               >
@@ -419,11 +479,13 @@ export default function DashboardLayout({
               </Button>
             </Link>
 
-            <div className="mt-4 mb-2">
-              <h3 className="text-sm font-medium text-muted-foreground px-4 py-2">
-                Kennel Management
-              </h3>
-            </div>
+            {!collapsed && (
+              <div className="mt-4 mb-2">
+                <h3 className="text-sm font-medium gradient-text px-4 py-2">
+                  Kennel Management
+                </h3>
+              </div>
+            )}
             <Link href="/dashboard/marketing/finances">
               <Button
                 variant={
@@ -451,11 +513,13 @@ export default function DashboardLayout({
               </Button>
             </Link>
 
-            <div className="mt-4 mb-2">
-              <h3 className="text-sm font-medium text-muted-foreground px-4 py-2">
-                Account
-              </h3>
-            </div>
+            {!collapsed && (
+              <div className="mt-4 mb-2">
+                <h3 className="text-sm font-medium gradient-text px-4 py-2">
+                  Account
+                </h3>
+              </div>
+            )}
             <Link href="/dashboard/settings">
               <Button
                 variant={
@@ -463,20 +527,30 @@ export default function DashboardLayout({
                     ? "default"
                     : "ghost"
                 }
-                className="w-full justify-start"
+                className={`${collapsed ? 'sidebar-collapsed-btn' : 'w-full justify-start'} ${pathname.startsWith("/dashboard/settings") ? "btn-primary" : "hover:bg-[rgba(41,171,226,0.2)] hover:text-[#29ABE2]"}`}
+                title="Settings"
               >
-                <Settings className="mr-2 h-4 w-4" />
-                Settings
+                <Settings className={collapsed ? "" : "mr-2 h-4 w-4"} />
+                {!collapsed && "Settings"}
               </Button>
             </Link>
           </nav>
         </aside>
-        <main className="flex-1 p-4 md:p-6">
+        <main className="flex-1 p-4 md:p-6 transition-all duration-300 overflow-x-hidden">
           <ErrorBoundary>
             <DatabaseConnectionError />
             {isConnected && children}
           </ErrorBoundary>
         </main>
+
+        {/* Mobile overlay when sidebar is open */}
+        {isMobile && sidebarVisible && (
+          <div
+            className="fixed inset-0 bg-black/50 z-30"
+            onClick={toggleSidebar}
+            aria-hidden="true"
+          />
+        )}
       </div>
     </div>
   );

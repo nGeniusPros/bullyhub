@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import MainLayout from '@/components/layout/MainLayout';
+import "@/app/dashboard/dashboard.css";
 
 export default function PricingPage() {
   return (
@@ -97,11 +98,11 @@ export default function PricingPage() {
                   </li>
                 </ul>
                 <Link href="/register?plan=pet-owner" className="w-full">
-                  <Button variant="outline" className="w-full">Get Started</Button>
+                  <Button variant="outline" className="w-full btn-gradient-3color">Get Started</Button>
                 </Link>
               </div>
             </div>
-            
+
             {/* Pro Plan */}
             <div className="flex flex-col rounded-lg border bg-card shadow-sm relative">
               <div className="absolute top-0 right-0 bg-primary text-primary-foreground text-xs px-3 py-1 rounded-bl-lg rounded-tr-lg">
@@ -218,11 +219,11 @@ export default function PricingPage() {
                   </li>
                 </ul>
                 <Link href="/register?plan=breeder" className="w-full">
-                  <Button className="w-full">Get Started</Button>
+                  <Button className="w-full btn-gradient-3color">Get Started</Button>
                 </Link>
               </div>
             </div>
-            
+
             {/* Enterprise Plan */}
             <div className="flex flex-col rounded-lg border bg-card shadow-sm">
               <div className="p-6">
@@ -336,14 +337,14 @@ export default function PricingPage() {
                   </li>
                 </ul>
                 <Link href="/register?plan=professional" className="w-full">
-                  <Button variant="outline" className="w-full">Get Started</Button>
+                  <Button variant="outline" className="w-full btn-gradient-3color">Get Started</Button>
                 </Link>
               </div>
             </div>
           </div>
         </div>
       </section>
-      
+
       {/* FAQ Section */}
       <section className="py-16 md:py-20 bg-muted">
         <div className="container px-4 md:px-6">
@@ -385,7 +386,7 @@ export default function PricingPage() {
           </div>
         </div>
       </section>
-      
+
       {/* CTA Section */}
       <section className="py-16 md:py-20">
         <div className="container px-4 md:px-6">
@@ -400,10 +401,10 @@ export default function PricingPage() {
             </div>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/register">
-                <Button size="lg">Sign Up Now</Button>
+                <Button size="lg" className="btn-gradient-3color">Sign Up Now</Button>
               </Link>
               <Link href="/contact">
-                <Button variant="outline" size="lg">Contact Sales</Button>
+                <Button variant="outline" size="lg" className="btn-gradient-3color">Contact Sales</Button>
               </Link>
             </div>
           </div>

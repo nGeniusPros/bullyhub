@@ -1,0 +1,16 @@
+/* MainLayout.css - Styles for the main layout component */
+@import '../../styles/theme.css';
+
+.main-layout-gradient {
+  background: linear-gradient(135deg, #E8F4FC 0%, #F5F9FD 100%);
+}
+
+/* For a more vibrant gradient that matches the dashboard */
+.main-layout-primary-gradient {
+  background: linear-gradient(135deg, #29ABE2 0%, #6A3DE8 100%);
+}
+
+/* For a softer gradient that's easier on the eyes */
+.main-layout-soft-gradient {
+  background: linear-gradient(135deg, #F0F8FF 0%, #E6F2FF 100%);
+}

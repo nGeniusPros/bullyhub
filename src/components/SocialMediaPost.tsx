@@ -67,6 +67,7 @@ export default function SocialMediaPost({
       setPlatforms([]);
       setScheduleDate(null);
     } catch (error) {
+      console.error("Post creation error:", error);
       toast({
         title: "Error",
         description: "Failed to create post. Please try again.",
@@ -115,6 +116,42 @@ export default function SocialMediaPost({
           ))}
         </div>
       )}
+
+      <Button
+        type="button"
+        variant="outline"
+        className="w-full"
+        onClick={async () => {
+          try {
+            setIsLoading(true);
+            const res = await fetch("https://api.thedogapi.com/v1/images/search?limit=1", {
+              headers: { "x-api-key": "live_QTXVxRVbZz6jjQf6FeSGiy6NMoN1eS3Ez10bY2mmbyIwJWqIyRMqVtFAYgmAO56N" }
+            });
+            if (!res.ok) throw new Error("Failed to fetch dog image");
+            const data = await res.json();
+            if (data && data[0] && data[0].url) {
+              setMediaUrls((prev) => [...prev, data[0].url]);
+              toast({
+                title: "Dog Image Added",
+                description: "A random dog image from the Dog API was added to your post.",
+              });
+            } else {
+              throw new Error("No image returned from Dog API");
+            }
+          } catch (error) {
+            console.error("Dog API fetch error:", error);
+            toast({
+              title: "Error",
+              description: "Failed to fetch dog image. Please try again.",
+              variant: "destructive",
+            });
+          } finally {
+            setIsLoading(false);
+          }
+        }}
+      >
+        Add Dog API Image
+      </Button>
 
       <Button
         onClick={handleSubmit}

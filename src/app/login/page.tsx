@@ -16,6 +16,7 @@ import { Label } from "@/components/ui/label";
 import MainLayout from "@/components/layout/MainLayout";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
+import "@/app/dashboard/dashboard.css";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -88,7 +89,7 @@ export default function LoginPage() {
               </div>
             )}
             <CardFooter className="flex flex-col space-y-4">
-              <Button type="submit" className="w-full" disabled={isLoading}>
+              <Button type="submit" className="w-full btn-gradient-3color" disabled={isLoading}>
                 {isLoading ? "Logging in..." : "Log in"}
               </Button>
               <div className="text-center text-sm">
