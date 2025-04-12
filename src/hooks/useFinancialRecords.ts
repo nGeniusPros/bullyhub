@@ -1,17 +1,16 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { createBrowserSupabaseClient } from "@/lib/supabase-browser";
 import { FinancialRecord } from "@/types";
 import { toast } from "@/components/ui/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
+import { getAuthToken } from "@/lib/auth-utils";
 
 export function useFinancialRecords() {
   const [records, setRecords] = useState<FinancialRecord[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { user } = useAuth();
-  const supabase = createBrowserSupabaseClient();
 
   const fetchRecords = async (filters?: {
     recordType?: "income" | "expense";
@@ -31,44 +30,58 @@ export function useFinancialRecords() {
       setLoading(true);
       setError(null);
 
-      let query = supabase
-        .from("financial_records")
-        .select("*")
-        .eq("breeder_id", user.id);
+      // Build query parameters
+      const queryParams = new URLSearchParams();
 
-      // Apply filters if provided
+      // Always filter by the current user
+      queryParams.append("breeder_id", user.id);
+
+      // Apply additional filters if provided
       if (filters) {
         if (filters.recordType) {
-          query = query.eq("record_type", filters.recordType);
+          queryParams.append("record_type", filters.recordType);
         }
         if (filters.startDate) {
-          query = query.gte("date", filters.startDate);
+          queryParams.append("start_date", filters.startDate);
         }
         if (filters.endDate) {
-          query = query.lte("date", filters.endDate);
+          queryParams.append("end_date", filters.endDate);
         }
         if (filters.category) {
-          query = query.eq("category", filters.category);
+          queryParams.append("category", filters.category);
         }
         if (filters.relatedDogId) {
-          query = query.eq("related_dog_id", filters.relatedDogId);
+          queryParams.append("related_dog_id", filters.relatedDogId);
         }
         if (filters.relatedClientId) {
-          query = query.eq("related_client_id", filters.relatedClientId);
+          queryParams.append("related_client_id", filters.relatedClientId);
         }
       }
 
-      // Order by date, most recent first
-      query = query.order("date", { ascending: false });
+      // Get auth token for the request
+      const authHeaders = await getAuthHeaders();
 
-      const { data, error } = await query;
+      // Call the Netlify function
+      const response = await fetch(
+        `/.netlify/functions/financial-management?${queryParams.toString()}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            ...authHeaders,
+          },
+        }
+      );
 
-      if (error) {
-        throw error;
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to fetch financial records");
       }
 
+      const { records: data } = await response.json();
+
       // Transform the data to match our FinancialRecord interface
-      const transformedData: FinancialRecord[] = data.map((record) => ({
+      const transformedData: FinancialRecord[] = data.map((record: any) => ({
         id: record.id,
         breederId: record.breeder_id,
         recordType: record.record_type as "income" | "expense",
@@ -121,15 +134,25 @@ export function useFinancialRecords() {
         receipt_url: record.receiptUrl,
       };
 
-      const { data, error } = await supabase
-        .from("financial_records")
-        .insert(recordData)
-        .select()
-        .single();
+      // Get auth token for the request
+      const authHeaders = await getAuthHeaders();
 
-      if (error) {
-        throw error;
+      // Call the Netlify function
+      const response = await fetch("/.netlify/functions/financial-management", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...authHeaders,
+        },
+        body: JSON.stringify(recordData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to add financial record");
       }
+
+      const { record: data } = await response.json();
 
       // Transform the returned data to match our FinancialRecord interface
       const newRecord: FinancialRecord = {
@@ -181,7 +204,7 @@ export function useFinancialRecords() {
       setError(null);
 
       // Transform the updates to match the database schema
-      const updateData: any = {};
+      const updateData: any = { id }; // Include the ID for the API
       if (updates.recordType !== undefined) updateData.record_type = updates.recordType;
       if (updates.category !== undefined) updateData.category = updates.category;
       if (updates.amount !== undefined) updateData.amount = updates.amount;
@@ -191,17 +214,25 @@ export function useFinancialRecords() {
       if (updates.relatedClientId !== undefined) updateData.related_client_id = updates.relatedClientId;
       if (updates.receiptUrl !== undefined) updateData.receipt_url = updates.receiptUrl;
 
-      const { data, error } = await supabase
-        .from("financial_records")
-        .update(updateData)
-        .eq("id", id)
-        .eq("breeder_id", user.id) // Ensure the record belongs to the user
-        .select()
-        .single();
+      // Get auth token for the request
+      const authHeaders = await getAuthHeaders();
 
-      if (error) {
-        throw error;
+      // Call the Netlify function
+      const response = await fetch("/.netlify/functions/financial-management", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          ...authHeaders,
+        },
+        body: JSON.stringify(updateData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to update financial record");
       }
+
+      const { record: data } = await response.json();
 
       // Transform the returned data to match our FinancialRecord interface
       const updatedRecord: FinancialRecord = {
@@ -251,14 +282,24 @@ export function useFinancialRecords() {
     try {
       setError(null);
 
-      const { error } = await supabase
-        .from("financial_records")
-        .delete()
-        .eq("id", id)
-        .eq("breeder_id", user.id); // Ensure the record belongs to the user
+      // Get auth token for the request
+      const authHeaders = await getAuthHeaders();
 
-      if (error) {
-        throw error;
+      // Call the Netlify function
+      const response = await fetch(
+        `/.netlify/functions/financial-management?id=${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            ...authHeaders,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to delete financial record");
       }
 
       // Update the local state
