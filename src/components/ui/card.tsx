@@ -2,12 +2,22 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
-function Card({ className, ...props }: React.ComponentProps<"div">) {
+function Card({
+  className,
+  variant = "primary",
+  ...props
+}: React.ComponentProps<"div"> & { variant?: "primary" | "secondary" | "success" | "info" | "activity" | "3color" }) {
   return (
     <div
       data-slot="card"
       className={cn(
-        "bg-card-gradient-primary text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm hover:shadow-md transition-all duration-300",
+        "card flex flex-col gap-6 py-6 shadow-sm hover:shadow-md transition-all duration-300",
+        variant === "primary" && "card-gradient card-gradient-primary",
+        variant === "secondary" && "card-gradient card-gradient-secondary",
+        variant === "success" && "card-gradient card-gradient-success",
+        variant === "info" && "card-gradient card-gradient-info",
+        variant === "activity" && "activity-card-gradient",
+        variant === "3color" && "card-gradient card-gradient-primary card-gradient-3color",
         className
       )}
       {...props}
@@ -15,17 +25,27 @@ function Card({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function CardHeader({ className, gradient, ...props }: React.ComponentProps<"div"> & { gradient?: 'primary' | 'secondary' | 'success' | 'info' | boolean }) {
+function CardHeader({
+  className,
+  gradient,
+  variant = "primary",
+  ...props
+}: React.ComponentProps<"div"> & {
+  gradient?: "primary" | "secondary" | "success" | "info" | "activity" | "3color" | boolean
+  variant?: "primary" | "secondary" | "success" | "info" | "activity" | "3color"
+}) {
   return (
     <div
       data-slot="card-header"
       className={cn(
+        "card-header",
         "@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6",
-        gradient === 'primary' && "bg-gradient-primary text-white rounded-t-xl -mt-6 -mx-px mb-4",
-        gradient === 'secondary' && "bg-gradient-secondary text-white rounded-t-xl -mt-6 -mx-px mb-4",
-        gradient === 'success' && "bg-gradient-success text-white rounded-t-xl -mt-6 -mx-px mb-4",
-        gradient === 'info' && "bg-gradient-info text-white rounded-t-xl -mt-6 -mx-px mb-4",
-        gradient === true && "bg-gradient-primary text-white rounded-t-xl -mt-6 -mx-px mb-4",
+        (gradient === "primary" || gradient === true || variant === "primary") && "gradient",
+        (gradient === "secondary" || variant === "secondary") && "gradient card-header gradient-header card-header gradient-card-secondary",
+        (gradient === "success" || variant === "success") && "gradient card-header gradient-header card-header gradient-card-success",
+        (gradient === "info" || variant === "info") && "gradient card-header gradient-header card-header gradient-card-info",
+        (gradient === "activity" || variant === "activity") && "activity-card-header-3color",
+        (gradient === "3color" || variant === "3color") && "gradient card-header gradient-header card-header gradient-card-primary card-gradient-3color",
         className
       )}
       {...props}

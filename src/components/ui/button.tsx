@@ -32,6 +32,9 @@ const buttonVariants = cva(
         ghost:
           "hover:bg-[rgba(41,171,226,0.2)] hover:text-[#29ABE2] dark:hover:bg-[rgba(41,171,226,0.3)]",
         link: "text-primary underline-offset-4 hover:underline",
+        gradient: "btn-gradient",
+        "secondary-gradient": "btn-secondary-gradient",
+        "gradient-3color": "btn-gradient-3color",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",

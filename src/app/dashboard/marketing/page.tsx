@@ -47,11 +47,11 @@ export default function MarketingDashboard() {
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {/* Kennel Branding */}
             <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardHeader gradient="primary" className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">Kennel Branding</CardTitle>
-                <Globe className="h-4 w-4 text-muted-foreground" />
+                <Globe className="h-4 w-4 text-white" />
               </CardHeader>
-              <CardContent>
+              <CardContent className="bg-gradient-to-b from-white/80 to-primary-light/30 rounded-b-xl">
                 <div className="text-2xl font-bold">Website Templates</div>
                 <p className="text-xs text-muted-foreground">
                   Custom website templates, logo design tools, and social media kit
@@ -59,18 +59,18 @@ export default function MarketingDashboard() {
               </CardContent>
               <CardFooter>
                 <Link href="/dashboard/marketing/branding" className="w-full">
-                  <Button variant="outline" className="w-full">Manage Branding</Button>
+                  <Button className="w-full">Manage Branding</Button>
                 </Link>
               </CardFooter>
             </Card>
 
             {/* Client Management */}
             <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardHeader gradient="primary" className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">Client Management</CardTitle>
-                <Users className="h-4 w-4 text-muted-foreground" />
+                <Users className="h-4 w-4 text-white" />
               </CardHeader>
-              <CardContent>
+              <CardContent className="bg-gradient-to-b from-white/80 to-primary-light/30 rounded-b-xl">
                 <div className="text-2xl font-bold">Client Database</div>
                 <p className="text-xs text-muted-foreground">
                   Track clients, prospects, and communication history
@@ -78,18 +78,18 @@ export default function MarketingDashboard() {
               </CardContent>
               <CardFooter>
                 <Link href="/dashboard/marketing/clients" className="w-full">
-                  <Button variant="outline" className="w-full">Manage Clients</Button>
+                  <Button className="w-full">Manage Clients</Button>
                 </Link>
               </CardFooter>
             </Card>
 
             {/* Financial Management */}
             <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardHeader gradient="primary" className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">Financial Management</CardTitle>
-                <DollarSign className="h-4 w-4 text-muted-foreground" />
+                <DollarSign className="h-4 w-4 text-white" />
               </CardHeader>
-              <CardContent>
+              <CardContent className="bg-gradient-to-b from-white/80 to-primary-light/30 rounded-b-xl">
                 <div className="text-2xl font-bold">Breeding Finances</div>
                 <p className="text-xs text-muted-foreground">
                   Track expenses, income, and profitability for your breeding program
@@ -97,7 +97,7 @@ export default function MarketingDashboard() {
               </CardContent>
               <CardFooter>
                 <Link href="/dashboard/marketing/finances" className="w-full">
-                  <Button variant="outline" className="w-full">Manage Finances</Button>
+                  <Button className="w-full">Manage Finances</Button>
                 </Link>
               </CardFooter>
             </Card>
