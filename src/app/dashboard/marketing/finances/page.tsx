@@ -41,7 +41,7 @@ import { createBrowserSupabaseClient } from "@/lib/supabase-browser";
 // Financial records are now fetched from the database using the useFinancialRecords hook
 
 export default function FinancialManagement() {
-  const [activeTab, setActiveTab] = useState("all");
+  const [activeTab, setActiveTab] = useState("analysis");
   const [searchTerm, setSearchTerm] = useState("");
   const { records, loading, error, fetchRecords, getFinancialSummary } =
     useFinancialRecords();
@@ -251,17 +251,28 @@ export default function FinancialManagement() {
           </div>
 
           <Tabs
-            defaultValue="all"
+            defaultValue="analysis"
             value={activeTab}
             onValueChange={setActiveTab}
             className="space-y-4"
           >
             <TabsList>
+              <TabsTrigger value="analysis">Analysis</TabsTrigger>
               <TabsTrigger value="all">All Transactions</TabsTrigger>
               <TabsTrigger value="income">Income</TabsTrigger>
               <TabsTrigger value="expenses">Expenses</TabsTrigger>
-              <TabsTrigger value="analysis">Analysis</TabsTrigger>
             </TabsList>
+
+            <TabsContent value="analysis" className="space-y-4">
+              <div className="p-2">
+                {/* Import the FinancialCharts component */}
+                {(() => {
+                  const FinancialCharts =
+                    require("@/components/marketing/financial-charts").FinancialCharts;
+                  return <FinancialCharts records={records} />;
+                })()}
+              </div>
+            </TabsContent>
 
             <TabsContent value="all" className="space-y-4">
               <div className="rounded-md border">
@@ -474,17 +485,6 @@ export default function FinancialManagement() {
                     </p>
                   </div>
                 )}
-              </div>
-            </TabsContent>
-
-            <TabsContent value="analysis" className="space-y-4">
-              <div className="p-2">
-                {/* Import the FinancialCharts component */}
-                {(() => {
-                  const FinancialCharts =
-                    require("@/components/marketing/financial-charts").FinancialCharts;
-                  return <FinancialCharts records={records} />;
-                })()}
               </div>
             </TabsContent>
           </Tabs>
