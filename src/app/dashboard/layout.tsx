@@ -271,10 +271,11 @@ export default function DashboardLayout({
                 variant={
                   pathname === "/dashboard/breeding" ? "default" : "ghost"
                 }
-                className="w-full justify-start"
+                className={`${collapsed ? 'sidebar-collapsed-btn' : 'w-full justify-start'}`}
+                title="Breeding Dashboard"
               >
-                <Target className="mr-2 h-4 w-4" />
-                Breeding Dashboard
+                <Target className={collapsed ? "" : "mr-2 h-4 w-4"} />
+                {!collapsed && "Breeding Dashboard"}
               </Button>
             </Link>
             <Link href="/dashboard/breeding-programs">
@@ -284,10 +285,11 @@ export default function DashboardLayout({
                     ? "default"
                     : "ghost"
                 }
-                className="w-full justify-start"
+                className={`${collapsed ? 'sidebar-collapsed-btn' : 'w-full justify-start'}`}
+                title="Breeding Programs"
               >
-                <BookOpen className="mr-2 h-4 w-4" />
-                Breeding Programs
+                <BookOpen className={collapsed ? "" : "mr-2 h-4 w-4"} />
+                {!collapsed && "Breeding Programs"}
               </Button>
             </Link>
             <Link href="/dashboard/dna-tests">
@@ -297,10 +299,11 @@ export default function DashboardLayout({
                     ? "default"
                     : "ghost"
                 }
-                className="w-full justify-start"
+                className={`${collapsed ? 'sidebar-collapsed-btn' : 'w-full justify-start'}`}
+                title="DNA Tests"
               >
-                <Dna className="mr-2 h-4 w-4" />
-                DNA Tests
+                <Dna className={collapsed ? "" : "mr-2 h-4 w-4"} />
+                {!collapsed && "DNA Tests"}
               </Button>
             </Link>
             <Link href="/dashboard/health-clearances">
@@ -310,10 +313,11 @@ export default function DashboardLayout({
                     ? "default"
                     : "ghost"
                 }
-                className="w-full justify-start"
+                className={`${collapsed ? 'sidebar-collapsed-btn' : 'w-full justify-start'}`}
+                title="Health Clearances"
               >
-                <Award className="mr-2 h-4 w-4" />
-                Health Clearances
+                <Award className={collapsed ? "" : "mr-2 h-4 w-4"} />
+                {!collapsed && "Health Clearances"}
               </Button>
             </Link>
             <Link href="/dashboard/breeding/compatibility">
@@ -539,7 +543,7 @@ export default function DashboardLayout({
         <main className="flex-1 p-4 md:p-6 transition-all duration-300 overflow-x-hidden">
           <ErrorBoundary>
             <DatabaseConnectionError />
-            {isConnected && children}
+            {(isConnected || process.env.NODE_ENV === 'development') && children}
           </ErrorBoundary>
         </main>
 

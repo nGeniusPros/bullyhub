@@ -24,7 +24,7 @@ export function DatabaseConnectionError() {
     );
   }
 
-  if (!isConnected) {
+  if (!isConnected && process.env.NODE_ENV !== 'development') {
     return (
       <Card className="w-full max-w-md mx-auto my-8">
         <CardHeader>

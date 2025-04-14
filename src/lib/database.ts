@@ -683,31 +683,37 @@ export const checkDatabaseConnection = async () => {
     const supabase = getSafeSupabaseClient();
 
     // Try to fetch a small amount of data to verify connection
-    const { data, error } = await supabase
-      .from("profiles")
-      .select("id")
-      .limit(1);
+    // First try to check if the connection itself works without querying tables
+    const { data: healthData, error: healthError } = await supabase.from('health').select('*').limit(1);
 
-    if (error) {
-      console.error("Database connection error:", error);
-      return {
-        success: false,
-        error: error.message,
-        details: error
-      };
+    // If we get a specific error about the table not existing, that's actually good
+    // It means the connection works but the table doesn't exist yet
+    if (healthError && healthError.code === '42P01') {
+      console.log("Database connection successful (table doesn't exist but connection works)");
+      return true;
     }
 
-    return {
-      success: true,
-      data
-    };
+    // If we get here, either the query worked or we got a different error
+    if (healthError) {
+      // Try another table
+      const { data: profilesData, error: profilesError } = await supabase.from('profiles').select('*').limit(1);
+
+      if (profilesError && profilesError.code === '42P01') {
+        console.log("Database connection successful (profiles table doesn't exist but connection works)");
+        return true;
+      }
+
+      if (profilesError) {
+        console.error("Database connection error:", profilesError);
+        return false;
+      }
+    }
+
+    // If we get here, one of the queries worked
+    return true;
   } catch (error: any) {
     console.error("Unexpected error checking database connection:", error);
-    return {
-      success: false,
-      error: error.message || "Unknown error",
-      details: error
-    };
+    return false;
   }
 };
 
