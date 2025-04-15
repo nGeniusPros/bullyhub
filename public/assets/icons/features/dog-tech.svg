@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <title>Dog Tech</title>
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M30,5 C43.8071187,5 55,16.1928813 55,30 C55,43.8071187 43.8071187,55 30,55 C16.1928813,55 5,43.8071187 5,30 C5,16.1928813 16.1928813,5 30,5 Z" fill="#29ABE2" opacity="0.1"></path>
+        <path d="M22,15 L38,15 C38,15 41,20 41,25 L19,25 C19,20 22,15 22,15 Z" stroke="#29ABE2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M19,25 C19,25 16,40 22,45 C25,48 35,48 38,45 C44,40 41,25 41,25" stroke="#29ABE2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M43,20 C43,20 46,25 46,30 C46,35 43,40 43,40" stroke="#29ABE2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M17,20 C17,20 14,25 14,30 C14,35 17,40 17,40" stroke="#29ABE2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <circle fill="#29ABE2" cx="26" cy="20" r="1.5"></circle>
+        <circle fill="#29ABE2" cx="34" cy="20" r="1.5"></circle>
+        <path d="M30,30 L30,35 M27,32.5 L33,32.5" stroke="#29ABE2" stroke-width="2" stroke-linecap="round"></path>
+        <path d="M48,10 L52,6 M52,10 L48,6" stroke="#FF8C00" stroke-width="2" stroke-linecap="round"></path>
+        <path d="M8,10 L12,6 M12,10 L8,6" stroke="#FF8C00" stroke-width="2" stroke-linecap="round"></path>
+        <path d="M48,50 L52,46 M52,50 L48,46" stroke="#FF8C00" stroke-width="2" stroke-linecap="round"></path>
+        <path d="M8,50 L12,46 M12,50 L8,46" stroke="#FF8C00" stroke-width="2" stroke-linecap="round"></path>
+    </g>
+</svg>

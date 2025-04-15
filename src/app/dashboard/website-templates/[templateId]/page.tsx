@@ -25,10 +25,10 @@ const SAMPLE_DATA = {
         breeds: ["Bulldog", "French Bulldog"]
       },
       featuredDogs: [
-        { id: "1", name: "Champion Max", imageUrl: "/dogs/dog-1744345833521-658.jpg", breed: "Bulldog", gender: "M", dob: "2020-01-01", isStud: true, achievements: ["Grand Champion", "Best in Show"] }
+        { id: "1", name: "Champion Max", imageUrl: "/assets/dogs/dog-1744345833521-658.jpg", breed: "Bulldog", gender: "M", dob: "2020-01-01", isStud: true, achievements: ["Grand Champion", "Best in Show"] }
       ],
       studDogs: [
-        { id: "1", name: "Champion Max", imageUrl: "/dogs/dog-1744345833521-658.jpg", breed: "Bulldog", gender: "M", dob: "2020-01-01", isStud: true, achievements: ["Grand Champion", "Best in Show"], studFee: "$2000", profileUrl: "#" }
+        { id: "1", name: "Champion Max", imageUrl: "/assets/dogs/dog-1744345833521-658.jpg", breed: "Bulldog", gender: "M", dob: "2020-01-01", isStud: true, achievements: ["Grand Champion", "Best in Show"], studFee: "$2000", profileUrl: "#" }
       ],
       breedingPhilosophy: "We believe in responsible breeding...",
       upcomingLitters: [
@@ -61,7 +61,7 @@ const SAMPLE_DATA = {
         breeds: ["Doberman"]
       },
       featuredChampions: [
-        { id: "1", name: "Ch. Titan", imageUrl: "/dogs/titan.jpg", titles: ["BIS", "GCH"], breed: "Doberman", gender: "M", dob: "2019-05-01", profileUrl: "#", videoUrl: "#" }
+        { id: "1", name: "Ch. Titan", imageUrl: "/assets/dogs/titan.jpg", titles: ["BIS", "GCH"], breed: "Doberman", gender: "M", dob: "2019-05-01", profileUrl: "#", videoUrl: "#" }
       ],
       achievements: [
         { id: "1", title: "Best in Show", year: "2024", event: "National Specialty", dogName: "Ch. Titan", dogProfileUrl: "#" }
@@ -70,7 +70,7 @@ const SAMPLE_DATA = {
         { id: "1", date: "2025-05-10", location: "New York", event: "Spring Classic", participatingDogs: [{ name: "Ch. Titan", profileUrl: "#" }] }
       ],
       championGallery: [
-        { id: "1", name: "Ch. Titan", imageUrl: "/dogs/titan.jpg", titles: ["BIS", "GCH"], breed: "Doberman", gender: "M", dob: "2019-05-01", profileUrl: "#", videoUrl: "#" }
+        { id: "1", name: "Ch. Titan", imageUrl: "/assets/dogs/titan.jpg", titles: ["BIS", "GCH"], breed: "Doberman", gender: "M", dob: "2019-05-01", profileUrl: "#", videoUrl: "#" }
       ],
       showResults: [
         { id: "1", title: "Titan Wins Best in Show", excerpt: "Titan took top honors at the National Specialty.", imageUrl: "/blog/titan-bis.jpg", url: "#", date: "2024-11-01" }
@@ -82,7 +82,7 @@ const SAMPLE_DATA = {
         { id: "1", quote: "Titan exemplifies the breed standard.", author: "Judge Smith", photoUrl: "/avatars/judge1.png" }
       ],
       studDogs: [
-        { id: "1", name: "Ch. Titan", imageUrl: "/dogs/titan.jpg", titles: ["BIS", "GCH"], breed: "Doberman", gender: "M", dob: "2019-05-01", profileUrl: "#", videoUrl: "#" }
+        { id: "1", name: "Ch. Titan", imageUrl: "/assets/dogs/titan.jpg", titles: ["BIS", "GCH"], breed: "Doberman", gender: "M", dob: "2019-05-01", profileUrl: "#", videoUrl: "#" }
       ]
     }
   },
@@ -102,7 +102,7 @@ const SAMPLE_DATA = {
         breeds: ["Golden Retriever"]
       },
       dogs: [
-        { id: "1", name: "Bella", imageUrl: "/dogs/bella.jpg", bio: "Sweet and gentle, loves kids.", breed: "Golden Retriever", gender: "F", dob: "2021-03-01", profileUrl: "#", healthTestingUrl: "#" }
+        { id: "1", name: "Bella", imageUrl: "/assets/dogs/bella.jpg", bio: "Sweet and gentle, loves kids.", breed: "Golden Retriever", gender: "F", dob: "2021-03-01", profileUrl: "#", healthTestingUrl: "#" }
       ],
       puppyGallery: ["/puppies/puppy1.jpg", "/puppies/puppy2.jpg"],
       applicationSteps: [

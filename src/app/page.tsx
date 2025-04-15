@@ -12,7 +12,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
             <div className="md:col-span-7 space-y-6">
               <div className="flex items-center mb-4">
-                <Image src="/icons/paw-tech.svg" alt="Paw print with tech elements" width={40} height={40} className="text-primary" />
+                <Image src="/assets/icons/features/paw-tech.svg" alt="Paw print with tech elements" width={40} height={40} className="text-primary" />
               </div>
               <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">
                 The Ultimate AI-Powered Platform for Dog Breeders and Pet Owners
@@ -54,7 +54,7 @@ export default function Home() {
             {/* Column 1 */}
             <div className="flex flex-col items-center text-center space-y-4">
               <Image
-                src="/icons/fragmented-docs.svg"
+                src="/assets/icons/features/fragmented-docs.svg"
                 alt="Document with fragmented pieces"
                 width={48}
                 height={48}
@@ -69,7 +69,7 @@ export default function Home() {
             {/* Column 2 */}
             <div className="flex flex-col items-center text-center space-y-4">
               <Image
-                src="/icons/dna-chart.svg"
+                src="/assets/icons/features/dna-chart.svg"
                 alt="DNA/genetic chart"
                 width={48}
                 height={48}
@@ -84,7 +84,7 @@ export default function Home() {
             {/* Column 3 */}
             <div className="flex flex-col items-center text-center space-y-4">
               <Image
-                src="/icons/dog-question.svg"
+                src="/assets/icons/features/dog-question.svg"
                 alt="Question mark with dog silhouette"
                 width={48}
                 height={48}
@@ -118,7 +118,7 @@ export default function Home() {
             </div>
             <div className="order-1 md:order-2">
               <Image
-                src="/images/dog-profile-dashboard.jpg"
+                src="/assets/images/features/dog-profile-dashboard.jpg"
                 alt="Unified dog profile dashboard"
                 width={500}
                 height={350}
@@ -131,7 +131,7 @@ export default function Home() {
           <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
             <div className="">
               <Image
-                src="/images/ai-health-monitoring.png"
+                src="/assets/images/features/ai-health-monitoring.png"
                 alt="AI health monitoring interface"
                 width={500}
                 height={350}
@@ -163,7 +163,7 @@ export default function Home() {
             </div>
             <div className="order-1 md:order-2">
               <Image
-                src="/images/breeding-program-tools.jpg"
+                src="/assets/images/features/breeding-program-tools.jpg"
                 alt="Breeding program tools interface"
                 width={500}
                 height={350}
@@ -189,7 +189,7 @@ export default function Home() {
               <div className="flex items-center mb-4">
                 <div className="h-10 w-10 rounded-full overflow-hidden mr-3">
                   <Image
-                    src="/images/testimonial-1.jpg"
+                    src="/assets/images/testimonials/testimonial-1.jpg"
                     alt="Sarah M."
                     width={40}
                     height={40}
@@ -217,7 +217,7 @@ export default function Home() {
               <div className="flex items-center mb-4">
                 <div className="h-10 w-10 rounded-full overflow-hidden mr-3">
                   <Image
-                    src="/images/testimonial-2.jpg"
+                    src="/assets/images/testimonials/testimonial-2.jpg"
                     alt="Michael T."
                     width={40}
                     height={40}
@@ -245,7 +245,7 @@ export default function Home() {
               <div className="flex items-center mb-4">
                 <div className="h-10 w-10 rounded-full overflow-hidden mr-3">
                   <Image
-                    src="/images/testimonial-3.jpg"
+                    src="/assets/images/testimonials/testimonial-3.jpg"
                     alt="Jennifer L."
                     width={40}
                     height={40}
@@ -497,7 +497,7 @@ export default function Home() {
           <div className="bg-white rounded-lg shadow-lg p-8 md:p-12 max-w-4xl mx-auto text-center">
             <div className="flex justify-center mb-6">
               <Image
-                src="/icons/dog-tech.svg"
+                src="/assets/icons/features/dog-tech.svg"
                 alt="Dog with digital elements"
                 width={60}
                 height={60}
