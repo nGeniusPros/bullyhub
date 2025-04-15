@@ -23,6 +23,42 @@ Each feature follows this structure:
 
 ## Features
 
+### Dogs
+
+The Dogs feature allows users to:
+
+- Create and manage dog profiles
+- View and edit dog information
+- Upload dog images
+- View dog pedigrees
+
+### Health Records
+
+The Health Records feature allows users to:
+
+- Create and manage health records for dogs
+- Upload health record documents
+- Track health history
+- Categorize records by type (examinations, vaccinations, etc.)
+
+### Nutrition
+
+The Nutrition feature allows users to:
+
+- Create and manage meal plans for dogs
+- Track nutritional information
+- Schedule feeding times
+- Manage food items and ingredients
+
+### Gallery
+
+The Gallery feature allows users to:
+
+- Upload and manage images
+- Create and manage albums
+- Share images publicly
+- Tag and categorize images
+
 ### DNA Testing
 
 The DNA Testing feature allows users to:
@@ -46,6 +82,7 @@ The Stud Services feature allows users to:
 - List dogs for stud service
 - Browse available studs
 - Use AI-powered stud recommendations
+- Communicate with stud owners via AI receptionist
 
 ### Marketplace
 
@@ -54,6 +91,7 @@ The Marketplace feature allows users to:
 - Browse products by category
 - View product details
 - Add products to cart
+- Complete purchases
 
 ## Development Workflow
 

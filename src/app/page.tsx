@@ -492,9 +492,9 @@ export default function Home() {
       </section>
 
       {/* Final CTA Section */}
-      <section className="py-16 md:py-20 bg-gradient-to-r from-[#29ABE2] to-[#FFDA63]">
+      <section className="py-16 md:py-20 bg-white">
         <div className="container px-4 md:px-6">
-          <div className="bg-white rounded-lg shadow-lg p-8 md:p-12 max-w-4xl mx-auto text-center">
+          <div className="bg-[#E8F4FC] rounded-lg shadow-lg p-8 md:p-12 max-w-4xl mx-auto text-center">
             <div className="flex justify-center mb-6">
               <Image
                 src="/icons/dog-tech.svg"
