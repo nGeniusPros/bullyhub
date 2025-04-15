@@ -160,7 +160,7 @@ export default function UploadDNATestPage() {
           Upload DNA test results from major testing providers
         </p>
       </div>
-      <Card>
+      <Card className="card-gradient card-gradient-primary">
         <form onSubmit={handleSubmit}>
           <CardHeader>
             <CardTitle>DNA Test Information</CardTitle>
@@ -262,7 +262,7 @@ export default function UploadDNATestPage() {
                     />
                     <Button
                       type="button"
-                      variant="outline"
+                      className="btn-secondary-gradient-3color text-white"
                       onClick={() => document.getElementById("file")?.click()}
                     >
                       Browse Files
@@ -285,7 +285,7 @@ export default function UploadDNATestPage() {
             >
               Cancel
             </Button>
-            <Button type="submit" disabled={submitting || loading}>
+            <Button type="submit" disabled={submitting || loading} className="btn-gradient-3color">
               {submitting ? (
                 <>
                   <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-b-transparent"></div>

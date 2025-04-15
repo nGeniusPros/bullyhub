@@ -38,152 +38,10 @@ import { FinancialRecord } from "@/types";
 import { format } from "date-fns";
 import { createBrowserSupabaseClient } from "@/lib/supabase-browser";
 
-// Mock financial data
-const mockFinancialRecords = [
-  {
-    id: "1",
-    recordType: "income",
-    category: "Stud Fee",
-    amount: 1500,
-    description: "Stud service for Max with Sarah's female",
-    date: "2024-05-15",
-    relatedDogId: "1",
-    relatedDogName: "Champion Max",
-    relatedClientId: "2",
-    relatedClientName: "Sarah Johnson",
-    receiptUrl: null,
-  },
-  {
-    id: "2",
-    recordType: "income",
-    category: "Puppy Sale",
-    amount: 3500,
-    description: "Blue male puppy from Titan's litter",
-    date: "2024-05-10",
-    relatedDogId: "3",
-    relatedDogName: "Titan",
-    relatedClientId: "1",
-    relatedClientName: "John Smith",
-    receiptUrl: null,
-  },
-  {
-    id: "3",
-    recordType: "expense",
-    category: "Veterinary",
-    amount: 450,
-    description: "Annual checkups and vaccinations for breeding dogs",
-    date: "2024-05-08",
-    relatedDogId: null,
-    relatedDogName: null,
-    relatedClientId: null,
-    relatedClientName: null,
-    receiptUrl: "receipt-123.pdf",
-  },
-  {
-    id: "4",
-    recordType: "expense",
-    category: "Food",
-    amount: 250,
-    description: "Premium dog food for the month",
-    date: "2024-05-05",
-    relatedDogId: null,
-    relatedDogName: null,
-    relatedClientId: null,
-    relatedClientName: null,
-    receiptUrl: "receipt-124.pdf",
-  },
-  {
-    id: "5",
-    recordType: "income",
-    category: "Stud Fee",
-    amount: 2000,
-    description: "Stud service for Zeus with Jessica's female",
-    date: "2024-05-01",
-    relatedDogId: "4",
-    relatedDogName: "Zeus",
-    relatedClientId: "4",
-    relatedClientName: "Jessica Brown",
-    receiptUrl: null,
-  },
-  {
-    id: "6",
-    recordType: "expense",
-    category: "Supplies",
-    amount: 180,
-    description: "Whelping supplies and equipment",
-    date: "2024-04-28",
-    relatedDogId: null,
-    relatedDogName: null,
-    relatedClientId: null,
-    relatedClientName: null,
-    receiptUrl: "receipt-125.pdf",
-  },
-  {
-    id: "7",
-    recordType: "expense",
-    category: "Marketing",
-    amount: 120,
-    description: "Social media advertising for stud services",
-    date: "2024-04-25",
-    relatedDogId: null,
-    relatedDogName: null,
-    relatedClientId: null,
-    relatedClientName: null,
-    receiptUrl: null,
-  },
-  {
-    id: "8",
-    recordType: "income",
-    category: "Puppy Sale",
-    amount: 3000,
-    description: "Champagne female puppy from King Apollo's litter",
-    date: "2024-04-20",
-    relatedDogId: "2",
-    relatedDogName: "King Apollo",
-    relatedClientId: "5",
-    relatedClientName: "David Miller",
-    receiptUrl: null,
-  },
-];
-
-// Calculate financial summary
-const calculateFinancialSummary = (records) => {
-  const totalIncome = records
-    .filter((record) => record.recordType === "income")
-    .reduce((sum, record) => sum + record.amount, 0);
-
-  const totalExpenses = records
-    .filter((record) => record.recordType === "expense")
-    .reduce((sum, record) => sum + record.amount, 0);
-
-  const netProfit = totalIncome - totalExpenses;
-
-  // Calculate by category
-  const incomeByCategory = records
-    .filter((record) => record.recordType === "income")
-    .reduce((acc, record) => {
-      acc[record.category] = (acc[record.category] || 0) + record.amount;
-      return acc;
-    }, {});
-
-  const expensesByCategory = records
-    .filter((record) => record.recordType === "expense")
-    .reduce((acc, record) => {
-      acc[record.category] = (acc[record.category] || 0) + record.amount;
-      return acc;
-    }, {});
-
-  return {
-    totalIncome,
-    totalExpenses,
-    netProfit,
-    incomeByCategory,
-    expensesByCategory,
-  };
-};
+// Financial records are now fetched from the database using the useFinancialRecords hook
 
 export default function FinancialManagement() {
-  const [activeTab, setActiveTab] = useState("all");
+  const [activeTab, setActiveTab] = useState("analysis");
   const [searchTerm, setSearchTerm] = useState("");
   const { records, loading, error, fetchRecords, getFinancialSummary } =
     useFinancialRecords();
@@ -393,17 +251,28 @@ export default function FinancialManagement() {
           </div>
 
           <Tabs
-            defaultValue="all"
+            defaultValue="analysis"
             value={activeTab}
             onValueChange={setActiveTab}
             className="space-y-4"
           >
             <TabsList>
+              <TabsTrigger value="analysis">Analysis</TabsTrigger>
               <TabsTrigger value="all">All Transactions</TabsTrigger>
               <TabsTrigger value="income">Income</TabsTrigger>
               <TabsTrigger value="expenses">Expenses</TabsTrigger>
-              <TabsTrigger value="analysis">Analysis</TabsTrigger>
             </TabsList>
+
+            <TabsContent value="analysis" className="space-y-4">
+              <div className="p-2">
+                {/* Import the FinancialCharts component */}
+                {(() => {
+                  const FinancialCharts =
+                    require("@/components/marketing/financial-charts").FinancialCharts;
+                  return <FinancialCharts records={records} />;
+                })()}
+              </div>
+            </TabsContent>
 
             <TabsContent value="all" className="space-y-4">
               <div className="rounded-md border">
@@ -616,17 +485,6 @@ export default function FinancialManagement() {
                     </p>
                   </div>
                 )}
-              </div>
-            </TabsContent>
-
-            <TabsContent value="analysis" className="space-y-4">
-              <div className="p-2">
-                {/* Import the FinancialCharts component */}
-                {(() => {
-                  const FinancialCharts =
-                    require("@/components/marketing/financial-charts").FinancialCharts;
-                  return <FinancialCharts records={records} />;
-                })()}
               </div>
             </TabsContent>
           </Tabs>

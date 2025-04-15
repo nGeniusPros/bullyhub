@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MealPlanForm } from "@/features/nutrition/components/MealPlanForm";
+import { MealPlanForm } from "@/components/MealPlanForm";
 
 export default function AddMealPlanPage() {
   const searchParams = useSearchParams();

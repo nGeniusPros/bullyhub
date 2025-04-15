@@ -88,21 +88,38 @@ export default function BreedingDashboardPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">
-            Breeding Dashboard
+      {/* Hero Banner */}
+      <div
+        className="rounded-2xl p-8 mb-6 flex flex-col md:flex-row items-center justify-between"
+        style={{
+          background: "linear-gradient(90deg, #6EE7B7 0%, #3B82F6 100%)",
+          color: "#fff",
+        }}
+      >
+        <div className="flex-1">
+          <h1 className="text-4xl font-bold mb-2 drop-shadow">
+            Welcome to Breeder Hub
           </h1>
-          <p className="text-muted-foreground">
-            Manage your breeding program with AI-powered tools
+          <p className="text-lg mb-4 drop-shadow">
+            Manage your breeding programs, AI tools, and stud services with a modern dashboard for kennel owners.
           </p>
+          <Link href="/dashboard/breeding/planning">
+            <Button
+              className="bg-white text-blue-600 font-semibold shadow hover:bg-blue-50"
+              size="lg"
+            >
+              <Plus className="mr-2 h-5 w-5" />
+              New Breeding Plan
+            </Button>
+          </Link>
         </div>
-        <Link href="/dashboard/breeding/planning">
-          <Button>
-            <Plus className="mr-2 h-4 w-4" />
-            New Breeding Plan
-          </Button>
-        </Link>
+        <div className="hidden md:block ml-8">
+          <img
+            src="/avatars/avatar style 2/avatar-3.png"
+            alt="Breeding Dashboard Mascot"
+            className="w-40 h-40 rounded-full shadow-lg border-4 border-white object-cover"
+          />
+        </div>
       </div>
 
       {/* AI Features */}
@@ -111,28 +128,26 @@ export default function BreedingDashboardPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {aiFeatures.map((feature, index) => (
             <Link key={index} href={feature.href}>
-              <Card className="h-full hover:shadow-md transition-shadow">
-                <CardHeader className="pb-2">
+              <Card className="h-full flex flex-col justify-between hover:shadow-md transition-shadow">
+                <div className="flex-1 flex flex-col p-4">
                   <div
                     className={`w-10 h-10 rounded-full ${feature.color} flex items-center justify-center text-white mb-2`}
                   >
                     {feature.icon}
                   </div>
-                  <CardTitle className="text-lg">{feature.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground">
+                  <CardTitle className="text-lg mb-1">{feature.title}</CardTitle>
+                  <p className="text-sm text-muted-foreground flex-1 mb-4">
                     {feature.description}
                   </p>
-                </CardContent>
-                <CardFooter>
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-start p-0 h-auto"
-                  >
-                    <span className="text-sm text-primary">Open</span>
-                  </Button>
-                </CardFooter>
+                  <div className="mt-auto">
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start p-0 h-auto"
+                    >
+                      <span className="text-sm text-primary">Open</span>
+                    </Button>
+                  </div>
+                </div>
               </Card>
             </Link>
           ))}
@@ -145,9 +160,9 @@ export default function BreedingDashboardPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {breedingTools.map((tool, index) => (
             <Link key={index} href={tool.href}>
-              <Card className="h-full hover:shadow-md transition-shadow">
-                <CardHeader className="pb-2">
-                  <div className="flex items-center justify-between">
+              <Card className="h-full flex flex-col justify-between hover:shadow-md transition-shadow">
+                <div className="flex-1 flex flex-col p-4">
+                  <div className="flex items-center justify-between mb-2">
                     <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">
                       {tool.icon}
                     </div>
@@ -157,21 +172,19 @@ export default function BreedingDashboardPage() {
                       </div>
                     )}
                   </div>
-                  <CardTitle className="text-lg mt-2">{tool.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground">
+                  <CardTitle className="text-lg mb-1">{tool.title}</CardTitle>
+                  <p className="text-sm text-muted-foreground flex-1 mb-4">
                     {tool.description}
                   </p>
-                </CardContent>
-                <CardFooter>
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-start p-0 h-auto"
-                  >
-                    <span className="text-sm text-primary">Open</span>
-                  </Button>
-                </CardFooter>
+                  <div className="mt-auto">
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start p-0 h-auto"
+                    >
+                      <span className="text-sm text-primary">Open</span>
+                    </Button>
+                  </div>
+                </div>
               </Card>
             </Link>
           ))}

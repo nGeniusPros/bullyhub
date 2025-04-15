@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,103 +10,221 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Plus, Dog, Dna, Heart, BookOpen } from "lucide-react";
+import "./dashboard.css";
 
 export default function DashboardPage() {
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-        <p className="text-muted-foreground">
-          Welcome to PetPals! Manage your dogs, DNA tests, and breeding
-          programs.
-        </p>
+    <div className="dashboard-container space-y-6">
+      <div className="welcome-header bg-info-gradient-3color">
+        <div className="flex flex-col space-y-2 z-10 relative max-w-[60%]">
+          <h1 className="text-3xl font-bold tracking-tight text-white">Welcome to PetPals</h1>
+          <p className="text-white/90">
+            We're here to help you manage your pets with our comprehensive suite of tools and services.
+          </p>
+          <div className="mt-4">
+            <Button className="bg-white/20 text-white border-white/30 hover:bg-white/30">
+              Explore Features
+            </Button>
+          </div>
+        </div>
       </div>
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200">
-          <CardHeader className="pb-2">
-            <CardTitle>My Dogs</CardTitle>
-            <CardDescription>
-              Manage your dogs and their profiles
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">3</div>
-            <p className="text-xs text-muted-foreground">
-              You have 3 dogs registered
-            </p>
-            <div className="mt-4">
-              <Link href="/dashboard/dogs">
-                <Button variant="outline" size="sm">
-                  View all
-                </Button>
-              </Link>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="bg-gradient-to-br from-purple-50 to-pink-50 border-purple-200">
-          <CardHeader className="pb-2">
-            <CardTitle>DNA Tests</CardTitle>
-            <CardDescription>View and manage DNA test results</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">2</div>
-            <p className="text-xs text-muted-foreground">
-              You have 2 DNA tests on file
-            </p>
-            <div className="mt-4">
-              <Link href="/dashboard/dna-tests">
-                <Button variant="outline" size="sm">
-                  View all
-                </Button>
-              </Link>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="bg-gradient-to-br from-green-50 to-teal-50 border-green-200">
-          <CardHeader className="pb-2">
-            <CardTitle>Stud Services</CardTitle>
-            <CardDescription>Manage your stud services</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">1</div>
-            <p className="text-xs text-muted-foreground">
-              You have 1 active stud service
-            </p>
-            <div className="mt-4">
-              <Link href="/dashboard/stud-services">
-                <Button variant="outline" size="sm">
-                  View all
-                </Button>
-              </Link>
-            </div>
-          </CardContent>
-        </Card>
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div className="quick-action-card bg-primary-gradient-3color">
+          <div className="quick-action-icon">
+            <Dog className="h-5 w-5 text-white" />
+          </div>
+          <h3 className="text-lg font-semibold mb-1">My Dogs</h3>
+          <p className="text-sm text-white/80 mb-3">
+            Manage your dogs and their profiles
+          </p>
+          <Link href="/dashboard/dogs" className="inline-block">
+            <Button variant="outline" size="sm" className="bg-white/20 text-white border-white/30 hover:bg-white/30">
+              View all
+            </Button>
+          </Link>
+        </div>
+
+        <div className="quick-action-card bg-secondary-gradient-3color">
+          <div className="quick-action-icon">
+            <Dna className="h-5 w-5 text-white" />
+          </div>
+          <h3 className="text-lg font-semibold mb-1">DNA Tests</h3>
+          <p className="text-sm text-white/80 mb-3">
+            View and manage DNA test results
+          </p>
+          <Link href="/dashboard/dna-tests" className="inline-block">
+            <Button variant="outline" size="sm" className="bg-white/20 text-white border-white/30 hover:bg-white/30">
+              View all
+            </Button>
+          </Link>
+        </div>
+
+        <div className="quick-action-card bg-success-gradient-3color">
+          <div className="quick-action-icon">
+            <Heart className="h-5 w-5 text-white" />
+          </div>
+          <h3 className="text-lg font-semibold mb-1">Stud Services</h3>
+          <p className="text-sm text-white/80 mb-3">
+            Manage your stud services
+          </p>
+          <Link href="/dashboard/stud-services" className="inline-block">
+            <Button variant="outline" size="sm" className="bg-white/20 text-white border-white/30 hover:bg-white/30">
+              View all
+            </Button>
+          </Link>
+        </div>
+
+        <div className="quick-action-card bg-info-gradient-3color">
+          <div className="quick-action-icon">
+            <BookOpen className="h-5 w-5 text-white" />
+          </div>
+          <h3 className="text-lg font-semibold mb-1">Health Records</h3>
+          <p className="text-sm text-white/80 mb-3">
+            Track health and medical records
+          </p>
+          <Link href="/dashboard/health" className="inline-block">
+            <Button variant="outline" size="sm" className="bg-white/20 text-white border-white/30 hover:bg-white/30">
+              View all
+            </Button>
+          </Link>
+        </div>
       </div>
-      <div className="grid gap-6 md:grid-cols-2">
-        <Card className="bg-gradient-to-br from-gray-50 to-blue-50 border-gray-200">
-          <CardHeader>
-            <CardTitle>Recent Activity</CardTitle>
-            <CardDescription>Your recent activity on PetPals</CardDescription>
-          </CardHeader>
-          <CardContent>
+      <div className="flex justify-between items-center mb-4 mt-8">
+        <h2 className="text-xl font-semibold">PetPals Dashboard</h2>
+        <Button className="btn-gradient-3color">
+          <Plus className="h-4 w-4" /> Add Pet
+        </Button>
+      </div>
+
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
+        <div className="pet-card pet-card-gradient pet-card-gradient-primary">
+          <div className="relative">
+            <img
+              src="https://images.unsplash.com/photo-1583511655826-05700442b31b?w=500&h=300&q=80"
+              alt="French Bulldog"
+              className="pet-card-image"
+              width={500}
+              height={300}
+            />
+          </div>
+          <div className="p-4">
+            <div className="flex justify-between items-start">
+              <div>
+                <h3 className="text-lg font-semibold">Max</h3>
+                <p className="text-sm text-muted-foreground">French Bulldog</p>
+              </div>
+              <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">Healthy</span>
+            </div>
+
+            <div className="pet-card-stats mt-4">
+              <div className="pet-stat">
+                <span className="pet-stat-value">2 yrs</span>
+                <span className="pet-stat-label">Age</span>
+              </div>
+              <div className="pet-stat">
+                <span className="pet-stat-value">24 lbs</span>
+                <span className="pet-stat-label">Weight</span>
+              </div>
+              <div className="pet-stat">
+                <span className="pet-stat-value">Male</span>
+                <span className="pet-stat-label">Gender</span>
+              </div>
+            </div>
+
+            <div className="mt-4 space-y-3">
+              <div>
+                <div className="flex justify-between items-center mb-1">
+                  <span className="text-xs font-medium">Health</span>
+                  <span className="text-xs font-medium">95%</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-1.5">
+                  <div className="progress-bar progress-bar-health" style={{ width: '95%' }}></div>
+                </div>
+              </div>
+
+              <div>
+                <div className="flex justify-between items-center mb-1">
+                  <span className="text-xs font-medium">Nutrition</span>
+                  <span className="text-xs font-medium">85%</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-1.5">
+                  <div className="progress-bar progress-bar-nutrition" style={{ width: '85%' }}></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="pet-card pet-card-gradient pet-card-gradient-secondary">
+          <div className="relative">
+            <img
+              src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=500&h=300&q=80"
+              alt="Golden Retriever"
+              className="pet-card-image"
+              width={500}
+              height={300}
+            />
+          </div>
+          <div className="p-4">
+            <div className="flex justify-between items-start">
+              <div>
+                <h3 className="text-lg font-semibold">Bella</h3>
+                <p className="text-sm text-muted-foreground">Golden Retriever</p>
+              </div>
+              <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">Healthy</span>
+            </div>
+
+            <div className="pet-card-stats mt-4">
+              <div className="pet-stat">
+                <span className="pet-stat-value">3 yrs</span>
+                <span className="pet-stat-label">Age</span>
+              </div>
+              <div className="pet-stat">
+                <span className="pet-stat-value">65 lbs</span>
+                <span className="pet-stat-label">Weight</span>
+              </div>
+              <div className="pet-stat">
+                <span className="pet-stat-value">Female</span>
+                <span className="pet-stat-label">Gender</span>
+              </div>
+            </div>
+
+            <div className="mt-4 space-y-3">
+              <div>
+                <div className="flex justify-between items-center mb-1">
+                  <span className="text-xs font-medium">Health</span>
+                  <span className="text-xs font-medium">88%</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-1.5">
+                  <div className="progress-bar progress-bar-health" style={{ width: '88%' }}></div>
+                </div>
+              </div>
+
+              <div>
+                <div className="flex justify-between items-center mb-1">
+                  <span className="text-xs font-medium">Training</span>
+                  <span className="text-xs font-medium">92%</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-1.5">
+                  <div className="progress-bar progress-bar-training" style={{ width: '92%' }}></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid gap-6 md:grid-cols-2 mt-6">
+        <Card className="activity-card activity-card-gradient">
+          <div className="activity-card-header-3color">
+            <CardTitle className="text-white">Recent Activity</CardTitle>
+          </div>
+          <CardContent className="pt-6">
             <div className="space-y-4">
               <div className="flex items-center gap-4">
-                <div className="rounded-full bg-primary/10 p-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="h-4 w-4 text-primary"
-                  >
-                    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
-                    <polyline points="14 2 14 8 20 8" />
-                  </svg>
+                <div className="rounded-full bg-primary-gradient p-2">
+                  <Dna className="h-4 w-4 text-white" />
                 </div>
                 <div className="flex-1">
                   <p className="text-sm font-medium">DNA Test Uploaded</p>
@@ -116,24 +235,8 @@ export default function DashboardPage() {
                 <div className="text-xs text-muted-foreground">2 days ago</div>
               </div>
               <div className="flex items-center gap-4">
-                <div className="rounded-full bg-primary/10 p-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="h-4 w-4 text-primary"
-                  >
-                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                    <circle cx="9" cy="7" r="4" />
-                    <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                  </svg>
+                <div className="rounded-full bg-secondary-gradient p-2">
+                  <Heart className="h-4 w-4 text-white" />
                 </div>
                 <div className="flex-1">
                   <p className="text-sm font-medium">Stud Service Inquiry</p>
@@ -144,26 +247,8 @@ export default function DashboardPage() {
                 <div className="text-xs text-muted-foreground">5 days ago</div>
               </div>
               <div className="flex items-center gap-4">
-                <div className="rounded-full bg-primary/10 p-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="h-4 w-4 text-primary"
-                  >
-                    <path d="M10 5.172C10 3.782 8.423 2.679 6.5 3c-2.823.47-4.113 6.006-4 7 .08.703 1.725 1.722 3.656 1 1.261-.472 1.96-1.45 2.344-2.5" />
-                    <path d="M14.5 5.172c0-1.39 1.577-2.493 3.5-2.172 2.823.47 4.113 6.006 4 7-.08.703-1.725 1.722-3.656 1-1.261-.472-1.96-1.45-2.344-2.5" />
-                    <path d="M8 14v.5" />
-                    <path d="M16 14v.5" />
-                    <path d="M11.25 16.25h1.5L12 17l-.75-.75Z" />
-                    <path d="M4.42 11.247A13.152 13.152 0 0 0 4 14.556C4 18.728 7.582 21 12 21s8-2.272 8-6.444c0-1.061-.162-2.2-.493-3.309m-9.243-6.082A8.801 8.801 0 0 1 12 5c.78 0 1.5.108 2.161.306" />
-                  </svg>
+                <div className="rounded-full bg-success-gradient p-2">
+                  <Dog className="h-4 w-4 text-white" />
                 </div>
                 <div className="flex-1">
                   <p className="text-sm font-medium">New Dog Added</p>
@@ -176,90 +261,34 @@ export default function DashboardPage() {
             </div>
           </CardContent>
         </Card>
-        <Card className="bg-gradient-to-br from-orange-50 to-yellow-50 border-orange-200">
-          <CardHeader>
-            <CardTitle>Quick Actions</CardTitle>
-            <CardDescription>Common tasks you can perform</CardDescription>
-          </CardHeader>
-          <CardContent>
+
+        <Card className="activity-card activity-card-gradient">
+          <div className="activity-card-header-3color">
+            <CardTitle className="text-white">Quick Actions</CardTitle>
+          </div>
+          <CardContent className="pt-6">
             <div className="grid gap-2">
               <Link href="/dashboard/dogs/add">
-                <Button className="w-full justify-start bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="mr-2 h-4 w-4"
-                  >
-                    <path d="M5 12h14" />
-                    <path d="M12 5v14" />
-                  </svg>
+                <Button className="w-full justify-start btn-gradient-3color text-white">
+                  <Plus className="mr-2 h-4 w-4" />
                   Add a New Dog
                 </Button>
               </Link>
               <Link href="/dashboard/dna-tests/upload">
-                <Button className="w-full justify-start bg-gradient-to-r from-purple-500 to-pink-600 text-white hover:from-purple-600 hover:to-pink-700">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="mr-2 h-4 w-4"
-                  >
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                    <polyline points="17 8 12 3 7 8" />
-                    <line x1="12" x2="12" y1="3" y2="15" />
-                  </svg>
+                <Button className="w-full justify-start btn-secondary-gradient-3color text-white">
+                  <Dna className="mr-2 h-4 w-4" />
                   Upload DNA Test
                 </Button>
               </Link>
               <Link href="/dashboard/stud-services/create">
-                <Button className="w-full justify-start bg-gradient-to-r from-green-500 to-teal-600 text-white hover:from-green-600 hover:to-teal-700">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="mr-2 h-4 w-4"
-                  >
-                    <path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z" />
-                  </svg>
+                <Button className="w-full justify-start bg-success-gradient-3color text-white">
+                  <Heart className="mr-2 h-4 w-4" />
                   Create Stud Service
                 </Button>
               </Link>
               <Link href="/dashboard/breeding-programs/create">
-                <Button className="w-full justify-start bg-gradient-to-r from-orange-500 to-yellow-600 text-white hover:from-orange-600 hover:to-yellow-700">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="mr-2 h-4 w-4"
-                  >
-                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-                  </svg>
+                <Button className="w-full justify-start bg-info-gradient-3color text-white">
+                  <BookOpen className="mr-2 h-4 w-4" />
                   Create Breeding Program
                 </Button>
               </Link>

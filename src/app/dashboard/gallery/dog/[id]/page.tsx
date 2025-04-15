@@ -32,8 +32,21 @@ interface Dog {
   profileImageUrl?: string;
 }
 
-import { GalleryImage, GalleryImageUploadData } from "@/features/gallery/types";
-import { useGalleryQueries } from "@/features/gallery/data/queries";
+interface GalleryImage {
+  id: string;
+  url: string;
+  title: string;
+  description: string;
+  is_favorite: boolean;
+  created_at: string;
+  dog_id: string;
+  dog: {
+    id: string;
+    name: string;
+    breed: string;
+    color: string;
+  };
+}
 
 export default function DogGalleryPage({ params }: { params: { id: string } }) {
   const router = useRouter();
@@ -45,9 +58,6 @@ export default function DogGalleryPage({ params }: { params: { id: string } }) {
   const [showUploadDialog, setShowUploadDialog] = useState(false);
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
   const [isUploading, setIsUploading] = useState(false);
-
-  // Get the gallery queries
-  const galleryQueries = useGalleryQueries();
 
   useEffect(() => {
     const fetchDog = async () => {
@@ -66,7 +76,11 @@ export default function DogGalleryPage({ params }: { params: { id: string } }) {
 
     const fetchImages = async () => {
       try {
-        const data = await galleryQueries.getDogImages(params.id);
+        const response = await fetch(`/api/gallery/images?dogId=${params.id}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch images");
+        }
+        const data = await response.json();
         setImages(data);
       } catch (error) {
         console.error("Error fetching images:", error);
@@ -78,7 +92,7 @@ export default function DogGalleryPage({ params }: { params: { id: string } }) {
 
     fetchDog();
     fetchImages();
-  }, [params.id, galleryQueries]);
+  }, [params.id]);
 
   const filteredImages = images.filter(
     (image) =>
@@ -90,28 +104,38 @@ export default function DogGalleryPage({ params }: { params: { id: string } }) {
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       setIsUploading(true);
-
+      
       try {
-        // Upload each file using the gallery queries
+        const formData = new FormData();
+        
         for (let i = 0; i < e.target.files.length; i++) {
           const file = e.target.files[i];
-
-          const uploadData: GalleryImageUploadData = {
-            dog_id: params.id,
-            title: "",
-            description: "",
-            tags: [],
-            is_public: true,
-            file: file
-          };
-
-          await galleryQueries.uploadImage(uploadData);
+          formData.append("file", file);
         }
-
+        
+        formData.append("dogId", params.id);
+        formData.append("title", "");
+        formData.append("description", "");
+        
+        const response = await fetch("/api/gallery/upload", {
+          method: "POST",
+          body: formData,
+        });
+        
+        if (!response.ok) {
+          throw new Error("Failed to upload images");
+        }
+        
+        const data = await response.json();
+        
         // Refresh images
-        const updatedImages = await galleryQueries.getDogImages(params.id);
-        setImages(updatedImages);
-
+        const imagesResponse = await fetch(`/api/gallery/images?dogId=${params.id}`);
+        if (!imagesResponse.ok) {
+          throw new Error("Failed to fetch updated images");
+        }
+        const imagesData = await imagesResponse.json();
+        setImages(imagesData);
+        
         toast.success("Images uploaded successfully");
         setShowUploadDialog(false);
       } catch (error) {
@@ -132,12 +156,12 @@ export default function DogGalleryPage({ params }: { params: { id: string } }) {
             <Upload className="h-8 w-8 text-muted-foreground mb-4" />
             <h3 className="font-medium mb-1">Drag and drop your images</h3>
             <p className="text-sm text-muted-foreground mb-4">or click to browse files</p>
-            <Input
-              type="file"
-              accept="image/*"
-              multiple
-              className="hidden"
-              id="image-upload"
+            <Input 
+              type="file" 
+              accept="image/*" 
+              multiple 
+              className="hidden" 
+              id="image-upload" 
               onChange={handleImageUpload}
               disabled={isUploading}
             />
@@ -164,9 +188,9 @@ export default function DogGalleryPage({ params }: { params: { id: string } }) {
     return (
       <div className="space-y-4">
         <div className="rounded-md overflow-hidden">
-          <img
-            src={image.url}
-            alt={image.title}
+          <img 
+            src={image.url} 
+            alt={image.title} 
             className="w-full object-contain max-h-[500px]"
           />
         </div>
@@ -281,19 +305,19 @@ export default function DogGalleryPage({ params }: { params: { id: string } }) {
         </div>
       ) : (
         <div className={`grid gap-4 ${
-          layout === 'grid'
-            ? 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
+          layout === 'grid' 
+            ? 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4' 
             : 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3'
         }`}>
           {filteredImages.map((image) => (
-            <div
-              key={image.id}
+            <div 
+              key={image.id} 
               className="group relative overflow-hidden rounded-lg cursor-pointer"
               onClick={() => setSelectedImage(image)}
             >
-              <img
-                src={image.url}
-                alt={image.title || "Dog photo"}
+              <img 
+                src={image.url} 
+                alt={image.title || "Dog photo"} 
                 className="w-full h-48 object-cover transition-transform group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -316,7 +340,7 @@ export default function DogGalleryPage({ params }: { params: { id: string } }) {
           ))}
         </div>
       )}
-
+      
       {/* Image Detail Dialog */}
       {selectedImage && (
         <Dialog open={!!selectedImage} onOpenChange={(open) => !open && setSelectedImage(null)}>

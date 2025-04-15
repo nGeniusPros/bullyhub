@@ -8,7 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import { Dog } from "@/types";
 import Link from "next/link";
-import { DogProfileImageUpload } from "@/features/dogs/components/DogProfileImageUpload";
+import { DogProfileImageUpload } from "@/components/DogProfileImageUpload";
 import {
   Activity,
   Calendar,
