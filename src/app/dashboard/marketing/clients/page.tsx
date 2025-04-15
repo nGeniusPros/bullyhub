@@ -107,55 +107,55 @@ export default function ClientManagement() {
             </div>
           </div>
 
-      <Tabs
-        defaultValue="all"
-        value={activeTab}
-        onValueChange={setActiveTab}
-        className="space-y-4"
-      >
-        <TabsList>
-          <TabsTrigger value="all">All Clients</TabsTrigger>
-          <TabsTrigger value="active">Active</TabsTrigger>
-          <TabsTrigger value="prospect">Prospects</TabsTrigger>
-          <TabsTrigger value="past">Past Clients</TabsTrigger>
-        </TabsList>
+          <Tabs
+            defaultValue="all"
+            value={activeTab}
+            onValueChange={setActiveTab}
+            className="space-y-4"
+          >
+            <TabsList>
+              <TabsTrigger value="all">All Clients</TabsTrigger>
+              <TabsTrigger value="active">Active</TabsTrigger>
+              <TabsTrigger value="prospect">Prospects</TabsTrigger>
+              <TabsTrigger value="past">Past Clients</TabsTrigger>
+            </TabsList>
 
-        <TabsContent value="all" className="space-y-4">
-          <div className="grid gap-4">
-            {filteredClients.map((client) => (
-              <ClientCard key={client.id} client={client} />
-            ))}
-            {filteredClients.length === 0 && (
-              <div className="text-center py-10">
-                <Users className="mx-auto h-10 w-10 text-muted-foreground" />
-                <h3 className="mt-2 text-lg font-medium">No clients found</h3>
-                <p className="text-sm text-muted-foreground">
-                  Try adjusting your search or filter to find what you're
-                  looking for.
-                </p>
+            <TabsContent value="all" className="space-y-4">
+              <div className="grid gap-4">
+                {filteredClients.map((client) => (
+                  <ClientCard key={client.id} client={client} />
+                ))}
+                {filteredClients.length === 0 && (
+                  <div className="text-center py-10">
+                    <Users className="mx-auto h-10 w-10 text-muted-foreground" />
+                    <h3 className="mt-2 text-lg font-medium">No clients found</h3>
+                    <p className="text-sm text-muted-foreground">
+                      Try adjusting your search or filter to find what you're
+                      looking for.
+                    </p>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        </TabsContent>
+            </TabsContent>
 
-        <TabsContent value="active" className="space-y-4">
-          <div className="grid gap-4">
-            {filteredClients.map((client) => (
-              <ClientCard key={client.id} client={client} />
-            ))}
-            {filteredClients.length === 0 && (
-              <div className="text-center py-10">
-                <Users className="mx-auto h-10 w-10 text-muted-foreground" />
-                <h3 className="mt-2 text-lg font-medium">
-                  No active clients found
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  Try adjusting your search or add a new client.
-                </p>
+            <TabsContent value="active" className="space-y-4">
+              <div className="grid gap-4">
+                {filteredClients.map((client) => (
+                  <ClientCard key={client.id} client={client} />
+                ))}
+                {filteredClients.length === 0 && (
+                  <div className="text-center py-10">
+                    <Users className="mx-auto h-10 w-10 text-muted-foreground" />
+                    <h3 className="mt-2 text-lg font-medium">
+                      No active clients found
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      Try adjusting your search or add a new client.
+                    </p>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        </TabsContent>
+            </TabsContent>
 
             <TabsContent value="prospect" className="space-y-4">
               <div className="grid gap-4">
@@ -174,25 +174,27 @@ export default function ClientManagement() {
               </div>
             </TabsContent>
 
-        <TabsContent value="past" className="space-y-4">
-          <div className="grid gap-4">
-            {filteredClients.map((client) => (
-              <ClientCard key={client.id} client={client} />
-            ))}
-            {filteredClients.length === 0 && (
-              <div className="text-center py-10">
-                <Users className="mx-auto h-10 w-10 text-muted-foreground" />
-                <h3 className="mt-2 text-lg font-medium">
-                  No past clients found
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  Try adjusting your search or filter.
-                </p>
+            <TabsContent value="past" className="space-y-4">
+              <div className="grid gap-4">
+                {filteredClients.map((client) => (
+                  <ClientCard key={client.id} client={client} />
+                ))}
+                {filteredClients.length === 0 && (
+                  <div className="text-center py-10">
+                    <Users className="mx-auto h-10 w-10 text-muted-foreground" />
+                    <h3 className="mt-2 text-lg font-medium">
+                      No past clients found
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      Try adjusting your search or filter.
+                    </p>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        </TabsContent>
-      </Tabs>
+            </TabsContent>
+          </Tabs>
+        </>
+      )}
     </div>
   );
 }

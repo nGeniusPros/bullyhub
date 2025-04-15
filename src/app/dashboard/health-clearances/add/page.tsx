@@ -354,6 +354,7 @@ export default function AddHealthClearancePage() {
                       </div>
                     </div>
                   )}
+                </div>
               </>
             )}
           </CardContent>
