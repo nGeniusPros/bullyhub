@@ -14,6 +14,93 @@
   to = "/.netlify/functions/:splat"
   status = 200
 
+# Feature-specific redirects for vertical slice architecture
+
+# Dogs feature
+[[redirects]]
+  from = "/api/dogs"
+  to = "/.netlify/functions/dogs"
+  status = 200
+
+[[redirects]]
+  from = "/api/dogs/:id"
+  to = "/.netlify/functions/dog-by-id/:id"
+  status = 200
+
+[[redirects]]
+  from = "/api/dogs/:id/pedigree"
+  to = "/.netlify/functions/dog-pedigree/:id"
+  status = 200
+
+[[redirects]]
+  from = "/api/dogs/:id/upload-image"
+  to = "/.netlify/functions/dog-upload-image/:id"
+  status = 200
+
+# DNA Testing feature
+[[redirects]]
+  from = "/api/dna-tests"
+  to = "/.netlify/functions/dna-tests"
+  status = 200
+
+[[redirects]]
+  from = "/api/dna-tests/:id"
+  to = "/.netlify/functions/dna-test-by-id/:id"
+  status = 200
+
+[[redirects]]
+  from = "/api/dna-tests/parse"
+  to = "/.netlify/functions/dna-test-parser"
+  status = 200
+
+# Health Clearances feature
+[[redirects]]
+  from = "/api/health-clearances"
+  to = "/.netlify/functions/health-clearances"
+  status = 200
+
+[[redirects]]
+  from = "/api/health-clearances/:id"
+  to = "/.netlify/functions/health-clearance-by-id/:id"
+  status = 200
+
+[[redirects]]
+  from = "/api/health-clearances/verify"
+  to = "/.netlify/functions/health-clearance-verification"
+  status = 200
+
+# Stud Services feature
+[[redirects]]
+  from = "/api/stud-services"
+  to = "/.netlify/functions/stud-services"
+  status = 200
+
+[[redirects]]
+  from = "/api/stud-services/:id"
+  to = "/.netlify/functions/stud-service-by-id/:id"
+  status = 200
+
+[[redirects]]
+  from = "/api/stud-services/receptionist"
+  to = "/.netlify/functions/stud-receptionist"
+  status = 200
+
+# Marketplace feature
+[[redirects]]
+  from = "/api/marketplace/products"
+  to = "/.netlify/functions/marketplace-products"
+  status = 200
+
+[[redirects]]
+  from = "/api/marketplace/products/:id"
+  to = "/.netlify/functions/marketplace-product-by-id/:id"
+  status = 200
+
+[[redirects]]
+  from = "/api/marketplace/cart"
+  to = "/.netlify/functions/marketplace-cart"
+  status = 200
+
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 

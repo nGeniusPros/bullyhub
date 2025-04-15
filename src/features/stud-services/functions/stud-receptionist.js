@@ -1,12 +1,5 @@
 // Stud Services Feature - Stud Receptionist Function
-import { createResponse, handleOptions } from "../../../netlify/utils/cors-headers.js";
-import { supabase } from "../../../netlify/utils/supabase-client.js";
 import OpenAI from "openai";
-
-// Initialize OpenAI client
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
 
 // System prompt for the AI stud receptionist
 const SYSTEM_PROMPT = `
@@ -30,57 +23,64 @@ Format these as a numbered list with the heading "Suggested Questions:".
 /**
  * Handler for the stud receptionist function
  */
-export const handler = async (event, context) => {
-  // Handle OPTIONS request for CORS preflight
-  if (event.httpMethod === "OPTIONS") {
-    return handleOptions();
-  }
+export const createHandler = ({ createResponse, handleOptions, supabase }) => {
+  // Initialize OpenAI client
+  const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+  });
 
-  try {
-    // Parse the request body
-    const data = JSON.parse(event.body);
-    const { studServiceId, message, conversationId } = data;
-
-    if (!studServiceId || !message) {
-      return createResponse(400, { error: "Both studServiceId and message are required" });
+  return async (event, context) => {
+    // Handle OPTIONS request for CORS preflight
+    if (event.httpMethod === "OPTIONS") {
+      return handleOptions();
     }
 
-    // Get the stud service details
-    const { data: studService, error: studServiceError } = await supabase
-      .from("stud_services")
-      .select(`
-        *,
-        stud:dogs(
-          id,
-          name,
-          breed,
-          color,
-          date_of_birth,
-          owner_id,
-          profiles:owner_id(first_name, last_name)
-        )
-      `)
-      .eq("id", studServiceId)
-      .single();
+    try {
+      // Parse the request body
+      const data = JSON.parse(event.body);
+      const { studServiceId, message, conversationId } = data;
 
-    if (studServiceError || !studService) {
-      console.error("Error fetching stud service:", studServiceError);
-      return createResponse(404, { error: "Stud service not found" });
+      if (!studServiceId || !message) {
+        return createResponse(400, { error: "Both studServiceId and message are required" });
+      }
+
+      // Get the stud service details
+      const { data: studService, error: studServiceError } = await supabase
+        .from("stud_services")
+        .select(`
+          *,
+          stud:dogs(
+            id,
+            name,
+            breed,
+            color,
+            date_of_birth,
+            owner_id,
+            profiles:owner_id(first_name, last_name)
+          )
+        `)
+        .eq("id", studServiceId)
+        .single();
+
+      if (studServiceError || !studService) {
+        console.error("Error fetching stud service:", studServiceError);
+        return createResponse(404, { error: "Stud service not found" });
+      }
+
+      // Generate AI response
+      const aiResponse = await generateAIResponse(studService, message, conversationId, openai, supabase);
+      return aiResponse;
+    } catch (error) {
+      console.error("Error in stud receptionist:", error);
+      return createResponse(500, { error: "Internal server error" });
     }
-
-    // Generate AI response
-    const aiResponse = await generateAIResponse(studService, message, conversationId);
-    return aiResponse;
-  } catch (error) {
-    console.error("Error in stud receptionist:", error);
-    return createResponse(500, { error: "Internal server error" });
-  }
+  };
 };
 
 /**
  * Generate AI response based on stud service details and user message
  */
-async function generateAIResponse(studService, message, conversationId) {
+async function generateAIResponse(studService, message, conversationId, openai, supabase) {
   try {
     // Get conversation history if conversationId is provided
     let conversationHistory = [];
@@ -118,18 +118,18 @@ async function generateAIResponse(studService, message, conversationId) {
     - Color: ${studService.stud.color}
     - Age: ${calculateAge(studService.stud.date_of_birth)}
     - Owner: ${studService.stud.profiles.first_name} ${studService.stud.profiles.last_name}
-    
+
     Stud Service Information:
     - Fee: $${studService.fee}
     - Availability: ${studService.availability ? "Available" : "Not available at this time"}
     - Description: ${studService.description || "No additional description provided"}
-    
+
     Health Requirements for Female Dogs:
     - Up-to-date vaccinations
     - Negative brucellosis test within 30 days of breeding
     - Health clearances appropriate for the breed
     - Female must be in good health and condition
-    
+
     Breeding Process:
     - Initial consultation and compatibility assessment
     - Health verification for both dogs
@@ -184,7 +184,7 @@ async function generateAIResponse(studService, message, conversationId) {
     };
 
     // Save the conversation to the database
-    await saveConversation(studService.id, message, aiResponse, conversationId);
+    await saveConversation(studService.id, message, aiResponse, conversationId, supabase);
 
     return createResponse(200, {
       message: aiResponse,
@@ -206,17 +206,17 @@ function extractSuggestedQuestions(response) {
   try {
     const suggestedQuestionsRegex = /Suggested Questions:[\s\n]+((?:\d+\.\s+[^\n]+[\n]?)+)/i;
     const match = response.match(suggestedQuestionsRegex);
-    
+
     if (match && match[1]) {
       const questionsText = match[1];
       const questionLines = questionsText.split(/\n/).filter(line => line.trim() !== '');
-      
+
       return questionLines.map(line => {
         // Remove the number and any leading/trailing whitespace
         return line.replace(/^\d+\.\s+/, '').trim();
       });
     }
-    
+
     return [];
   } catch (error) {
     console.error("Error extracting suggested questions:", error);
@@ -236,7 +236,7 @@ function extractAvailabilityInfo(response, defaultAvailability) {
     // Look for next available date in the response
     const dateRegex = /(available|open)(?:\s+for\s+booking)?(?:\s+on|\s+from)?\s+([A-Za-z]+\s+\d{1,2}(?:st|nd|rd|th)?(?:,\s+\d{4})?)/i;
     const dateMatch = response.match(dateRegex);
-    
+
     if (dateMatch && dateMatch[2]) {
       nextAvailableDate = dateMatch[2];
     }
@@ -244,7 +244,7 @@ function extractAvailabilityInfo(response, defaultAvailability) {
     // Look for booking instructions
     const instructionsRegex = /(to\s+book|booking\s+process|schedule\s+a\s+breeding)[^.!?]*[.!?]/i;
     const instructionsMatch = response.match(instructionsRegex);
-    
+
     if (instructionsMatch && instructionsMatch[0]) {
       bookingInstructions = instructionsMatch[0].trim();
     }
@@ -267,10 +267,10 @@ function extractAvailabilityInfo(response, defaultAvailability) {
 /**
  * Save conversation to the database
  */
-async function saveConversation(studServiceId, userMessage, aiResponse, conversationId) {
+async function saveConversation(studServiceId, userMessage, aiResponse, conversationId, supabase) {
   try {
     const timestamp = new Date().toISOString();
-    
+
     if (conversationId) {
       // Update existing conversation
       const { data: conversation, error: getError } = await supabase
@@ -278,18 +278,18 @@ async function saveConversation(studServiceId, userMessage, aiResponse, conversa
         .select("messages")
         .eq("id", conversationId)
         .single();
-      
+
       if (getError) {
         console.error("Error fetching conversation:", getError);
         return;
       }
-      
+
       const updatedMessages = [
         ...conversation.messages,
         { role: "user", content: userMessage, timestamp },
         { role: "assistant", content: aiResponse, timestamp },
       ];
-      
+
       const { error: updateError } = await supabase
         .from("stud_receptionist_conversations")
         .update({
@@ -297,7 +297,7 @@ async function saveConversation(studServiceId, userMessage, aiResponse, conversa
           updated_at: timestamp,
         })
         .eq("id", conversationId);
-      
+
       if (updateError) {
         console.error("Error updating conversation:", updateError);
       }
@@ -315,7 +315,7 @@ async function saveConversation(studServiceId, userMessage, aiResponse, conversa
           created_at: timestamp,
           updated_at: timestamp,
         });
-      
+
       if (insertError) {
         console.error("Error creating conversation:", insertError);
       }

@@ -1,14 +1,12 @@
 // DNA Testing Feature - DNA Test Parser Function
-import { createResponse, handleOptions } from "../../../netlify/utils/cors-headers.js";
-import { supabase } from "../../../netlify/utils/supabase-client.js";
 
 /**
  * Parse DNA test results from various providers
- * 
+ *
  * This function accepts DNA test data in various formats and parses it into
  * a standardized structure for storage in the database.
  */
-export const handler = async (event, context) => {
+export const createHandler = ({ createResponse, handleOptions, supabase }) => async (event, context) => {
   // Handle OPTIONS request for CORS preflight
   if (event.httpMethod === "OPTIONS") {
     return handleOptions();
@@ -22,9 +20,9 @@ export const handler = async (event, context) => {
     const { dogId, testType, testProvider, testData, rawData } = JSON.parse(event.body);
 
     if (!dogId || !testType || !testProvider || !testData) {
-      return createResponse(400, { 
-        error: "Missing required fields", 
-        required: ["dogId", "testType", "testProvider", "testData"] 
+      return createResponse(400, {
+        error: "Missing required fields",
+        required: ["dogId", "testType", "testProvider", "testData"]
       });
     }
 
@@ -89,7 +87,7 @@ async function parseTestData(testType, testProvider, testData) {
     .eq("marker_type", testType === "health-markers" ? "health" : "color");
 
   const markers = geneticMarkers || [];
-  
+
   // Standardized results object
   const results = {
     provider: testProvider,
@@ -102,15 +100,15 @@ async function parseTestData(testType, testProvider, testData) {
   switch (testProvider.toLowerCase()) {
     case "embark":
       return parseEmbarkResults(testType, testData, markers, results);
-    
+
     case "wisdom panel":
     case "wisdompanel":
       return parseWisdomPanelResults(testType, testData, markers, results);
-    
+
     case "paw print genetics":
     case "pawprintgenetics":
       return parsePawPrintResults(testType, testData, markers, results);
-    
+
     default:
       // Generic parser for unknown providers
       return parseGenericResults(testType, testData, markers, results);
@@ -126,11 +124,11 @@ function parseEmbarkResults(testType, testData, markers, results) {
     // Parse color genetics
     if (testData.traits) {
       Object.entries(testData.traits).forEach(([trait, value]) => {
-        const marker = markers.find(m => 
+        const marker = markers.find(m =>
           m.marker_name.toLowerCase() === trait.toLowerCase() ||
           m.gene_symbol.toLowerCase() === trait.toLowerCase()
         );
-        
+
         if (marker) {
           results.markers[marker.gene_symbol] = {
             name: marker.marker_name,
@@ -150,10 +148,10 @@ function parseEmbarkResults(testType, testData, markers, results) {
     // Parse health markers
     if (testData.health_conditions) {
       testData.health_conditions.forEach(condition => {
-        const marker = markers.find(m => 
+        const marker = markers.find(m =>
           m.condition_name?.toLowerCase() === condition.name?.toLowerCase()
         );
-        
+
         results.markers[condition.name] = {
           name: condition.name,
           value: condition.status || "unknown",
@@ -163,7 +161,7 @@ function parseEmbarkResults(testType, testData, markers, results) {
       });
     }
   }
-  
+
   return results;
 }
 
@@ -191,11 +189,11 @@ function parsePawPrintResults(testType, testData, markers, results) {
 function parseGenericResults(testType, testData, markers, results) {
   // Try to match keys in testData with known genetic markers
   Object.entries(testData).forEach(([key, value]) => {
-    const marker = markers.find(m => 
+    const marker = markers.find(m =>
       m.marker_name.toLowerCase() === key.toLowerCase() ||
       m.gene_symbol.toLowerCase() === key.toLowerCase()
     );
-    
+
     if (marker) {
       results.markers[marker.gene_symbol] = {
         name: marker.marker_name,
@@ -210,6 +208,6 @@ function parseGenericResults(testType, testData, markers, results) {
       };
     }
   });
-  
+
   return results;
 }

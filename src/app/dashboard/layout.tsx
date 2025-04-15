@@ -49,7 +49,7 @@ export default function DashboardLayout({
 
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="sticky top-0 z-50 w-full border-b bg-background">
+      <header className="sticky top-0 z-50 w-full border-b bg-gradient-to-r from-blue-500 to-purple-600 text-white">
         <div className="container flex h-16 items-center justify-between px-4 md:px-6">
           <Link href="/" className="flex items-center gap-2 font-bold text-xl">
             PetPals
@@ -96,7 +96,7 @@ export default function DashboardLayout({
         </div>
       </header>
       <div className="flex flex-1">
-        <aside className="w-64 border-r bg-muted/40 hidden md:block">
+        <aside className="w-64 border-r bg-gray-50 hidden md:block">
           <nav className="flex flex-col gap-2 p-4">
             <div className="mb-2">
               <h3 className="text-sm font-medium text-muted-foreground px-4 py-2">
@@ -106,7 +106,7 @@ export default function DashboardLayout({
             <Link href="/dashboard">
               <Button
                 variant={pathname === "/dashboard" ? "default" : "ghost"}
-                className="w-full justify-start"
+                className="w-full justify-start bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700"
               >
                 <LayoutDashboard className="mr-2 h-4 w-4" />
                 Dashboard
@@ -472,7 +472,7 @@ export default function DashboardLayout({
             </Link>
           </nav>
         </aside>
-        <main className="flex-1 p-4 md:p-6">
+        <main className="flex-1 p-4 md:p-6 bg-gray-50">
           <ErrorBoundary>
             <DatabaseConnectionError />
             {isConnected && children}

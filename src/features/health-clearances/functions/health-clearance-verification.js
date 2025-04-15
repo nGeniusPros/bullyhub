@@ -1,14 +1,12 @@
 // Health Clearances Feature - Health Clearance Verification Function
-import { createResponse, handleOptions } from "../../../netlify/utils/cors-headers.js";
-import { supabase } from "../../../netlify/utils/supabase-client.js";
 
 /**
  * Verify health clearances and process new submissions
- * 
+ *
  * This function handles verification of health clearances by verification number
  * and processes new health clearance submissions.
  */
-export const handler = async (event, context) => {
+export const createHandler = ({ createResponse, handleOptions, supabase }) => async (event, context) => {
   // Handle OPTIONS request for CORS preflight
   if (event.httpMethod === "OPTIONS") {
     return handleOptions();
@@ -19,26 +17,26 @@ export const handler = async (event, context) => {
     if (event.httpMethod === 'GET') {
       const params = new URLSearchParams(event.queryStringParameters);
       const verificationNumber = params.get('verificationNumber');
-      
+
       if (!verificationNumber) {
         return createResponse(400, { error: 'Verification number is required' });
       }
-      
-      return await verifyHealthClearance(verificationNumber);
+
+      return await verifyHealthClearance(verificationNumber, { createResponse, supabase });
     }
-    
+
     // Handle POST request to submit a new clearance for verification
     if (event.httpMethod === 'POST') {
       const data = JSON.parse(event.body);
       const { dogId, test, date, result, verificationNumber, documents } = data;
-      
+
       if (!dogId || !test || !date || !result || !verificationNumber) {
         return createResponse(400, { error: 'Missing required fields' });
       }
-      
-      return await submitHealthClearance(data);
+
+      return await submitHealthClearance(data, { createResponse, supabase });
     }
-    
+
     return createResponse(405, { error: 'Method not allowed' });
   } catch (error) {
     console.error('Error processing request:', error);
@@ -49,7 +47,7 @@ export const handler = async (event, context) => {
 /**
  * Verify a health clearance by verification number
  */
-async function verifyHealthClearance(verificationNumber) {
+async function verifyHealthClearance(verificationNumber, { createResponse, supabase }) {
   try {
     // Get the health clearance from the database
     const { data: healthClearance, error } = await supabase
@@ -60,15 +58,15 @@ async function verifyHealthClearance(verificationNumber) {
       `)
       .eq('verification_number', verificationNumber)
       .single();
-    
+
     if (error) {
       console.error('Error fetching health clearance:', error);
       return createResponse(404, { error: 'Health clearance not found' });
     }
-    
+
     // Check if the clearance is expired
     const isExpired = healthClearance.expiry_date && new Date(healthClearance.expiry_date) < new Date();
-    
+
     // Format the response
     const verificationResult = {
       verified: true,
@@ -88,7 +86,7 @@ async function verifyHealthClearance(verificationNumber) {
         verifiedAt: new Date().toISOString()
       }
     };
-    
+
     return createResponse(200, verificationResult);
   } catch (error) {
     console.error('Error verifying health clearance:', error);
@@ -99,7 +97,7 @@ async function verifyHealthClearance(verificationNumber) {
 /**
  * Submit a new health clearance or update an existing one
  */
-async function submitHealthClearance(clearanceData) {
+async function submitHealthClearance(clearanceData, { createResponse, supabase }) {
   try {
     // Check if a clearance with this verification number already exists
     const { data: existingClearance, error: checkError } = await supabase
@@ -107,21 +105,21 @@ async function submitHealthClearance(clearanceData) {
       .select('id')
       .eq('verification_number', clearanceData.verificationNumber)
       .maybeSingle();
-    
+
     if (checkError) {
       console.error('Error checking for existing clearance:', checkError);
       return createResponse(500, { error: 'Failed to check for existing clearance' });
     }
-    
+
     // Determine the status based on the test and result
     const status = determineStatus(clearanceData.test, clearanceData.result);
-    
+
     // Calculate expiry date if applicable
     const expiryDate = calculateExpiryDate(clearanceData.test, clearanceData.date);
-    
+
     let clearanceId;
     let operation;
-    
+
     if (existingClearance) {
       // Update existing clearance
       const { data: updatedClearance, error: updateError } = await supabase
@@ -139,12 +137,12 @@ async function submitHealthClearance(clearanceData) {
         .eq('id', existingClearance.id)
         .select()
         .single();
-      
+
       if (updateError) {
         console.error('Error updating health clearance:', updateError);
         return createResponse(500, { error: 'Failed to update health clearance' });
       }
-      
+
       clearanceId = updatedClearance.id;
       operation = 'updated';
     } else {
@@ -164,16 +162,16 @@ async function submitHealthClearance(clearanceData) {
         })
         .select()
         .single();
-      
+
       if (insertError) {
         console.error('Error inserting health clearance:', insertError);
         return createResponse(500, { error: 'Failed to create health clearance' });
       }
-      
+
       clearanceId = newClearance.id;
       operation = 'created';
     }
-    
+
     return createResponse(200, {
       success: true,
       message: `Health clearance ${operation} successfully`,
@@ -193,7 +191,7 @@ async function submitHealthClearance(clearanceData) {
 function determineStatus(test, result) {
   const testLower = test.toLowerCase();
   const resultLower = result.toLowerCase();
-  
+
   // Define test-specific rules
   const testRules = {
     'cardiac evaluation': { action: 'normal or better' },
@@ -204,25 +202,25 @@ function determineStatus(test, result) {
     'eye examination': { action: 'normal or better' },
     'dna test': { action: 'carriers can breed' }
   };
-  
+
   // Find the applicable rule
   let action = 'normal or better'; // Default rule
-  
+
   for (const [testPattern, rule] of Object.entries(testRules)) {
     if (testLower.includes(testPattern)) {
       action = rule.action;
       break;
     }
   }
-  
+
   // Apply the rule to determine status
   if (action === 'normal or better') {
-    return resultLower.includes('normal') || 
-           resultLower.includes('clear') || 
-           resultLower.includes('negative') || 
+    return resultLower.includes('normal') ||
+           resultLower.includes('clear') ||
+           resultLower.includes('negative') ||
            resultLower.includes('pass') ? 'passed' : 'failed';
   }
-  
+
   if (action.includes('grade 0-1 acceptable')) {
     // For graded tests like patella luxation
     const grade = parseInt(result.match(/\\d+/)?.[0] || '99');
@@ -239,7 +237,7 @@ function determineStatus(test, result) {
     // For genetic tests where carriers are acceptable
     return resultLower.includes('affected') ? 'failed' : 'passed';
   }
-  
+
   // Default to pending if we can't determine
   return 'pending';
 }
@@ -250,37 +248,37 @@ function determineStatus(test, result) {
 function calculateExpiryDate(test, testDate) {
   const testLower = test.toLowerCase();
   const date = new Date(testDate);
-  
+
   // Define test-specific expiry periods
   if (testLower.includes('cardiac') || testLower.includes('heart')) {
     // Cardiac evaluations typically valid for 1 year
     date.setFullYear(date.getFullYear() + 1);
     return date.toISOString().split('T')[0];
   }
-  
+
   if (testLower.includes('eye') || testLower.includes('ophthalmologist')) {
     // Eye examinations typically valid for 1 year
     date.setFullYear(date.getFullYear() + 1);
     return date.toISOString().split('T')[0];
   }
-  
+
   if (testLower.includes('boas')) {
     // BOAS assessments typically valid for 2 years
     date.setFullYear(date.getFullYear() + 2);
     return date.toISOString().split('T')[0];
   }
-  
+
   if (testLower.includes('hip') || testLower.includes('elbow') || testLower.includes('patella')) {
     // Orthopedic evaluations typically valid for 2 years
     date.setFullYear(date.getFullYear() + 2);
     return date.toISOString().split('T')[0];
   }
-  
+
   if (testLower.includes('dna') || testLower.includes('genetic')) {
     // DNA tests are typically valid for life
     return null;
   }
-  
+
   // Default to 1 year if we don't have a specific rule
   date.setFullYear(date.getFullYear() + 1);
   return date.toISOString().split('T')[0];

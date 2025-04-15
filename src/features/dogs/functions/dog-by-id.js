@@ -1,15 +1,13 @@
 // Dogs Feature - Dog By ID API Function
-import { createResponse, handleOptions } from "../../../netlify/utils/cors-headers.js";
-import { supabase } from "../../../netlify/utils/supabase-client.js";
 
 /**
  * Handle requests for a specific dog
- * 
+ *
  * GET: Get a dog by ID
  * PUT: Update a dog
  * DELETE: Delete a dog
  */
-export const handler = async (event, context) => {
+export const createHandler = ({ createResponse, handleOptions, supabase }) => async (event, context) => {
   // Handle OPTIONS request for CORS preflight
   if (event.httpMethod === "OPTIONS") {
     return handleOptions();

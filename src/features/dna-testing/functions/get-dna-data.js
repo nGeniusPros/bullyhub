@@ -1,8 +1,4 @@
 // DNA Testing Feature - Get DNA Data Function
-import { createResponse, handleOptions } from "../../../netlify/utils/cors-headers.js";
-import { supabase } from "../../../netlify/utils/supabase-client.js";
-
-// Ensure paths are correct for both local development and production
 
 /**
  * Get DNA test data for a dog
@@ -10,7 +6,7 @@ import { supabase } from "../../../netlify/utils/supabase-client.js";
  * This function retrieves DNA test results for a specific dog,
  * with optional filtering by test type and provider.
  */
-export const handler = async (event, context) => {
+export const createHandler = ({ createResponse, handleOptions, supabase }) => async (event, context) => {
   // Handle OPTIONS request for CORS preflight
   if (event.httpMethod === "OPTIONS") {
     return handleOptions();

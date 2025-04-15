@@ -1,13 +1,11 @@
 // Dogs Feature - Dog Pedigree API Function
-import { createResponse, handleOptions } from "../../../netlify/utils/cors-headers.js";
-import { supabase } from "../../../netlify/utils/supabase-client.js";
 
 /**
  * Handle requests for a dog's pedigree
- * 
+ *
  * GET: Get a dog's pedigree
  */
-export const handler = async (event, context) => {
+export const createHandler = ({ createResponse, handleOptions, supabase }) => async (event, context) => {
   // Handle OPTIONS request for CORS preflight
   if (event.httpMethod === "OPTIONS") {
     return handleOptions();
@@ -22,7 +20,7 @@ export const handler = async (event, context) => {
   // Get the dog ID from the path
   const pathParts = event.path.split("/");
   const dogId = pathParts[pathParts.length - 2]; // The ID is the second-to-last part of the path
-  
+
   if (!dogId) {
     return createResponse(400, { error: "Dog ID is required" });
   }

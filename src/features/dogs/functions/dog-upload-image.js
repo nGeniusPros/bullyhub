@@ -1,15 +1,13 @@
 // Dogs Feature - Dog Upload Image API Function
-import { createResponse, handleOptions } from "../../../netlify/utils/cors-headers.js";
-import { supabase } from "../../../netlify/utils/supabase-client.js";
 import busboy from "busboy";
 import { Buffer } from "buffer";
 
 /**
  * Handle requests for uploading a dog's image
- * 
+ *
  * POST: Upload an image for a dog
  */
-export const handler = async (event, context) => {
+export const createHandler = ({ createResponse, handleOptions, supabase }) => async (event, context) => {
   // Handle OPTIONS request for CORS preflight
   if (event.httpMethod === "OPTIONS") {
     return handleOptions();
@@ -24,7 +22,7 @@ export const handler = async (event, context) => {
   // Get the dog ID from the path
   const pathParts = event.path.split("/");
   const dogId = pathParts[pathParts.length - 2]; // The ID is the second-to-last part of the path
-  
+
   if (!dogId) {
     return createResponse(400, { error: "Dog ID is required" });
   }
@@ -49,7 +47,7 @@ export const handler = async (event, context) => {
 
       // Parse the multipart form data
       const formData = await parseMultipartForm(event);
-      
+
       if (!formData.file) {
         return createResponse(400, { error: "No file uploaded" });
       }
@@ -87,7 +85,7 @@ export const handler = async (event, context) => {
         return createResponse(500, { error: "Failed to update dog with image URL" });
       }
 
-      return createResponse(200, { 
+      return createResponse(200, {
         message: "Image uploaded successfully",
         imageUrl: urlData.publicUrl
       });

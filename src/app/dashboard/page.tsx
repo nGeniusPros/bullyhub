@@ -16,12 +16,12 @@ export default function DashboardPage() {
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
         <p className="text-muted-foreground">
-          Welcome to Bully Hub! Manage your dogs, DNA tests, and breeding
+          Welcome to PetPals! Manage your dogs, DNA tests, and breeding
           programs.
         </p>
       </div>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <Card>
+        <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200">
           <CardHeader className="pb-2">
             <CardTitle>My Dogs</CardTitle>
             <CardDescription>
@@ -42,7 +42,7 @@ export default function DashboardPage() {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="bg-gradient-to-br from-purple-50 to-pink-50 border-purple-200">
           <CardHeader className="pb-2">
             <CardTitle>DNA Tests</CardTitle>
             <CardDescription>View and manage DNA test results</CardDescription>
@@ -61,7 +61,7 @@ export default function DashboardPage() {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="bg-gradient-to-br from-green-50 to-teal-50 border-green-200">
           <CardHeader className="pb-2">
             <CardTitle>Stud Services</CardTitle>
             <CardDescription>Manage your stud services</CardDescription>
@@ -82,10 +82,10 @@ export default function DashboardPage() {
         </Card>
       </div>
       <div className="grid gap-6 md:grid-cols-2">
-        <Card>
+        <Card className="bg-gradient-to-br from-gray-50 to-blue-50 border-gray-200">
           <CardHeader>
             <CardTitle>Recent Activity</CardTitle>
-            <CardDescription>Your recent activity on Bully Hub</CardDescription>
+            <CardDescription>Your recent activity on PetPals</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -176,7 +176,7 @@ export default function DashboardPage() {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="bg-gradient-to-br from-orange-50 to-yellow-50 border-orange-200">
           <CardHeader>
             <CardTitle>Quick Actions</CardTitle>
             <CardDescription>Common tasks you can perform</CardDescription>
@@ -184,7 +184,7 @@ export default function DashboardPage() {
           <CardContent>
             <div className="grid gap-2">
               <Link href="/dashboard/dogs/add">
-                <Button className="w-full justify-start" variant="outline">
+                <Button className="w-full justify-start bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -204,7 +204,7 @@ export default function DashboardPage() {
                 </Button>
               </Link>
               <Link href="/dashboard/dna-tests/upload">
-                <Button className="w-full justify-start" variant="outline">
+                <Button className="w-full justify-start bg-gradient-to-r from-purple-500 to-pink-600 text-white hover:from-purple-600 hover:to-pink-700">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -225,7 +225,7 @@ export default function DashboardPage() {
                 </Button>
               </Link>
               <Link href="/dashboard/stud-services/create">
-                <Button className="w-full justify-start" variant="outline">
+                <Button className="w-full justify-start bg-gradient-to-r from-green-500 to-teal-600 text-white hover:from-green-600 hover:to-teal-700">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -244,7 +244,7 @@ export default function DashboardPage() {
                 </Button>
               </Link>
               <Link href="/dashboard/breeding-programs/create">
-                <Button className="w-full justify-start" variant="outline">
+                <Button className="w-full justify-start bg-gradient-to-r from-orange-500 to-yellow-600 text-white hover:from-orange-600 hover:to-yellow-700">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
