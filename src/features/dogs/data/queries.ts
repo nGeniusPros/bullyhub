@@ -172,22 +172,22 @@ export const dogQueries = {
    */
   getDogPedigree: async (dogId: string): Promise<PedigreeData | null> => {
     const supabase = createClient();
-    
+
     // This is a placeholder for actual pedigree retrieval logic
     // In a real implementation, this would query the pedigree data from the database
-    
+
     // Get the dog first
     const { data: dog, error } = await supabase
       .from("dogs")
       .select("*")
       .eq("id", dogId)
       .single();
-    
+
     if (error || !dog) {
       console.error("Error fetching dog for pedigree:", error);
       return null;
     }
-    
+
     // For now, return a mock pedigree structure
     // This would be replaced with actual database queries in a production implementation
     return {
@@ -234,7 +234,7 @@ export const dogQueries = {
    */
   uploadDogImage: async (dogId: string, file: File): Promise<string> => {
     const supabase = createClient();
-    
+
     // Upload the file to storage
     const { data: uploadData, error: uploadError } = await supabase
       .storage
@@ -243,29 +243,29 @@ export const dogQueries = {
         cacheControl: '3600',
         upsert: true
       });
-    
+
     if (uploadError) {
       console.error("Error uploading dog image:", uploadError);
       throw new Error(`Failed to upload dog image: ${uploadError.message}`);
     }
-    
+
     // Get the public URL
     const { data: urlData } = supabase
       .storage
       .from('dog-images')
       .getPublicUrl(uploadData.path);
-    
+
     // Update the dog with the new image URL
     const { error: updateError } = await supabase
       .from("dogs")
       .update({ profile_image_url: urlData.publicUrl })
       .eq("id", dogId);
-    
+
     if (updateError) {
       console.error("Error updating dog with image URL:", updateError);
       throw new Error(`Failed to update dog with image URL: ${updateError.message}`);
     }
-    
+
     return urlData.publicUrl;
   }
 };
@@ -275,7 +275,7 @@ export const dogQueries = {
  */
 export const useDogQueries = () => {
   const supabase = createBrowserClient();
-  
+
   return {
     /**
      * Get all dogs for the current user
@@ -283,11 +283,11 @@ export const useDogQueries = () => {
      */
     getAllDogs: async (): Promise<DogWithBreedingProgram[]> => {
       const { data: { user }, error: userError } = await supabase.auth.getUser();
-      
+
       if (userError || !user) {
         throw new Error("User not authenticated");
       }
-      
+
       const { data, error } = await supabase
         .from("dogs")
         .select(`
@@ -296,12 +296,12 @@ export const useDogQueries = () => {
         `)
         .eq("owner_id", user.id)
         .order("name");
-      
+
       if (error) {
         console.error("Error fetching dogs:", error);
         throw new Error(`Failed to fetch dogs: ${error.message}`);
       }
-      
+
       return data.map(dog => ({
         id: dog.id,
         name: dog.name,
@@ -324,7 +324,95 @@ export const useDogQueries = () => {
         } : undefined
       }));
     },
-    
-    // Add client-side versions of other queries as needed
+
+    /**
+     * Upload an image for a dog
+     * @param dogId - The ID of the dog
+     * @param file - The image file to upload
+     * @returns The URL of the uploaded image
+     */
+    uploadDogImage: async (dogId: string, file: File): Promise<string> => {
+      const { data: uploadData, error: uploadError } = await supabase
+        .storage
+        .from('dog-images')
+        .upload(`${dogId}/${file.name}`, file, {
+          cacheControl: '3600',
+          upsert: true
+        });
+
+      if (uploadError) {
+        console.error("Error uploading dog image:", uploadError);
+        throw new Error(`Failed to upload dog image: ${uploadError.message}`);
+      }
+
+      // Get the public URL
+      const { data: urlData } = supabase
+        .storage
+        .from('dog-images')
+        .getPublicUrl(uploadData.path);
+
+      // Update the dog with the new image URL
+      const { error: updateError } = await supabase
+        .from("dogs")
+        .update({ profile_image_url: urlData.publicUrl })
+        .eq("id", dogId);
+
+      if (updateError) {
+        console.error("Error updating dog with image URL:", updateError);
+        throw new Error(`Failed to update dog with image URL: ${updateError.message}`);
+      }
+
+      return urlData.publicUrl;
+    },
+
+    /**
+     * Remove an image for a dog
+     * @param dogId - The ID of the dog
+     */
+    removeDogImage: async (dogId: string): Promise<void> => {
+      // Get the dog to find the image URL
+      const { data: dog, error: fetchError } = await supabase
+        .from("dogs")
+        .select("profile_image_url")
+        .eq("id", dogId)
+        .single();
+
+      if (fetchError || !dog) {
+        console.error("Error fetching dog:", fetchError);
+        throw new Error(`Failed to fetch dog: ${fetchError?.message}`);
+      }
+
+      if (!dog.profile_image_url) {
+        // No image to remove
+        return;
+      }
+
+      // Extract the path from the URL
+      const url = new URL(dog.profile_image_url);
+      const pathParts = url.pathname.split('/');
+      const filePath = pathParts.slice(pathParts.indexOf('dog-images') + 1).join('/');
+
+      // Remove the file from storage
+      const { error: removeError } = await supabase
+        .storage
+        .from('dog-images')
+        .remove([filePath]);
+
+      if (removeError) {
+        console.error("Error removing dog image:", removeError);
+        throw new Error(`Failed to remove dog image: ${removeError.message}`);
+      }
+
+      // Update the dog to remove the image URL
+      const { error: updateError } = await supabase
+        .from("dogs")
+        .update({ profile_image_url: null })
+        .eq("id", dogId);
+
+      if (updateError) {
+        console.error("Error updating dog to remove image URL:", updateError);
+        throw new Error(`Failed to update dog to remove image URL: ${updateError.message}`);
+      }
+    }
   };
 };
