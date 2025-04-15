@@ -38,7 +38,7 @@ export default function ForBreedersPage() {
               Our platform provides everything you need to manage your breeding program with precision and confidence
             </p>
           </div>
-          
+
           <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
             <div className="space-y-4">
               <h3 className="text-2xl font-medium text-[#333333]">Genetic Analysis & Breeding Predictions</h3>
@@ -67,24 +67,24 @@ export default function ForBreedersPage() {
               </ul>
             </div>
             <div>
-              <Image 
-                src="/images/genetic-analysis.jpg" 
-                alt="Genetic analysis dashboard" 
-                width={500} 
+              <Image
+                src="/assets/images/features/genetic-analysis.jpg"
+                alt="Genetic analysis dashboard"
+                width={500}
                 height={350}
-                className="rounded-lg shadow-lg" 
+                className="rounded-lg shadow-lg"
               />
             </div>
           </div>
-          
+
           <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
             <div className="order-2 md:order-1">
-              <Image 
-                src="/images/health-tracking.jpg" 
-                alt="Health tracking system" 
-                width={500} 
+              <Image
+                src="/assets/images/features/health-tracking.jpg"
+                alt="Health tracking system"
+                width={500}
                 height={350}
-                className="rounded-lg shadow-lg" 
+                className="rounded-lg shadow-lg"
               />
             </div>
             <div className="space-y-4 order-1 md:order-2">

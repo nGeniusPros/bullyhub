@@ -30,7 +30,7 @@ export default function Home() {
             </div>
             <div className="md:col-span-5">
               <Image
-                src="/images/hero-dogs.jpg"
+                src="/assets/images/landing/hero-dogs.png"
                 alt="Breeder with puppies and pet owner with dog"
                 width={500}
                 height={400}
@@ -118,7 +118,7 @@ export default function Home() {
             </div>
             <div className="order-1 md:order-2">
               <Image
-                src="/assets/images/features/dog-profile-dashboard.jpg"
+                src="/assets/images/features/dashboard-overview.png"
                 alt="Unified dog profile dashboard"
                 width={500}
                 height={350}
@@ -131,7 +131,7 @@ export default function Home() {
           <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
             <div className="">
               <Image
-                src="/assets/images/features/ai-health-monitoring.png"
+                src="/assets/images/features/health-dashboard.png"
                 alt="AI health monitoring interface"
                 width={500}
                 height={350}
@@ -163,7 +163,7 @@ export default function Home() {
             </div>
             <div className="order-1 md:order-2">
               <Image
-                src="/assets/images/features/breeding-program-tools.jpg"
+                src="/assets/images/features/breeding-tools.png"
                 alt="Breeding program tools interface"
                 width={500}
                 height={350}
@@ -189,7 +189,7 @@ export default function Home() {
               <div className="flex items-center mb-4">
                 <div className="h-10 w-10 rounded-full overflow-hidden mr-3">
                   <Image
-                    src="/assets/images/testimonials/testimonial-1.jpg"
+                    src="/assets/images/testimonials/testimonials.png"
                     alt="Sarah M."
                     width={40}
                     height={40}
@@ -217,7 +217,7 @@ export default function Home() {
               <div className="flex items-center mb-4">
                 <div className="h-10 w-10 rounded-full overflow-hidden mr-3">
                   <Image
-                    src="/assets/images/testimonials/testimonial-2.jpg"
+                    src="/assets/images/testimonials/testimonials.png"
                     alt="Michael T."
                     width={40}
                     height={40}
@@ -245,7 +245,7 @@ export default function Home() {
               <div className="flex items-center mb-4">
                 <div className="h-10 w-10 rounded-full overflow-hidden mr-3">
                   <Image
-                    src="/assets/images/testimonials/testimonial-3.jpg"
+                    src="/assets/images/testimonials/testimonials.png"
                     alt="Jennifer L."
                     width={40}
                     height={40}

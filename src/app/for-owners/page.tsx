@@ -38,7 +38,7 @@ export default function ForOwnersPage() {
               Our platform provides everything you need to give your dog the best care possible
             </p>
           </div>
-          
+
           <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
             <div className="space-y-4">
               <h3 className="text-2xl font-medium text-[#333333]">Complete Health Management</h3>
@@ -67,24 +67,24 @@ export default function ForOwnersPage() {
               </ul>
             </div>
             <div>
-              <Image 
-                src="/images/health-management.jpg" 
-                alt="Health management dashboard" 
-                width={500} 
+              <Image
+                src="/assets/images/features/health-management.jpg"
+                alt="Health management dashboard"
+                width={500}
                 height={350}
-                className="rounded-lg shadow-lg" 
+                className="rounded-lg shadow-lg"
               />
             </div>
           </div>
-          
+
           <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
             <div className="order-2 md:order-1">
-              <Image 
-                src="/images/community-features.jpg" 
-                alt="Community features" 
-                width={500} 
+              <Image
+                src="/assets/images/features/community-features.jpg"
+                alt="Community features"
+                width={500}
                 height={350}
-                className="rounded-lg shadow-lg" 
+                className="rounded-lg shadow-lg"
               />
             </div>
             <div className="space-y-4 order-1 md:order-2">
@@ -114,7 +114,7 @@ export default function ForOwnersPage() {
               </ul>
             </div>
           </div>
-          
+
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-4">
               <h3 className="text-2xl font-medium text-[#333333]">AI-Powered Care Recommendations</h3>
@@ -143,12 +143,12 @@ export default function ForOwnersPage() {
               </ul>
             </div>
             <div>
-              <Image 
-                src="/images/ai-recommendations.jpg" 
-                alt="AI care recommendations" 
-                width={500} 
+              <Image
+                src="/assets/images/features/ai-recommendations.jpg"
+                alt="AI care recommendations"
+                width={500}
                 height={350}
-                className="rounded-lg shadow-lg" 
+                className="rounded-lg shadow-lg"
               />
             </div>
           </div>

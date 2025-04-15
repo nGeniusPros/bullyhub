@@ -2,15 +2,15 @@
 Write-Host "🚀 Starting development environment..." -ForegroundColor Cyan
 
 # Create the missing static files if they don't exist
-if (-not (Test-Path public\css\layout.css)) {
+if (-not (Test-Path public\assets\css\layout.css)) {
     Write-Host "Creating missing static files..." -ForegroundColor Yellow
 
     # Create directories if they don't exist
-    if (-not (Test-Path public\css)) {
-        New-Item -ItemType Directory -Path public\css | Out-Null
+    if (-not (Test-Path public\assets\css)) {
+        New-Item -ItemType Directory -Path public\assets\css | Out-Null
     }
-    if (-not (Test-Path public\js)) {
-        New-Item -ItemType Directory -Path public\js | Out-Null
+    if (-not (Test-Path public\assets\js)) {
+        New-Item -ItemType Directory -Path public\assets\js | Out-Null
     }
 
     # Create layout.css
@@ -53,7 +53,7 @@ body {
     padding: 0 0.5rem;
   }
 }
-"@ | Out-File -FilePath public\css\layout.css -Encoding utf8
+"@ | Out-File -FilePath public\assets\css\layout.css -Encoding utf8
 
     # Create main-app.js
     @"
@@ -113,7 +113,7 @@ function setupEventListeners() {
     });
   }
 }
-"@ | Out-File -FilePath public\js\main-app.js -Encoding utf8
+"@ | Out-File -FilePath public\assets\js\main-app.js -Encoding utf8
 
     # Create app-pages-internals.js
     @"
@@ -206,7 +206,7 @@ function initializeCalendar() {
   // This would initialize a calendar component
   console.log('Calendar would be initialized here');
 }
-"@ | Out-File -FilePath public\js\app-pages-internals.js -Encoding utf8
+"@ | Out-File -FilePath public\assets\js\app-pages-internals.js -Encoding utf8
 
     Write-Host "✅ Created missing static files" -ForegroundColor Green
 }
@@ -261,4 +261,4 @@ Write-Host ""
 Write-Host "Press Ctrl+C to stop the Netlify Functions server" -ForegroundColor Yellow
 Write-Host "You'll need to close the Next.js window separately" -ForegroundColor Yellow
 Write-Host ""
-Write-Host "The static files (layout.css, main-app.js, app-pages-internals.js) have been created in the public directory" -ForegroundColor Green
+Write-Host "The static files (layout.css, main-app.js, app-pages-internals.js) have been created in the public/assets directory" -ForegroundColor Green

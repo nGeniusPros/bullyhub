@@ -52,7 +52,7 @@ export default function FeaturesPage() {
             </div>
             <div>
               <Image
-                src="/images/dna-integration.jpg"
+                src="/assets/images/features/dna-analysis.png"
                 alt="DNA test results visualization"
                 width={500}
                 height={350}
@@ -69,7 +69,7 @@ export default function FeaturesPage() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="order-2 md:order-1">
               <Image
-                src="/images/ai-stud-receptionist.jpg"
+                src="/assets/images/features/ai-recommendations.png"
                 alt="AI Stud Receptionist interface"
                 width={500}
                 height={350}
@@ -138,7 +138,7 @@ export default function FeaturesPage() {
             </div>
             <div>
               <Image
-                src="/images/breeding-tools.jpg"
+                src="/assets/images/features/breeding-tools.png"
                 alt="Breeding program tools interface"
                 width={500}
                 height={350}
