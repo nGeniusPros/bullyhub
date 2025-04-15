@@ -36,6 +36,7 @@ import {
   Video,
   BarChart,
   Share2,
+  Plus,
 } from "lucide-react";
 
 export default function DashboardLayout({
@@ -51,7 +52,7 @@ export default function DashboardLayout({
       <header className="sticky top-0 z-50 w-full border-b bg-background">
         <div className="container flex h-16 items-center justify-between px-4 md:px-6">
           <Link href="/" className="flex items-center gap-2 font-bold text-xl">
-            Bully Hub
+            PetPals
           </Link>
           <nav className="flex items-center gap-4">
             <Button variant="ghost" size="sm">
@@ -316,15 +317,15 @@ export default function DashboardLayout({
                 Stud Service Dashboard
               </Button>
             </Link>
-            <Link href="/dashboard/stud-services/1/receptionist">
+            <Link href="/dashboard/stud-services/create">
               <Button
                 variant={
-                  pathname.includes("/receptionist") ? "default" : "ghost"
+                  pathname === "/dashboard/stud-services/create" ? "default" : "ghost"
                 }
                 className="w-full justify-start"
               >
-                <MessageSquare className="mr-2 h-4 w-4" />
-                AI Receptionist
+                <Plus className="mr-2 h-4 w-4" />
+                Create Stud Service
               </Button>
             </Link>
 
@@ -447,7 +448,7 @@ export default function DashboardLayout({
                 className="w-full justify-start"
               >
                 <ServerIcon className="mr-2 h-4 w-4" />
-                Kennel Marketplace
+                Marketplace
               </Button>
             </Link>
 

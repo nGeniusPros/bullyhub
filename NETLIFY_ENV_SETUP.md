@@ -1,10 +1,10 @@
-# Setting Up Environment Variables in Netlify for Bully Hub
+# Setting Up Environment Variables in Netlify for PetPals
 
-This guide explains how to set up the required environment variables for deploying Bully Hub to Netlify.
+This guide explains how to set up the required environment variables for deploying PetPals to Netlify.
 
 ## Required Environment Variables
 
-The following environment variables are required for Bully Hub to function properly:
+The following environment variables are required for PetPals to function properly:
 
 | Variable | Description |
 |----------|-------------|

@@ -1,5 +1,5 @@
-# Bully Hub Development Script - Simplified Version (No Auth)
-Write-Host "🐶 Starting Bully Hub Development Environment..." -ForegroundColor Cyan
+# PetPals Development Script - Simplified Version (No Auth)
+Write-Host "🐶 Starting PetPals Development Environment..." -ForegroundColor Cyan
 
 # Check if .env.local exists
 if (-not (Test-Path .env.local)) {

@@ -1,10 +1,10 @@
-# Netlify Serverless Functions for Bully Hub
+# Netlify Serverless Functions for PetPals
 
-This document provides information on how to use and deploy the Netlify serverless functions implemented in the Bully Hub project.
+This document provides information on how to use and deploy the Netlify serverless functions implemented in the PetPals project.
 
 ## Overview
 
-Bully Hub uses Netlify serverless functions to handle backend operations that require server-side processing, such as:
+PetPals uses Netlify serverless functions to handle backend operations that require server-side processing, such as:
 
 - DNA test integration
 - AI stud receptionist
@@ -15,7 +15,7 @@ Bully Hub uses Netlify serverless functions to handle backend operations that re
 ## Directory Structure
 
 ```
-bullyhub/
+petpals/
 ├── netlify/
 │   └── functions/
 │       ├── hello-world.js
@@ -30,16 +30,16 @@ bullyhub/
 
 A simple test function to verify that serverless functions are working.
 
-**Endpoint:** `/.netlify/functions/hello-world`  
-**Method:** GET  
+**Endpoint:** `/.netlify/functions/hello-world`
+**Method:** GET
 **Response:** JSON with a greeting message
 
 ### 2. DNA Test Integration
 
 Stores DNA test results for dogs in the database.
 
-**Endpoint:** `/.netlify/functions/dna-test-integration`  
-**Method:** POST  
+**Endpoint:** `/.netlify/functions/dna-test-integration`
+**Method:** POST
 **Request Body:**
 ```json
 {
@@ -58,8 +58,8 @@ Stores DNA test results for dogs in the database.
 
 Analyzes breeding compatibility and provides stud recommendations.
 
-**Endpoint:** `/.netlify/functions/stud-receptionist`  
-**Method:** POST  
+**Endpoint:** `/.netlify/functions/stud-receptionist`
+**Method:** POST
 **Request Body:**
 ```json
 {

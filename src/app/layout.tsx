@@ -20,9 +20,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Bully Hub - Dog Breeding & Genetics Platform",
+  title: "PetPals - Dog Breeding & Kennel Management Platform",
   description:
-    "Comprehensive platform for dog breeders and pet owners with focus on genetic data, stud services, and breeding program management",
+    "All-in-one kennel management solution where breeders can connect social media accounts and deploy template websites to run their entire business from one platform",
 };
 
 export default function RootLayout({

@@ -1,6 +1,6 @@
-# Netlify Functions for Bully Hub
+# Netlify Functions for PetPals
 
-This directory contains serverless functions for the Bully Hub application. These functions handle backend operations that require server-side processing, such as DNA test integration, AI stud receptionist, color prediction, COI calculation, and other breeding-related computations.
+This directory contains serverless functions for the PetPals application. These functions handle backend operations that require server-side processing, such as DNA test integration, AI stud receptionist, color prediction, COI calculation, and other breeding-related computations.
 
 ## Directory Structure
 
@@ -23,16 +23,16 @@ netlify/
 
 A simple test function to verify that serverless functions are working.
 
-**Endpoint:** `/.netlify/functions/hello-world`  
-**Method:** GET  
+**Endpoint:** `/.netlify/functions/hello-world`
+**Method:** GET
 **Response:** JSON with a greeting message
 
 ### 2. DNA Test Integration
 
 Stores DNA test results for dogs in the database.
 
-**Endpoint:** `/.netlify/functions/dna-test-integration`  
-**Method:** POST  
+**Endpoint:** `/.netlify/functions/dna-test-integration`
+**Method:** POST
 **Request Body:**
 ```json
 {
@@ -51,8 +51,8 @@ Stores DNA test results for dogs in the database.
 
 Analyzes breeding compatibility and provides stud recommendations.
 
-**Endpoint:** `/.netlify/functions/stud-receptionist`  
-**Method:** POST  
+**Endpoint:** `/.netlify/functions/stud-receptionist`
+**Method:** POST
 **Request Body:**
 ```json
 {
@@ -67,8 +67,8 @@ Analyzes breeding compatibility and provides stud recommendations.
 
 Predicts puppy coat colors based on parents' genetics.
 
-**Endpoint:** `/.netlify/functions/color-prediction`  
-**Method:** POST  
+**Endpoint:** `/.netlify/functions/color-prediction`
+**Method:** POST
 **Request Body:**
 ```json
 {
@@ -82,8 +82,8 @@ Predicts puppy coat colors based on parents' genetics.
 
 Calculates Coefficient of Inbreeding for potential matings.
 
-**Endpoint:** `/.netlify/functions/coi-calculator`  
-**Method:** POST  
+**Endpoint:** `/.netlify/functions/coi-calculator`
+**Method:** POST
 **Request Body:**
 ```json
 {
@@ -98,12 +98,12 @@ Calculates Coefficient of Inbreeding for potential matings.
 
 Verifies health test results and certificates.
 
-**Endpoint:** `/.netlify/functions/health-clearance-verification`  
-**Method:** GET  
+**Endpoint:** `/.netlify/functions/health-clearance-verification`
+**Method:** GET
 **Query Parameters:**
 - `verificationNumber`: The verification number to check
 
-**Method:** POST  
+**Method:** POST
 **Request Body:**
 ```json
 {
@@ -121,8 +121,8 @@ Verifies health test results and certificates.
 
 Checks if a dog meets specific breeding program requirements.
 
-**Endpoint:** `/.netlify/functions/breeding-program-compatibility`  
-**Method:** POST  
+**Endpoint:** `/.netlify/functions/breeding-program-compatibility`
+**Method:** POST
 **Request Body:**
 ```json
 {
@@ -136,8 +136,8 @@ Checks if a dog meets specific breeding program requirements.
 
 Posts to social media platforms using Ayrshare API.
 
-**Endpoint:** `/.netlify/functions/social-media-integration`  
-**Method:** POST  
+**Endpoint:** `/.netlify/functions/social-media-integration`
+**Method:** POST
 **Request Body:**
 ```json
 {
@@ -150,11 +150,11 @@ Posts to social media platforms using Ayrshare API.
 }
 ```
 
-**Method:** GET  
+**Method:** GET
 **Query Parameters:**
 - `postId`: (Optional) The ID of a specific post to retrieve
 
-**Method:** DELETE  
+**Method:** DELETE
 **Query Parameters:**
 - `postId`: The ID of the post to delete
 

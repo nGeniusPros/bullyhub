@@ -1,10 +1,10 @@
-# Start Bully Hub Development Environment
+# Start PetPals Development Environment
 Write-Host "🚀 Starting development environment..." -ForegroundColor Cyan
 
 # Create the missing static files if they don't exist
 if (-not (Test-Path public\css\layout.css)) {
     Write-Host "Creating missing static files..." -ForegroundColor Yellow
-    
+
     # Create directories if they don't exist
     if (-not (Test-Path public\css)) {
         New-Item -ItemType Directory -Path public\css | Out-Null
@@ -12,11 +12,11 @@ if (-not (Test-Path public\css\layout.css)) {
     if (-not (Test-Path public\js)) {
         New-Item -ItemType Directory -Path public\js | Out-Null
     }
-    
+
     # Create layout.css
     @"
-/* 
- * layout.css - Main layout styles for Bully Hub
+/*
+ * layout.css - Main layout styles for PetPals
  * This file contains global layout styles for the application
  */
 
@@ -54,7 +54,7 @@ body {
   }
 }
 "@ | Out-File -FilePath public\css\layout.css -Encoding utf8
-    
+
     # Create main-app.js
     @"
 /**
@@ -65,10 +65,10 @@ body {
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
   console.log('Bully Hub application initialized');
-  
+
   // Initialize theme handling
   initializeTheme();
-  
+
   // Add event listeners for interactive elements
   setupEventListeners();
 });
@@ -80,14 +80,14 @@ function initializeTheme() {
   // Check for saved theme preference or use system preference
   const savedTheme = localStorage.getItem('theme');
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  
+
   // Apply theme
   if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
     document.documentElement.classList.add('dark');
   } else {
     document.documentElement.classList.remove('dark');
   }
-  
+
   // Add theme toggle functionality if toggle exists
   const themeToggle = document.getElementById('theme-toggle');
   if (themeToggle) {
@@ -106,7 +106,7 @@ function setupEventListeners() {
   // Mobile menu toggle
   const menuToggle = document.getElementById('mobile-menu-toggle');
   const mobileMenu = document.getElementById('mobile-menu');
-  
+
   if (menuToggle && mobileMenu) {
     menuToggle.addEventListener('click', function() {
       mobileMenu.classList.toggle('hidden');
@@ -114,7 +114,7 @@ function setupEventListeners() {
   }
 }
 "@ | Out-File -FilePath public\js\main-app.js -Encoding utf8
-    
+
     # Create app-pages-internals.js
     @"
 /**
@@ -129,19 +129,19 @@ const pageInitializers = {
     console.log('Dashboard page initialized');
     initializeDashboardCharts();
   },
-  
+
   // Profile page
   profile: function() {
     console.log('Profile page initialized');
     setupProfileImageUpload();
   },
-  
+
   // Nutrition page
   nutrition: function() {
     console.log('Nutrition page initialized');
     initializeNutritionCalculator();
   },
-  
+
   // Appointments page
   appointments: function() {
     console.log('Appointments page initialized');
@@ -153,7 +153,7 @@ const pageInitializers = {
 document.addEventListener('DOMContentLoaded', function() {
   // Determine current page from body data attribute or URL
   const currentPage = document.body.dataset.page || getCurrentPageFromUrl();
-  
+
   // Run page initializer if it exists
   if (currentPage && pageInitializers[currentPage]) {
     pageInitializers[currentPage]();
@@ -166,12 +166,12 @@ document.addEventListener('DOMContentLoaded', function() {
 function getCurrentPageFromUrl() {
   const path = window.location.pathname;
   const pathSegments = path.split('/').filter(Boolean);
-  
+
   if (pathSegments.length > 0) {
     // Return last segment of URL path
     return pathSegments[pathSegments.length - 1];
   }
-  
+
   return 'home';
 }
 
@@ -207,7 +207,7 @@ function initializeCalendar() {
   console.log('Calendar would be initialized here');
 }
 "@ | Out-File -FilePath public\js\app-pages-internals.js -Encoding utf8
-    
+
     Write-Host "✅ Created missing static files" -ForegroundColor Green
 }
 

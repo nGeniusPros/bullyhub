@@ -9,7 +9,7 @@ if not exist .next\static\chunks\app\dashboard mkdir .next\static\chunks\app\das
 if not exist .next\static\chunks\app\dashboard\dna-tests mkdir .next\static\chunks\app\dashboard\dna-tests
 
 REM Create the missing CSS file
-echo /* layout.css - Main layout styles for Bully Hub */ > .next\static\css\app\layout.css
+echo /* layout.css - Main layout styles for PetPals */ > .next\static\css\app\layout.css
 
 REM Create the missing JS files
 echo // main-app.js - Main JavaScript functionality > .next\static\chunks\main-app.js

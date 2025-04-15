@@ -1,6 +1,6 @@
-# Bully Hub Troubleshooting Guide
+# PetPals Troubleshooting Guide
 
-This guide helps you diagnose and fix common issues with the Bully Hub application.
+This guide helps you diagnose and fix common issues with the PetPals application.
 
 ## Common Issues and Solutions
 

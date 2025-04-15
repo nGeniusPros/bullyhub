@@ -22,3 +22,21 @@ export function formatCurrency(
     maximumFractionDigits: 0,
   }).format(value);
 }
+
+/**
+ * Calculate age from a birth date
+ * @param birthDate - The birth date
+ * @returns Age in years
+ */
+export function calculateAge(birthDate: Date | string): number {
+  const birth = typeof birthDate === 'string' ? new Date(birthDate) : birthDate;
+  const today = new Date();
+  let age = today.getFullYear() - birth.getFullYear();
+  const m = today.getMonth() - birth.getMonth();
+
+  if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
+    age--;
+  }
+
+  return age;
+}

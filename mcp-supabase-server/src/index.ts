@@ -12,6 +12,13 @@ import {
 } from '@modelcontextprotocol/sdk/types.js';
 import pg from 'pg';
 
+// Import feature tools
+import { dnaTestingTools } from '../../src/features/dna-testing/mcp/dna-tools.js';
+import { healthClearanceTools } from '../../src/features/health-clearances/mcp/health-tools.js';
+import { studServiceTools } from '../../src/features/stud-services/mcp/stud-tools.js';
+import { marketplaceTools } from '../../src/features/marketplace/mcp/marketplace-tools.js';
+import { dogTools } from '../../src/features/dogs/mcp/dog-tools.js';
+
 const {
   SUPABASE_DB_PASSWORD,
   SUPABASE_PROJECT_REF,
@@ -51,48 +58,81 @@ const server = new Server(
   }
 );
 
-server.setRequestHandler(ListToolsRequestSchema, async () => ({
-  tools: [
-    {
-      name: 'query',
-      description: 'Execute a SQL query on the Supabase database',
-      inputSchema: {
-        type: 'object',
-        properties: {
-          query: {
-            type: 'string',
-            description: 'SQL query string',
-          },
+// Define all available tools
+const availableTools = [
+  // Core database query tool
+  {
+    name: 'query',
+    description: 'Execute a SQL query on the Supabase database',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        query: {
+          type: 'string',
+          description: 'SQL query string',
         },
-        required: ['query'],
       },
+      required: ['query'],
     },
-  ],
+    handler: async ({ query }: { query: string }) => {
+      try {
+        const result = await queryDatabase(query);
+        return {
+          content: [
+            {
+              type: 'text',
+              text: JSON.stringify(result.rows, null, 2),
+            },
+          ],
+        };
+      } catch (error: any) {
+        return {
+          content: [
+            {
+              type: 'text',
+              text: `Error executing query: ${error.message}`,
+            },
+          ],
+          isError: true,
+        };
+      }
+    }
+  },
+
+  // Add feature tools
+  ...dnaTestingTools,
+  ...healthClearanceTools,
+  ...studServiceTools,
+  ...marketplaceTools,
+  ...dogTools,
+];
+
+// List available tools
+server.setRequestHandler(ListToolsRequestSchema, async () => ({
+  tools: availableTools.map(tool => ({
+    name: tool.name,
+    description: tool.description,
+    inputSchema: tool.inputSchema,
+  })),
 }));
 
+// Handle tool calls
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
-  if (request.params.name !== 'query') {
-    throw new McpError(ErrorCode.MethodNotFound, `Unknown tool: ${request.params.name}`);
+  const toolName = request.params.name;
+  const tool = availableTools.find(t => t.name === toolName);
+
+  if (!tool) {
+    throw new McpError(ErrorCode.MethodNotFound, `Unknown tool: ${toolName}`);
   }
 
-  const { query } = request.params.arguments as { query: string };
-
   try {
-    const result = await queryDatabase(query);
-    return {
-      content: [
-        {
-          type: 'text',
-          text: JSON.stringify(result.rows, null, 2),
-        },
-      ],
-    };
+    return await tool.handler(request.params.arguments);
   } catch (error: any) {
     return {
       content: [
         {
           type: 'text',
-          text: `Error executing query: ${error.message}`,
+          text: `Error executing tool ${toolName}: ${error.message}`,
         },
       ],
       isError: true,
@@ -103,7 +143,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error('Supabase MCP server running');
+  console.error('Supabase MCP server running with Vertical Slice Architecture tools');
 }
 
 main().catch(console.error);

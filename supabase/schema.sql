@@ -1,6 +1,6 @@
 SET search_path TO public;
 
--- Create schema for Bully Hub App
+-- Create schema for PetPals App
 
 -- Enable RLS (Row Level Security)
 -- ALTER DATABASE postgres SET "app.jwt_secret" TO 'your-jwt-secret';
