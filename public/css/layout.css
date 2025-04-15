@@ -1,30 +1,23 @@
-/*
- * layout.css - Main layout styles for PetPals
+/* 
+ * layout.css - Main layout styles for Bully Hub
  * This file contains global layout styles for the application
  */
 
 :root {
-  /* PetPals Blue */
+  /* PetSmart Blue (#0072bc) */
   --primary: oklch(0.52 0.182 253.395);
   --primary-foreground: oklch(1 0 0);
   /* White for backgrounds */
   --background: oklch(1 0 0);
   /* Dark for text */
   --foreground: oklch(0.2 0 0);
-  /* Gradient colors */
-  --gradient-blue-start: #4f46e5;
-  --gradient-blue-end: #7c3aed;
-  --gradient-green-start: #10b981;
-  --gradient-green-end: #059669;
-  --gradient-orange-start: #f59e0b;
-  --gradient-orange-end: #d97706;
 }
 
 /* Basic layout styles */
 body {
   margin: 0;
   padding: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--font-geist-sans, sans-serif);
   background-color: var(--background);
   color: var(--foreground);
 }
@@ -37,131 +30,9 @@ body {
   padding: 0 1rem;
 }
 
-/* Gradient backgrounds */
-.bg-gradient-primary {
-  background: linear-gradient(to right, var(--gradient-blue-start), var(--gradient-blue-end));
-}
-
-.bg-gradient-secondary {
-  background: linear-gradient(to right, #0ea5e9, #6366f1);
-}
-
-.bg-gradient-success {
-  background: linear-gradient(to right, var(--gradient-green-start), var(--gradient-green-end));
-}
-
-.bg-gradient-warning {
-  background: linear-gradient(to right, var(--gradient-orange-start), var(--gradient-orange-end));
-}
-
-.bg-gradient-danger {
-  background: linear-gradient(to right, #ef4444, #dc2626);
-}
-
-.bg-gradient-info {
-  background: linear-gradient(to right, #06b6d4, #0891b2);
-}
-
-/* Card gradients */
-.card-gradient-blue {
-  background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
-  border-color: #bae6fd;
-}
-
-.card-gradient-purple {
-  background: linear-gradient(135deg, #faf5ff, #f3e8ff);
-  border-color: #e9d5ff;
-}
-
-.card-gradient-green {
-  background: linear-gradient(135deg, #ecfdf5, #d1fae5);
-  border-color: #a7f3d0;
-}
-
-.card-gradient-orange {
-  background: linear-gradient(135deg, #fff7ed, #ffedd5);
-  border-color: #fed7aa;
-}
-
-/* Button gradients */
-.btn-gradient-primary {
-  background: linear-gradient(to right, var(--gradient-blue-start), var(--gradient-blue-end));
-  color: white;
-}
-
-.btn-gradient-primary:hover {
-  background: linear-gradient(to right, #4338ca, #6d28d9);
-}
-
-.btn-gradient-secondary {
-  background: linear-gradient(to right, #0ea5e9, #6366f1);
-  color: white;
-}
-
-.btn-gradient-secondary:hover {
-  background: linear-gradient(to right, #0284c7, #4f46e5);
-}
-
-/* Sidebar styles */
-.sidebar {
-  background-color: #f8fafc;
-  border-right: 1px solid #e2e8f0;
-}
-
-.sidebar-item {
-  border-radius: 0.375rem;
-  transition: all 0.2s;
-}
-
-.sidebar-item:hover {
-  background-color: #f1f5f9;
-}
-
-.sidebar-item.active {
-  background-color: #e0f2fe;
-  color: #0284c7;
-}
-
-/* Header styles */
-.app-header {
-  background: linear-gradient(to right, var(--gradient-blue-start), var(--gradient-blue-end));
-  color: white;
-}
-
-/* Main content area */
-.main-content {
-  background-color: #f8fafc;
-}
-
-/* Dashboard card styles */
-.dashboard-card {
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  transition: all 0.2s;
-}
-
-.dashboard-card:hover {
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transform: translateY(-2px);
-}
-
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .container {
     padding: 0 0.5rem;
-  }
-
-  .sidebar {
-    display: none;
-  }
-
-  .sidebar.open {
-    display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 250px;
-    z-index: 50;
   }
 }
