@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { HealthRecordForm } from "@/components/HealthRecordForm";
+import { HealthRecordForm } from "@/features/health-records/components/HealthRecordForm";
 
 export default function AddHealthRecordPage() {
   const searchParams = useSearchParams();
