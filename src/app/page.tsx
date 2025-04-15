@@ -14,10 +14,10 @@ export default function Home() {
               <div className="flex items-center mb-4">
                 <Image src="/icons/paw-tech.svg" alt="Paw print with tech elements" width={40} height={40} className="text-primary" />
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-[#333333]">
+              <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">
                 The Ultimate AI-Powered Platform for Dog Breeders and Pet Owners
               </h1>
-              <p className="text-xl text-[#555555]">
+              <p className="text-xl text-muted-foreground">
                 Manage health records, track development, and connect with a community that cares as much about your dog as you do
               </p>
               <div className="pt-6">
@@ -45,7 +45,7 @@ export default function Home() {
       <section className="py-16 md:py-20 bg-white">
         <div className="container px-4 md:px-6">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-semibold text-[#333333] mb-6">
+            <h2 className="text-3xl font-semibold text-foreground mb-6">
               Managing Your Dog's Health and Development Shouldn't Be Complex
             </h2>
           </div>
@@ -60,8 +60,8 @@ export default function Home() {
                 height={48}
                 className="text-[#FFDA63]"
               />
-              <h3 className="text-xl font-medium text-[#333333]">Fragmented Records?</h3>
-              <p className="text-[#555555]">
+              <h3 className="text-xl font-medium text-foreground">Fragmented Records?</h3>
+              <p className="text-muted-foreground">
                 Are you struggling to keep track of vaccinations, health history, and important documents across multiple systems and paper files?
               </p>
             </div>
@@ -75,8 +75,8 @@ export default function Home() {
                 height={48}
                 className="text-[#FFDA63]"
               />
-              <h3 className="text-xl font-medium text-[#333333]">Breeding Decisions?</h3>
-              <p className="text-[#555555]">
+              <h3 className="text-xl font-medium text-foreground">Breeding Decisions?</h3>
+              <p className="text-muted-foreground">
                 Do you find it challenging to make informed breeding decisions without comprehensive genetic information and health predictions?
               </p>
             </div>
@@ -90,8 +90,8 @@ export default function Home() {
                 height={48}
                 className="text-[#FFDA63]"
               />
-              <h3 className="text-xl font-medium text-[#333333]">Care Knowledge?</h3>
-              <p className="text-[#555555]">
+              <h3 className="text-xl font-medium text-foreground">Care Knowledge?</h3>
+              <p className="text-muted-foreground">
                 Are you unsure about the best care practices for your specific dog breed and lacking personalized guidance?
               </p>
             </div>
@@ -103,7 +103,7 @@ export default function Home() {
       <section className="py-16 md:py-20 bg-[#E8F4FC]">
         <div className="container px-4 md:px-6">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-semibold text-[#333333]">
+            <h2 className="text-3xl font-semibold text-foreground">
               An Integrated Platform for Everyone in Your Dog's Life
             </h2>
           </div>
@@ -111,8 +111,8 @@ export default function Home() {
           {/* Benefit 1 */}
           <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
             <div className="space-y-4 order-2 md:order-1">
-              <h3 className="text-2xl font-medium text-[#333333]">Comprehensive Dog Profiles</h3>
-              <p className="text-[#555555]">
+              <h3 className="text-2xl font-medium text-foreground">Comprehensive Dog Profiles</h3>
+              <p className="text-muted-foreground">
                 Keep universal health records, genetic background, growth tracking, vaccination schedules, nutrition plans, and training milestones all in one secure location, accessible to everyone who cares for your dog.
               </p>
             </div>
@@ -131,7 +131,7 @@ export default function Home() {
           <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
             <div className="">
               <Image
-                src="/images/ai-health-monitoring.jpg"
+                src="/images/ai-health-monitoring.png"
                 alt="AI health monitoring interface"
                 width={500}
                 height={350}
@@ -139,8 +139,8 @@ export default function Home() {
               />
             </div>
             <div className="space-y-4">
-              <h3 className="text-2xl font-medium text-[#333333]">AI-Powered Health Management</h3>
-              <p className="text-[#555555]">
+              <h3 className="text-2xl font-medium text-foreground">AI-Powered Health Management</h3>
+              <p className="text-muted-foreground">
                 Leverage our cutting-edge AI to monitor your dog's health with breed-specific alerts, early warning detection, and preventative care recommendations based on your dog's unique profile.
               </p>
             </div>
@@ -149,8 +149,8 @@ export default function Home() {
           {/* Benefit 3 */}
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-4 order-2 md:order-1">
-              <h3 className="text-2xl font-medium text-[#333333]">Breeding Program Tools</h3>
-              <p className="text-[#555555]">
+              <h3 className="text-2xl font-medium text-foreground">Breeding Program Tools</h3>
+              <p className="text-muted-foreground">
                 Make informed breeding decisions with genetic health predictions, inbreeding assessments, trait prediction tools, and a seamless system to transfer puppy profiles to new owners.
               </p>
               <div className="pt-4">
@@ -178,7 +178,7 @@ export default function Home() {
       <section className="py-16 md:py-20 bg-white">
         <div className="container px-4 md:px-6">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-semibold text-[#333333]">
+            <h2 className="text-3xl font-semibold text-foreground">
               Trusted by Breeders and Pet Owners Alike
             </h2>
           </div>
@@ -207,7 +207,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <p className="text-[#555555] italic text-base">
+              <p className="text-muted-foreground italic text-base">
                 "PetPals Dog Hub has revolutionized my breeding program. The genetic analysis tools and health tracking have improved my breeding decisions tremendously."
               </p>
             </div>
@@ -235,7 +235,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <p className="text-[#555555] italic text-base">
+              <p className="text-muted-foreground italic text-base">
                 "As a first-time dog owner, the personalized care recommendations and health alerts have been invaluable. I feel confident I'm giving my dog the best care possible."
               </p>
             </div>
@@ -263,7 +263,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <p className="text-[#555555] italic text-base">
+              <p className="text-muted-foreground italic text-base">
                 "The connection between breeder and owner accounts is genius. I can see my dog's complete history and get breed-specific advice directly from their breeder."
               </p>
             </div>
@@ -297,7 +297,7 @@ export default function Home() {
       <section className="py-16 md:py-20 bg-[#E8F4FC]">
         <div className="container px-4 md:px-6">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-semibold text-[#333333]">
+            <h2 className="text-3xl font-semibold text-foreground">
               Key Platform Features
             </h2>
           </div>
@@ -315,28 +315,28 @@ export default function Home() {
                   <path d="M8 16h.01" />
                 </svg>
               </div>
-              <h3 className="text-xl font-medium text-[#333333] text-center mb-4">Health Management System</h3>
-              <ul className="space-y-2 mb-4">
-                <li className="flex items-start">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#8FBC8F" className="w-5 h-5 mr-2 flex-shrink-0">
-                    <path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clipRule="evenodd" />
-                  </svg>
-                  <span className="text-[#555555]">AI-driven health monitoring with breed-specific alerts</span>
-                </li>
-                <li className="flex items-start">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#8FBC8F" className="w-5 h-5 mr-2 flex-shrink-0">
-                    <path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clipRule="evenodd" />
-                  </svg>
-                  <span className="text-[#555555]">Early warning detection based on logged symptoms</span>
-                </li>
-                <li className="flex items-start">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#8FBC8F" className="w-5 h-5 mr-2 flex-shrink-0">
-                    <path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clipRule="evenodd" />
-                  </svg>
-                  <span className="text-[#555555]">Preventative care recommendations and reminders</span>
-                </li>
-              </ul>
-              <p className="text-[#555555] mb-6">Keep your dog healthy with intelligent monitoring that prevents issues before they become serious.</p>
+              <h3 className="text-xl font-medium text-foreground text-center mb-4">Health Management System</h3>
+<ul className="space-y-2 mb-4">
+  <li className="flex flex-col items-center">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#8FBC8F" className="w-5 h-5 mb-1 flex-shrink-0">
+      <path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clipRule="evenodd" />
+    </svg>
+    <span className="text-muted-foreground">AI-driven health monitoring with breed-specific alerts</span>
+  </li>
+  <li className="flex flex-col items-center">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#8FBC8F" className="w-5 h-5 mb-1 flex-shrink-0">
+      <path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clipRule="evenodd" />
+    </svg>
+    <span className="text-muted-foreground">Early warning detection based on logged symptoms</span>
+  </li>
+  <li className="flex flex-col items-center">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#8FBC8F" className="w-5 h-5 mb-1 flex-shrink-0">
+      <path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clipRule="evenodd" />
+    </svg>
+    <span className="text-muted-foreground">Preventative care recommendations and reminders</span>
+  </li>
+</ul>
+              <p className="text-muted-foreground mb-6">Keep your dog healthy with intelligent monitoring that prevents issues before they become serious.</p>
               <div className="text-center">
                 <Link href="/features/health">
                   <Button style={{ backgroundColor: "#FF8C00", color: "white" }} className="hover:scale-105 transition-transform">
@@ -356,28 +356,28 @@ export default function Home() {
                   <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                 </svg>
               </div>
-              <h3 className="text-xl font-medium text-[#333333] text-center mb-4">Community Features</h3>
-              <ul className="space-y-2 mb-4">
-                <li className="flex items-start">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#8FBC8F" className="w-5 h-5 mr-2 flex-shrink-0">
-                    <path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clipRule="evenodd" />
-                  </svg>
-                  <span className="text-[#555555]">Breed-specific forums and discussion groups</span>
-                </li>
-                <li className="flex items-start">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#8FBC8F" className="w-5 h-5 mr-2 flex-shrink-0">
-                    <path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clipRule="evenodd" />
-                  </svg>
-                  <span className="text-[#555555]">Expert Q&A sessions with veterinarians</span>
-                </li>
-                <li className="flex items-start">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#8FBC8F" className="w-5 h-5 mr-2 flex-shrink-0">
-                    <path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clipRule="evenodd" />
-                  </svg>
-                  <span className="text-[#555555]">Educational content libraries by breed</span>
-                </li>
-              </ul>
-              <p className="text-[#555555] mb-6">Connect with other owners and experts to get the best advice for your specific breed.</p>
+              <h3 className="text-xl font-medium text-foreground text-center mb-4">Community Features</h3>
+<ul className="space-y-2 mb-4">
+  <li className="flex flex-col items-center">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#8FBC8F" className="w-5 h-5 mb-1 flex-shrink-0">
+      <path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clipRule="evenodd" />
+    </svg>
+    <span className="text-muted-foreground">Breed-specific forums and discussion groups</span>
+  </li>
+  <li className="flex flex-col items-center">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#8FBC8F" className="w-5 h-5 mb-1 flex-shrink-0">
+      <path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clipRule="evenodd" />
+    </svg>
+    <span className="text-muted-foreground">Expert Q&A sessions with veterinarians</span>
+  </li>
+  <li className="flex flex-col items-center">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#8FBC8F" className="w-5 h-5 mb-1 flex-shrink-0">
+      <path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clipRule="evenodd" />
+    </svg>
+    <span className="text-muted-foreground">Educational content libraries by breed</span>
+  </li>
+</ul>
+              <p className="text-muted-foreground mb-6">Connect with other owners and experts to get the best advice for your specific breed.</p>
               <div className="text-center">
                 <Link href="/features/community">
                   <Button style={{ backgroundColor: "#FF8C00", color: "white" }} className="hover:scale-105 transition-transform">
@@ -396,28 +396,28 @@ export default function Home() {
                   <path d="M12 17h.01" />
                 </svg>
               </div>
-              <h3 className="text-xl font-medium text-[#333333] text-center mb-4">AI-Powered Assistance</h3>
-              <ul className="space-y-2 mb-4">
-                <li className="flex items-start">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#8FBC8F" className="w-5 h-5 mr-2 flex-shrink-0">
-                    <path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clipRule="evenodd" />
-                  </svg>
-                  <span className="text-[#555555]">Personalized dog care recommendations</span>
-                </li>
-                <li className="flex items-start">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#8FBC8F" className="w-5 h-5 mr-2 flex-shrink-0">
-                    <path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clipRule="evenodd" />
-                  </svg>
-                  <span className="text-[#555555]">Predictive health analytics for early intervention</span>
-                </li>
-                <li className="flex items-start">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#8FBC8F" className="w-5 h-5 mr-2 flex-shrink-0">
-                    <path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clipRule="evenodd" />
-                  </svg>
-                  <span className="text-[#555555]">Smart notification system based on dog life stages</span>
-                </li>
-              </ul>
-              <p className="text-[#555555] mb-6">Receive intelligent guidance tailored to your dog's unique needs at every stage of life.</p>
+              <h3 className="text-xl font-medium text-foreground text-center mb-4">AI-Powered Assistance</h3>
+<ul className="space-y-2 mb-4">
+  <li className="flex flex-col items-center">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#8FBC8F" className="w-5 h-5 mb-1 flex-shrink-0">
+      <path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clipRule="evenodd" />
+    </svg>
+    <span className="text-muted-foreground">Personalized dog care recommendations</span>
+  </li>
+  <li className="flex flex-col items-center">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#8FBC8F" className="w-5 h-5 mb-1 flex-shrink-0">
+      <path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clipRule="evenodd" />
+    </svg>
+    <span className="text-muted-foreground">Predictive health analytics for early intervention</span>
+  </li>
+  <li className="flex flex-col items-center">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#8FBC8F" className="w-5 h-5 mb-1 flex-shrink-0">
+      <path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clipRule="evenodd" />
+    </svg>
+    <span className="text-muted-foreground">Smart notification system based on dog life stages</span>
+  </li>
+</ul>
+              <p className="text-muted-foreground mb-6">Receive intelligent guidance tailored to your dog's unique needs at every stage of life.</p>
               <div className="text-center">
                 <Link href="/features/ai">
                   <Button style={{ backgroundColor: "#FF8C00", color: "white" }} className="hover:scale-105 transition-transform">
@@ -434,7 +434,7 @@ export default function Home() {
       <section className="py-16 md:py-20 bg-white">
         <div className="container px-4 md:px-6">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-semibold text-[#333333]">
+            <h2 className="text-3xl font-semibold text-foreground">
               Frequently Asked Questions
             </h2>
           </div>
@@ -442,48 +442,48 @@ export default function Home() {
           <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-6">
             {/* FAQ 1 */}
             <div className="border-b border-[#E0E0E0] pb-4">
-              <h3 className="text-lg font-medium text-[#333333] mb-2">How secure is my dog's health and genetic data?</h3>
-              <p className="text-[#555555]">
+              <h3 className="text-lg font-medium text-foreground mb-2">How secure is my dog's health and genetic data?</h3>
+              <p className="text-muted-foreground">
                 We implement HIPAA-inspired security protocols with strong encryption for all sensitive information. You control exactly who has access to your dog's data.
               </p>
             </div>
 
             {/* FAQ 2 */}
             <div className="border-b border-[#E0E0E0] pb-4">
-              <h3 className="text-lg font-medium text-[#333333] mb-2">Can I use PetPals if I didn't get my dog from a breeder on the platform?</h3>
-              <p className="text-[#555555]">
+              <h3 className="text-lg font-medium text-foreground mb-2">Can I use PetPals if I didn't get my dog from a breeder on the platform?</h3>
+              <p className="text-muted-foreground">
                 Absolutely! PetPals provides standalone value for all pet owners, regardless of where you acquired your dog. You'll still access all health management and community features.
               </p>
             </div>
 
             {/* FAQ 3 */}
             <div className="border-b border-[#E0E0E0] pb-4">
-              <h3 className="text-lg font-medium text-[#333333] mb-2">How accurate are the AI health predictions and genetic analyses?</h3>
-              <p className="text-[#555555]">
+              <h3 className="text-lg font-medium text-foreground mb-2">How accurate are the AI health predictions and genetic analyses?</h3>
+              <p className="text-muted-foreground">
                 Our AI system is trained on millions of dog health records and continuously improves with usage. While not a replacement for veterinary care, it has proven highly effective at early issue detection.
               </p>
             </div>
 
             {/* FAQ 4 */}
             <div className="border-b border-[#E0E0E0] pb-4">
-              <h3 className="text-lg font-medium text-[#333333] mb-2">How does the connection between breeder and owner accounts work?</h3>
-              <p className="text-[#555555]">
+              <h3 className="text-lg font-medium text-foreground mb-2">How does the connection between breeder and owner accounts work?</h3>
+              <p className="text-muted-foreground">
                 Breeders can transfer puppy profiles directly to new owners while maintaining appropriate access to health records. Both parties control privacy settings and information sharing.
               </p>
             </div>
 
             {/* FAQ 5 */}
             <div className="border-b border-[#E0E0E0] pb-4">
-              <h3 className="text-lg font-medium text-[#333333] mb-2">Can veterinarians access my dog's health records on the platform?</h3>
-              <p className="text-[#555555]">
+              <h3 className="text-lg font-medium text-foreground mb-2">Can veterinarians access my dog's health records on the platform?</h3>
+              <p className="text-muted-foreground">
                 Yes! You can grant temporary or permanent access to veterinarians, trainers, and other care providers through our secure sharing system.
               </p>
             </div>
 
             {/* FAQ 6 */}
             <div className="border-b border-[#E0E0E0] pb-4">
-              <h3 className="text-lg font-medium text-[#333333] mb-2">What does the subscription include and how much does it cost?</h3>
-              <p className="text-[#555555]">
+              <h3 className="text-lg font-medium text-foreground mb-2">What does the subscription include and how much does it cost?</h3>
+              <p className="text-muted-foreground">
                 We offer tiered subscriptions for both breeders and pet owners, starting at $9.99/month. All plans include core features with premium options for advanced tools and analysis.
               </p>
             </div>
@@ -492,9 +492,9 @@ export default function Home() {
       </section>
 
       {/* Final CTA Section */}
-      <section className="py-16 md:py-20 bg-white">
+      <section className="py-16 md:py-20 bg-gradient-to-r from-[#29ABE2] to-[#FFDA63]">
         <div className="container px-4 md:px-6">
-          <div className="bg-[#E8F4FC] rounded-lg shadow-lg p-8 md:p-12 max-w-4xl mx-auto text-center">
+          <div className="bg-white rounded-lg shadow-lg p-8 md:p-12 max-w-4xl mx-auto text-center">
             <div className="flex justify-center mb-6">
               <Image
                 src="/icons/dog-tech.svg"
@@ -503,10 +503,10 @@ export default function Home() {
                 height={60}
               />
             </div>
-            <h2 className="text-3xl font-bold text-[#333333] mb-4">
+            <h2 className="text-3xl font-bold text-foreground mb-4">
               Ready to Transform How You Care for Your Dog?
             </h2>
-            <p className="text-xl text-[#555555] mb-8">
+            <p className="text-xl text-muted-foreground mb-8">
               Join thousands of breeders and pet owners already using PetPals Dog Hub to provide the best care for their dogs
             </p>
             <Link href="/register">
