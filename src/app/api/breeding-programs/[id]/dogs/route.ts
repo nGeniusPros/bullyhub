@@ -1,15 +1,23 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+
+export interface BreedingProgramDogsParams {
+  params: {
+    id: string;
+  };
+}
 
 export async function POST(
-  request: Request,
-  { params }: { params: { id: string } }
+  request: NextRequest,
+  context: BreedingProgramDogsParams
 ) {
-  return NextResponse.json({ id: params.id, message: "Add dogs to breeding program" });
+  const { id } = context.params;
+  return NextResponse.json({ id, message: "Add dogs to breeding program" });
 }
 
 export async function DELETE(
-  request: Request,
-  { params }: { params: { id: string } }
+  request: NextRequest,
+  context: BreedingProgramDogsParams
 ) {
-  return NextResponse.json({ id: params.id, message: "Remove dog from breeding program" });
+  const { id } = context.params;
+  return NextResponse.json({ id, message: "Remove dog from breeding program" });
 }
