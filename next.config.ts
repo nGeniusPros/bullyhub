@@ -3,11 +3,8 @@ import dotenv from "dotenv";
 import path from "path";
 
 // Import the Netlify plugin
-try {
-  require("@netlify/plugin-nextjs/lib/templates/dependencies");
-} catch (error) {
-  console.warn("Could not load @netlify/plugin-nextjs dependencies");
-}
+// Note: We're not using the require approach as it's causing issues
+// The plugin will be loaded by Netlify during deployment
 
 // Load environment variables from .env.local and .env files
 dotenv.config({ path: path.resolve(process.cwd(), ".env.local") });
