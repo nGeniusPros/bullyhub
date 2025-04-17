@@ -100,8 +100,8 @@ export default function DashboardPage() {
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
         <div className="pet-card pet-card-gradient pet-card-gradient-primary">
           <div className="relative">
-            <img
-              src="https://images.unsplash.com/photo-1583511655826-05700442b31b?w=500&h=300&q=80"
+            <Image
+              src="/assets/images/marketing/cartoon-1.png"
               alt="French Bulldog"
               className="pet-card-image"
               width={500}
@@ -158,7 +158,7 @@ export default function DashboardPage() {
 
         <div className="pet-card pet-card-gradient pet-card-gradient-secondary">
           <div className="relative">
-            <img
+            <Image
               src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=500&h=300&q=80"
               alt="Golden Retriever"
               className="pet-card-image"

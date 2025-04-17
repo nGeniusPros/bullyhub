@@ -3,11 +3,20 @@
   publish = ".next"
   functions = "netlify/functions"
 
+[build.environment]
+  NETLIFY_NEXT_PLUGIN_SKIP = "false"
+
 [dev]
   command = "next dev"
   port = 8888
   targetPort = 3000
   framework = "next"
+
+# Next.js specific redirects
+[[redirects]]
+  from = "/_next/static/*"
+  to = "/static/:splat"
+  status = 200
 
 [[redirects]]
   from = "/api/*"
@@ -111,11 +120,7 @@
 #   [plugins.inputs]
 #     file = "netlify/headers.js"
 
-# Enable Netlify Edge Functions
-[build.environment]
-  NETLIFY_EDGE_FUNCTIONS = "true"
-
-# Enable Brotli compression
+# Netlify Build Settings
 [build.processing]
   skip_processing = false
 [build.processing.css]
