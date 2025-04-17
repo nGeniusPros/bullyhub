@@ -119,10 +119,6 @@
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
-[plugins.inputs]
-  # Disable preview mode to avoid issues with Netlify deployment
-  enable_preview_mode = false
-
 # Import custom headers from netlify/headers.js
 # Temporarily disabled due to package not found
 # [[plugins]]
