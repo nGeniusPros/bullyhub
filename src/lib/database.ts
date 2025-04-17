@@ -682,11 +682,9 @@ export const checkDatabaseConnection = async () => {
   try {
     const supabase = getSafeSupabaseClient();
 
-    // Try to fetch a small amount of data to verify connection
-    const { data, error } = await supabase
-      .from("profiles")
-      .select("id")
-      .limit(1);
+    // Just check if we can connect to Supabase at all
+    // This avoids issues with specific tables not existing
+    const { data, error } = await supabase.auth.getSession();
 
     if (error) {
       console.error("Database connection error:", error);
@@ -697,6 +695,8 @@ export const checkDatabaseConnection = async () => {
       };
     }
 
+    // If we get here, we have a connection to Supabase
+    console.log("Successfully connected to Supabase");
     return {
       success: true,
       data

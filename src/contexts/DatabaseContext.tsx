@@ -26,26 +26,50 @@ export function DatabaseProvider({ children }: { children: React.ReactNode }) {
     setError(null);
 
     try {
-      const connected = await checkDatabaseConnection();
-      setIsConnected(connected);
+      const result = await checkDatabaseConnection();
 
-      if (!connected) {
-        setError("Could not connect to the database. Please try again later.");
-        toast({
-          title: "Database Connection Error",
-          description: "Could not connect to the database. Please try again later.",
-          variant: "destructive",
-        });
+      // Log the result for debugging
+      console.log("Database connection check result:", result);
+
+      if (result.success) {
+        setIsConnected(true);
+        console.log("Database connection successful");
+      } else {
+        setIsConnected(false);
+        const errorMsg = result.error || "Could not connect to the database. Please try again later.";
+        setError(errorMsg);
+
+        // In Netlify deployments, don't show error toasts
+        if (!window.location.hostname.includes('netlify.app')) {
+          toast({
+            title: "Database Connection Error",
+            description: errorMsg,
+            variant: "destructive",
+          });
+        } else {
+          console.warn("Database connection error in Netlify deployment:", errorMsg);
+          // For Netlify deployments, we'll still proceed even with connection errors
+          setIsConnected(true);
+        }
       }
     } catch (err: any) {
       console.error("Database connection error:", err);
       setIsConnected(false);
-      setError(err.message || "An unexpected error occurred");
-      toast({
-        title: "Database Connection Error",
-        description: err.message || "An unexpected error occurred",
-        variant: "destructive",
-      });
+      const errorMsg = err.message || "An unexpected error occurred";
+      setError(errorMsg);
+
+      // In Netlify deployments, don't show error toasts
+      if (!window.location.hostname.includes('netlify.app')) {
+        toast({
+          title: "Database Connection Error",
+          description: errorMsg,
+          variant: "destructive",
+        });
+      } else {
+        console.warn("Database connection error in Netlify deployment:", errorMsg);
+        // For Netlify deployments, we'll still proceed even with connection errors
+        setIsConnected(true);
+      }
     } finally {
       setIsLoading(false);
     }

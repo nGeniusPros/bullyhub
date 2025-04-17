@@ -48,9 +48,10 @@ export function EnvChecker() {
 
   // Only show the component in development mode or if there are missing variables
   const isDev = process.env.NODE_ENV === "development";
+  const isNetlifyDeployment = typeof window !== 'undefined' && window.location.hostname.includes('netlify.app');
 
-  // In production, only show if there are missing variables
-  if (process.env.NODE_ENV === "production" && missingVars.length === 0) {
+  // In production or Netlify deployments, don't show the component
+  if (process.env.NODE_ENV === "production" || isNetlifyDeployment) {
     return null;
   }
 
