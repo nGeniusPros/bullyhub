@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PetPals - Loading Error</title>
+  <link rel="icon" href="/favicon.ico" />
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      color: white;
+      text-align: center;
+    }
+    .container {
+      max-width: 800px;
+      padding: 2rem;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    p {
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    .error-details {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+    .button {
+      display: inline-block;
+      background-color: white;
+      color: #6366f1;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.375rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .button:hover {
+      background-color: #f9fafb;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>PetPals</h1>
+    <p>We're having trouble loading the application</p>
+    
+    <div class="error-details">
+      <p>Possible reasons:</p>
+      <ul>
+        <li>Environment variables might not be properly configured</li>
+        <li>Connection to backend services might be interrupted</li>
+        <li>The application might be experiencing temporary issues</li>
+      </ul>
+    </div>
+    
+    <a href="/" class="button">Try Again</a>
+    
+    <p style="margin-top: 2rem; font-size: 0.875rem;">
+      If the problem persists, please contact support or check the browser console for more details.
+    </p>
+  </div>
+  
+  <script>
+    // Log some diagnostic information to the console
+    console.log('Fallback page loaded due to application loading failure');
+    console.log('Current URL:', window.location.href);
+    console.log('User Agent:', navigator.userAgent);
+    
+    // Add a timeout to automatically retry after 10 seconds
+    setTimeout(() => {
+      // Only reload if we're on the fallback page
+      if (window.location.pathname.includes('/fallback.html')) {
+        console.log('Automatically retrying to load the application...');
+        window.location.href = '/';
+      }
+    }, 10000);
+  </script>
+</body>
+</html>

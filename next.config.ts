@@ -40,6 +40,7 @@ const nextConfig: NextConfig = {
         hostname: "**",
       },
     ],
+    unoptimized: process.env.NODE_ENV === 'production', // Use unoptimized images in production for Netlify compatibility
   },
   // Ensure static assets are copied to the output directory
   distDir: ".next",

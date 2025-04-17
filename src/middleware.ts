@@ -4,9 +4,11 @@ import type { NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
   // DEVELOPMENT MODE - Authentication bypass
-  const DEVELOPMENT_MODE = true; // Set to true to bypass authentication
+  // For deployed environments, we'll check based on hostname or environment
+  const isPreviewDeployment = request.headers.get('host')?.includes('netlify.app') || false;
+  const DEVELOPMENT_MODE = process.env.NODE_ENV !== 'production' || isPreviewDeployment;
 
-  // If in development mode, skip authentication checks
+  // If in development mode or preview deployment, skip authentication checks
   if (DEVELOPMENT_MODE) {
     return NextResponse.next();
   }

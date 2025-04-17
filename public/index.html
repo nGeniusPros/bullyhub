@@ -63,8 +63,19 @@
     <div class="loader"></div>
   </div>
   <script>
-    // Redirect to the actual application
-    window.location.href = "/";
+    // Check if we're already on the root path to avoid redirect loops
+    if (window.location.pathname !== '/' && !window.location.pathname.includes('/_next/')) {
+      window.location.href = '/';
+    }
+
+    // Set a timeout to redirect to fallback page if the app doesn't load
+    setTimeout(() => {
+      // If we're still on this loading page after 15 seconds, go to fallback
+      if (document.querySelector('.loader')) {
+        console.error('Application failed to load within timeout period');
+        window.location.href = '/fallback.html';
+      }
+    }, 15000);
   </script>
 </body>
 </html>

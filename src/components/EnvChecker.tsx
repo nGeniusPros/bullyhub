@@ -21,6 +21,8 @@ export function EnvChecker() {
     console.log("ENV config:", ENV);
     console.log("ENV.isConfigured():", ENV.isConfigured());
     console.log("ENV.getMissingVars():", ENV.getMissingVars());
+    console.log("Current hostname:", window.location.hostname);
+    console.log("Current environment:", process.env.NODE_ENV);
 
     // Collect information about environment variables
     const info: { [key: string]: string | undefined } = {
@@ -34,6 +36,13 @@ export function EnvChecker() {
     if (missing.length > 0) {
       console.error("Missing environment variables:", missing);
       setMissingVars(missing);
+
+      // Log additional information for debugging in production
+      if (process.env.NODE_ENV === 'production') {
+        console.error('Environment variables missing in production deployment');
+        console.error('This may cause the application to fail to load properly');
+        console.error('Please check Netlify environment variable configuration');
+      }
     }
   }, []);
 

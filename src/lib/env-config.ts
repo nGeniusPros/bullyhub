@@ -15,11 +15,40 @@ declare global {
 
 // Get environment variables from window.ENV or process.env
 const getEnv = () => {
-  if (typeof window !== "undefined" && window.ENV) {
-    return {
-      SUPABASE_URL: window.ENV.SUPABASE_URL || "",
-      SUPABASE_ANON_KEY: window.ENV.SUPABASE_ANON_KEY || "",
-    };
+  // For client-side, try to get from window.ENV first
+  if (typeof window !== "undefined") {
+    // Log for debugging
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('Window ENV object:', window.ENV);
+      console.log('Process env NEXT_PUBLIC_SUPABASE_URL:', process.env.NEXT_PUBLIC_SUPABASE_URL);
+    }
+
+    // Try window.ENV first
+    if (window.ENV && (window.ENV.SUPABASE_URL || window.ENV.SUPABASE_ANON_KEY)) {
+      return {
+        SUPABASE_URL: window.ENV.SUPABASE_URL || "",
+        SUPABASE_ANON_KEY: window.ENV.SUPABASE_ANON_KEY || "",
+      };
+    }
+
+    // If window.ENV doesn't have values, try process.env directly
+    if (process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+      return {
+        SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL || "",
+        SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "",
+      };
+    }
+
+    // For Netlify deployments, try hardcoded values as a last resort
+    // This is a temporary solution for debugging purposes
+    if (window.location.hostname.includes('netlify.app')) {
+      console.warn('Using fallback Supabase configuration for Netlify deployment');
+      // These are placeholders - replace with actual values if needed
+      return {
+        SUPABASE_URL: "https://your-project.supabase.co",
+        SUPABASE_ANON_KEY: "your-anon-key",
+      };
+    }
   }
 
   // Fallback to process.env (for server-side rendering)
