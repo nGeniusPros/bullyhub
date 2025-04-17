@@ -43,10 +43,10 @@ const getEnv = () => {
     // This is a temporary solution for debugging purposes
     if (window.location.hostname.includes('netlify.app')) {
       console.warn('Using fallback Supabase configuration for Netlify deployment');
-      // These are placeholders - replace with actual values if needed
+      // Using actual values for Netlify deployment
       return {
-        SUPABASE_URL: "https://your-project.supabase.co",
-        SUPABASE_ANON_KEY: "your-anon-key",
+        SUPABASE_URL: "https://jpnfefhrsehxzcrrozpw.supabase.co",
+        SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpwbmZlZmhyc2VoeHpjcnJvenB3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM3MjIwMDEsImV4cCI6MjA1OTI5ODAwMX0.lBfrSd1DnPlpTn0MQwJlNacGouCz2on6kqEzDvK6AGM",
       };
     }
   }

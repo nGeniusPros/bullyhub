@@ -37,11 +37,12 @@ export default function RootLayout({
         <Script id="env-config" strategy="beforeInteractive">
           {`
             window.ENV = {
-              SUPABASE_URL: "${process.env.NEXT_PUBLIC_SUPABASE_URL || ""}",
+              SUPABASE_URL: "${process.env.NEXT_PUBLIC_SUPABASE_URL || "https://jpnfefhrsehxzcrrozpw.supabase.co"}",
               SUPABASE_ANON_KEY: "${
-                process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ""
+                process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpwbmZlZmhyc2VoeHpjcnJvenB3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM3MjIwMDEsImV4cCI6MjA1OTI5ODAwMX0.lBfrSd1DnPlpTn0MQwJlNacGouCz2on6kqEzDvK6AGM"
               }"
             };
+            console.log("Environment variables set in window.ENV:", window.ENV);
           `}
         </Script>
       </head>
