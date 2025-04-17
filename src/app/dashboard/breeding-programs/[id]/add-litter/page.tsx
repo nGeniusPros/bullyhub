@@ -27,7 +27,7 @@ interface Puppy {
   gender: string;
 }
 
-export default function AddLitterPage({ params }: { params: { id: string } }) {
+export default function AddLitterPage({ params }) {
   const router = useRouter();
   const [dogs, setDogs] = useState<Dog[]>([]);
   const [sireId, setSireId] = useState<string>('');
@@ -40,27 +40,27 @@ export default function AddLitterPage({ params }: { params: { id: string } }) {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [programName, setProgramName] = useState('');
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         // Fetch the breeding program to get its name
         const programResponse = await fetch(`/api/breeding-programs/${params.id}`);
-        
+
         if (!programResponse.ok) {
           throw new Error('Failed to fetch breeding program');
         }
-        
+
         const programData = await programResponse.json();
         setProgramName(programData.name);
-        
+
         // Fetch all dogs owned by the user
         const dogsResponse = await fetch('/api/dogs');
-        
+
         if (!dogsResponse.ok) {
           throw new Error('Failed to fetch dogs');
         }
-        
+
         const dogsData = await dogsResponse.json();
         setDogs(dogsData);
       } catch (err) {
@@ -70,20 +70,20 @@ export default function AddLitterPage({ params }: { params: { id: string } }) {
         setLoading(false);
       }
     };
-    
+
     fetchData();
   }, [params.id]);
-  
+
   const addPuppy = () => {
     setPuppies([...puppies, { name: '', color: '', gender: 'male' }]);
   };
-  
+
   const updatePuppy = (index: number, field: keyof Puppy, value: string) => {
     const updatedPuppies = [...puppies];
     updatedPuppies[index] = { ...updatedPuppies[index], [field]: value };
     setPuppies(updatedPuppies);
   };
-  
+
   const removePuppy = (index: number) => {
     if (puppies.length > 1) {
       const updatedPuppies = [...puppies];
@@ -91,10 +91,10 @@ export default function AddLitterPage({ params }: { params: { id: string } }) {
       setPuppies(updatedPuppies);
     }
   };
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!sireId || !damId || !whelpingDate) {
       toast({
         title: 'Missing information',
@@ -103,7 +103,7 @@ export default function AddLitterPage({ params }: { params: { id: string } }) {
       });
       return;
     }
-    
+
     // Validate that sire and dam are different dogs
     if (sireId === damId) {
       toast({
@@ -113,14 +113,14 @@ export default function AddLitterPage({ params }: { params: { id: string } }) {
       });
       return;
     }
-    
+
     // Filter out incomplete puppies
-    const validPuppies = puppies.filter(puppy => 
+    const validPuppies = puppies.filter(puppy =>
       puppy.color.trim() !== '' && puppy.gender.trim() !== ''
     );
-    
+
     setSaving(true);
-    
+
     try {
       const response = await fetch(`/api/breeding-programs/${params.id}/litters`, {
         method: 'POST',
@@ -134,17 +134,17 @@ export default function AddLitterPage({ params }: { params: { id: string } }) {
           puppies: validPuppies
         }),
       });
-      
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || 'Failed to record litter');
       }
-      
+
       toast({
         title: 'Success',
         description: 'Litter recorded successfully',
       });
-      
+
       router.push(`/dashboard/breeding-programs/${params.id}`);
     } catch (error) {
       console.error('Error recording litter:', error);
@@ -157,7 +157,7 @@ export default function AddLitterPage({ params }: { params: { id: string } }) {
       setSaving(false);
     }
   };
-  
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -165,7 +165,7 @@ export default function AddLitterPage({ params }: { params: { id: string } }) {
       </div>
     );
   }
-  
+
   if (error) {
     return (
       <div className="space-y-4">
@@ -184,9 +184,9 @@ export default function AddLitterPage({ params }: { params: { id: string } }) {
               <h3 className="font-medium">Error</h3>
             </div>
             <p>{error}</p>
-            <Button 
-              className="mt-4" 
-              variant="outline" 
+            <Button
+              className="mt-4"
+              variant="outline"
               onClick={() => router.refresh()}
             >
               Try Again
@@ -196,11 +196,11 @@ export default function AddLitterPage({ params }: { params: { id: string } }) {
       </div>
     );
   }
-  
+
   // Filter dogs by gender for sire and dam selection
   const maleDogs = dogs.filter(dog => dog.isStud);
   const femaleDogs = dogs.filter(dog => !dog.isStud);
-  
+
   return (
     <div className="space-y-6">
       <div className="flex items-center space-x-2">
@@ -211,14 +211,14 @@ export default function AddLitterPage({ params }: { params: { id: string } }) {
           </Button>
         </Link>
       </div>
-      
+
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Record New Litter</h1>
         <p className="text-muted-foreground">
           Add a new litter to <span className="font-medium">{programName}</span>
         </p>
       </div>
-      
+
       <form onSubmit={handleSubmit}>
         <div className="grid gap-6">
           <Card>
@@ -253,7 +253,7 @@ export default function AddLitterPage({ params }: { params: { id: string } }) {
                     </p>
                   )}
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="dam">Dam (Mother)</Label>
                   <Select value={damId} onValueChange={setDamId} required>
@@ -281,7 +281,7 @@ export default function AddLitterPage({ params }: { params: { id: string } }) {
                   )}
                 </div>
               </div>
-              
+
               <div className="space-y-2">
                 <Label htmlFor="whelpingDate">Whelping Date</Label>
                 <Input
@@ -295,7 +295,7 @@ export default function AddLitterPage({ params }: { params: { id: string } }) {
               </div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardHeader className="flex flex-row items-center justify-between">
               <CardTitle>Puppies</CardTitle>
@@ -331,7 +331,7 @@ export default function AddLitterPage({ params }: { params: { id: string } }) {
                           </Button>
                         )}
                       </div>
-                      
+
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div className="space-y-2">
                           <Label>Name (Optional)</Label>
@@ -341,7 +341,7 @@ export default function AddLitterPage({ params }: { params: { id: string } }) {
                             placeholder="Puppy name"
                           />
                         </div>
-                        
+
                         <div className="space-y-2">
                           <Label>Color</Label>
                           <Input
@@ -351,7 +351,7 @@ export default function AddLitterPage({ params }: { params: { id: string } }) {
                             required
                           />
                         </div>
-                        
+
                         <div className="space-y-2">
                           <Label>Gender</Label>
                           <Select

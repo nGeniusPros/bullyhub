@@ -1,0 +1,9 @@
+import { NextRequest, NextResponse } from "next/server";
+
+export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
+  return NextResponse.json({ id: params.id, message: "Upload dog image" });
+}
+
+export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+  return NextResponse.json({ id: params.id, message: "Delete dog image" });
+}

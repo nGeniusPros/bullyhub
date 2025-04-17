@@ -1,0 +1,2 @@
+# redirects
+/api/*  /.netlify/functions/:splat  200

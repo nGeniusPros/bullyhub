@@ -3,24 +3,24 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { 
-  Card, 
-  CardContent, 
-  CardDescription, 
-  CardHeader, 
-  CardTitle 
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { 
-  ArrowLeft, 
-  Edit, 
-  Trash2, 
-  Dog, 
-  Baby, 
-  HeartPulse, 
+import {
+  ArrowLeft,
+  Edit,
+  Trash2,
+  Dog,
+  Baby,
+  HeartPulse,
   DollarSign,
   AlertTriangle
 } from 'lucide-react';
@@ -56,21 +56,21 @@ interface ExtendedBreedingProgram extends BreedingProgram {
   litters: Litter[];
 }
 
-export default function BreedingProgramDetailPage({ params }: { params: { id: string } }) {
+export default function BreedingProgramDetailPage({ params }) {
   const router = useRouter();
   const [program, setProgram] = useState<ExtendedBreedingProgram | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
+
   useEffect(() => {
     const fetchBreedingProgram = async () => {
       try {
         const response = await fetch(`/api/breeding-programs/${params.id}`);
-        
+
         if (!response.ok) {
           throw new Error('Failed to fetch breeding program');
         }
-        
+
         const data = await response.json();
         setProgram(data);
       } catch (err) {
@@ -80,31 +80,31 @@ export default function BreedingProgramDetailPage({ params }: { params: { id: st
         setLoading(false);
       }
     };
-    
+
     fetchBreedingProgram();
   }, [params.id]);
-  
+
   const handleDelete = async () => {
     if (!confirm('Are you sure you want to delete this breeding program?')) {
       return;
     }
-    
+
     try {
       const response = await fetch(`/api/breeding-programs/${params.id}`, {
         method: 'DELETE',
       });
-      
+
       if (!response.ok) {
         throw new Error('Failed to delete breeding program');
       }
-      
+
       router.push('/dashboard/breeding-programs');
     } catch (err) {
       setError('Error deleting breeding program');
       console.error(err);
     }
   };
-  
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -112,7 +112,7 @@ export default function BreedingProgramDetailPage({ params }: { params: { id: st
       </div>
     );
   }
-  
+
   if (error || !program) {
     return (
       <div className="space-y-4">
@@ -129,8 +129,8 @@ export default function BreedingProgramDetailPage({ params }: { params: { id: st
             <div className="text-center py-10">
               <h3 className="text-lg font-medium">Error loading breeding program</h3>
               <p className="text-muted-foreground mt-2">{error}</p>
-              <Button 
-                className="mt-4" 
+              <Button
+                className="mt-4"
                 onClick={() => router.refresh()}
               >
                 Try Again
@@ -141,7 +141,7 @@ export default function BreedingProgramDetailPage({ params }: { params: { id: st
       </div>
     );
   }
-  
+
   const getProgramTypeBadge = (type: string) => {
     switch (type) {
       case 'standard':
@@ -154,7 +154,7 @@ export default function BreedingProgramDetailPage({ params }: { params: { id: st
         return <Badge variant="outline">{type}</Badge>;
     }
   };
-  
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -179,7 +179,7 @@ export default function BreedingProgramDetailPage({ params }: { params: { id: st
           </Button>
         </div>
       </div>
-      
+
       <div className="grid gap-6">
         <Card>
           <CardHeader className="pb-3">
@@ -208,7 +208,7 @@ export default function BreedingProgramDetailPage({ params }: { params: { id: st
                 </TabsTrigger>
                 <TabsTrigger value="health">Health Protocols</TabsTrigger>
               </TabsList>
-              
+
               <TabsContent value="overview" className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="col-span-2 space-y-6">
@@ -221,7 +221,7 @@ export default function BreedingProgramDetailPage({ params }: { params: { id: st
                         ))}
                       </ul>
                     </div>
-                    
+
                     {/* Special Considerations */}
                     {program.specialConsiderations.length > 0 && (
                       <div>
@@ -234,7 +234,7 @@ export default function BreedingProgramDetailPage({ params }: { params: { id: st
                       </div>
                     )}
                   </div>
-                  
+
                   <div className="space-y-4">
                     {/* Program Stats */}
                     <Card>
@@ -255,7 +255,7 @@ export default function BreedingProgramDetailPage({ params }: { params: { id: st
                         </div>
                       </CardContent>
                     </Card>
-                    
+
                     {/* Cost Range */}
                     <Card>
                       <CardContent className="pt-6">
@@ -271,7 +271,7 @@ export default function BreedingProgramDetailPage({ params }: { params: { id: st
                   </div>
                 </div>
               </TabsContent>
-              
+
               <TabsContent value="dogs">
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
@@ -282,7 +282,7 @@ export default function BreedingProgramDetailPage({ params }: { params: { id: st
                       </Link>
                     </Button>
                   </div>
-                  
+
                   {program.dogs.length === 0 ? (
                     <div className="text-center py-10 border rounded-md">
                       <Dog className="h-10 w-10 text-muted-foreground mx-auto mb-4" />
@@ -326,7 +326,7 @@ export default function BreedingProgramDetailPage({ params }: { params: { id: st
                   )}
                 </div>
               </TabsContent>
-              
+
               <TabsContent value="litters">
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
@@ -337,7 +337,7 @@ export default function BreedingProgramDetailPage({ params }: { params: { id: st
                       </Link>
                     </Button>
                   </div>
-                  
+
                   {program.litters.length === 0 ? (
                     <div className="text-center py-10 border rounded-md">
                       <Baby className="h-10 w-10 text-muted-foreground mx-auto mb-4" />
@@ -365,7 +365,7 @@ export default function BreedingProgramDetailPage({ params }: { params: { id: st
                               </div>
                               <Badge>{litter.puppy_count} puppies</Badge>
                             </div>
-                            
+
                             {litter.puppies.length > 0 && (
                               <div className="mt-4">
                                 <h5 className="text-sm font-medium mb-2">Puppies:</h5>
@@ -386,7 +386,7 @@ export default function BreedingProgramDetailPage({ params }: { params: { id: st
                                 </div>
                               </div>
                             )}
-                            
+
                             <div className="mt-4">
                               <Button variant="outline" size="sm" className="w-full" asChild>
                                 <Link href={`/dashboard/litters/${litter.id}`}>
@@ -401,7 +401,7 @@ export default function BreedingProgramDetailPage({ params }: { params: { id: st
                   )}
                 </div>
               </TabsContent>
-              
+
               <TabsContent value="health">
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
@@ -412,7 +412,7 @@ export default function BreedingProgramDetailPage({ params }: { params: { id: st
                       </Link>
                     </Button>
                   </div>
-                  
+
                   {(!program.healthProtocols || program.healthProtocols.length === 0) ? (
                     <div className="text-center py-10 border rounded-md">
                       <HeartPulse className="h-10 w-10 text-muted-foreground mx-auto mb-4" />

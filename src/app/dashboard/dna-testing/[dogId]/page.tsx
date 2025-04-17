@@ -10,7 +10,7 @@ import DNATestForm from "@/features/dna-testing/components/DNATestForm";
 import DNAResultsView from "@/features/dna-testing/components/DNAResultsView";
 
 // Generate metadata dynamically
-export async function generateMetadata({ params }: { params: { dogId: string } }) {
+export async function generateMetadata({ params }) {
   const supabase = createServerSupabaseClient();
 
   // Fetch dog information
@@ -126,7 +126,7 @@ async function DogDNAManager({ dogId }: { dogId: string }) {
 }
 
 // Main page component
-export default function DogDNATestingPage({ params }: { params: { dogId: string } }) {
+export default function DogDNATestingPage({ params }) {
   return (
     <DashboardLayout>
       <Suspense fallback={<LoadingState />}>

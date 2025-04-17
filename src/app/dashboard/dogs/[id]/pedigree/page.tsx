@@ -8,8 +8,9 @@ import { toast } from 'sonner';
 import { PedigreeData } from '@/types';
 import { PedigreeTree } from '@/components/PedigreeTree';
 import Link from 'next/link';
+import { PageComponentProps } from '@/app/page-types';
 
-export default function DogPedigreePage({ params }: { params: { id: string } }) {
+export default function DogPedigreePage({ params }: PageComponentProps<{ id: string }>) {
   const router = useRouter();
   const [pedigree, setPedigree] = useState<PedigreeData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -18,11 +19,11 @@ export default function DogPedigreePage({ params }: { params: { id: string } }) 
     const fetchPedigree = async () => {
       try {
         const response = await fetch(`/api/dogs/${params.id}/pedigree`);
-        
+
         if (!response.ok) {
           throw new Error('Failed to fetch pedigree');
         }
-        
+
         const data = await response.json();
         setPedigree(data);
       } catch (error) {
@@ -32,7 +33,7 @@ export default function DogPedigreePage({ params }: { params: { id: string } }) 
         setLoading(false);
       }
     };
-    
+
     fetchPedigree();
   }, [params.id]);
 
@@ -107,7 +108,7 @@ export default function DogPedigreePage({ params }: { params: { id: string } }) 
               <p className="text-muted-foreground mb-4">
                 These dogs appear multiple times in the pedigree
               </p>
-              
+
               <div className="border rounded-md divide-y">
                 <div className="grid grid-cols-3 p-3 font-medium text-sm">
                   <div>Name</div>

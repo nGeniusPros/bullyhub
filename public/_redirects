@@ -1,0 +1,8 @@
+# Next.js static assets
+/_next/static/* /static/:splat 200
+
+# API redirects
+/api/* /.netlify/functions/:splat 200
+
+# SPA fallback for client-side routing
+/* /index.html 200

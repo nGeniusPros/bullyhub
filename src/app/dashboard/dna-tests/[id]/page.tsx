@@ -12,7 +12,7 @@ import { DNATestResult } from '@/types';
 import Link from 'next/link';
 import { AlertTriangle, Download, FileText, Share2, Trash2 } from 'lucide-react';
 
-export default function DNATestDetailPage({ params }: { params: { id: string } }) {
+export default function DNATestDetailPage({ params }) {
   const router = useRouter();
   const [dnaTest, setDnaTest] = useState<DNATestResult | null>(null);
   const [loading, setLoading] = useState(true);

@@ -1,9 +1,11 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 
-export async function GET(request, { params }) {
-  return NextResponse.json({ id: params.id, message: "Get DNA test" });
+export async function GET(request, context) {
+  const { params } = context;
+  return NextResponse.json({ id: params.id, message: "Get id" });
 }
 
-export async function DELETE(request, { params }) {
-  return NextResponse.json({ id: params.id, message: "Delete DNA test" });
+export async function DELETE(request, context) {
+  const { params } = context;
+  return NextResponse.json({ id: params.id, message: "Delete id" });
 }

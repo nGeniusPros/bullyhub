@@ -21,7 +21,7 @@ interface HealthProtocol {
   frequency: string;
 }
 
-export default function EditBreedingProgramPage({ params }: { params: { id: string } }) {
+export default function EditBreedingProgramPage({ params }) {
   const router = useRouter();
   const [program, setProgram] = useState<BreedingProgram | null>(null);
   const [goals, setGoals] = useState<string[]>(['']);
@@ -35,23 +35,23 @@ export default function EditBreedingProgramPage({ params }: { params: { id: stri
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  
+
   useEffect(() => {
     const fetchBreedingProgram = async () => {
       try {
         const response = await fetch(`/api/breeding-programs/${params.id}`);
-        
+
         if (!response.ok) {
           throw new Error('Failed to fetch breeding program');
         }
-        
+
         const data = await response.json();
         setProgram(data);
-        
+
         // Initialize form state with fetched data
         setGoals(data.goals.length > 0 ? data.goals : ['']);
-        setHealthProtocols(data.healthProtocols.length > 0 
-          ? data.healthProtocols 
+        setHealthProtocols(data.healthProtocols.length > 0
+          ? data.healthProtocols
           : [{
               protocolName: '',
               description: '',
@@ -67,10 +67,10 @@ export default function EditBreedingProgramPage({ params }: { params: { id: stri
         setLoading(false);
       }
     };
-    
+
     fetchBreedingProgram();
   }, [params.id]);
-  
+
   const addGoal = () => {
     setGoals([...goals, '']);
   };
@@ -88,7 +88,7 @@ export default function EditBreedingProgramPage({ params }: { params: { id: stri
       setGoals(updatedGoals);
     }
   };
-  
+
   const addHealthProtocol = () => {
     setHealthProtocols([...healthProtocols, {
       protocolName: '',
@@ -111,19 +111,19 @@ export default function EditBreedingProgramPage({ params }: { params: { id: stri
       setHealthProtocols(updatedProtocols);
     }
   };
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
-    
+
     try {
       const formData = new FormData(e.target as HTMLFormElement);
-      
+
       const specialConsiderationsText = formData.get('specialConsiderations')?.toString() || '';
       const specialConsiderations = specialConsiderationsText
         .split('\n')
         .filter(s => s.trim() !== '');
-      
+
       const programData = {
         name: formData.get('name')?.toString(),
         description: formData.get('description')?.toString(),
@@ -152,7 +152,7 @@ export default function EditBreedingProgramPage({ params }: { params: { id: stri
         title: 'Success',
         description: 'Breeding program updated successfully',
       });
-      
+
       router.push(`/dashboard/breeding-programs/${params.id}`);
     } catch (error) {
       console.error('Error updating breeding program:', error);
@@ -165,7 +165,7 @@ export default function EditBreedingProgramPage({ params }: { params: { id: stri
       setSaving(false);
     }
   };
-  
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -173,7 +173,7 @@ export default function EditBreedingProgramPage({ params }: { params: { id: stri
       </div>
     );
   }
-  
+
   if (error || !program) {
     return (
       <div className="space-y-4">
@@ -192,9 +192,9 @@ export default function EditBreedingProgramPage({ params }: { params: { id: stri
               <h3 className="font-medium">Error</h3>
             </div>
             <p>{error || 'Failed to load breeding program'}</p>
-            <Button 
-              className="mt-4" 
-              variant="outline" 
+            <Button
+              className="mt-4"
+              variant="outline"
               onClick={() => router.refresh()}
             >
               Try Again
@@ -204,7 +204,7 @@ export default function EditBreedingProgramPage({ params }: { params: { id: stri
       </div>
     );
   }
-  
+
   return (
     <div className="space-y-6">
       <div className="flex items-center space-x-2">
@@ -215,12 +215,12 @@ export default function EditBreedingProgramPage({ params }: { params: { id: stri
           </Button>
         </Link>
       </div>
-      
+
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Edit Breeding Program</h1>
         <p className="text-muted-foreground">Update your breeding program details</p>
       </div>
-      
+
       <Card>
         <form onSubmit={handleSubmit}>
           <CardHeader>
@@ -230,15 +230,15 @@ export default function EditBreedingProgramPage({ params }: { params: { id: stri
             {/* Basic Information */}
             <div className="space-y-2">
               <Label htmlFor="name">Program Name</Label>
-              <Input 
-                id="name" 
-                name="name" 
+              <Input
+                id="name"
+                name="name"
                 defaultValue={program.name}
-                placeholder="Blue French Bulldog Program" 
-                required 
+                placeholder="Blue French Bulldog Program"
+                required
               />
             </div>
-            
+
             {/* Program Type Selection */}
             <div className="space-y-2">
               <Label htmlFor="programType">Program Type</Label>
@@ -260,12 +260,12 @@ export default function EditBreedingProgramPage({ params }: { params: { id: stri
             {/* Color Focus */}
             <div className="space-y-2">
               <Label htmlFor="colorFocus">Color Focus</Label>
-              <Input 
-                id="colorFocus" 
-                name="colorFocus" 
+              <Input
+                id="colorFocus"
+                name="colorFocus"
                 defaultValue={program.colorFocus}
-                placeholder="Blue, Brindle, etc." 
-                required 
+                placeholder="Blue, Brindle, etc."
+                required
               />
             </div>
 
@@ -300,7 +300,7 @@ export default function EditBreedingProgramPage({ params }: { params: { id: stri
                 required
               />
             </div>
-            
+
             {/* Goals */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
@@ -337,7 +337,7 @@ export default function EditBreedingProgramPage({ params }: { params: { id: stri
                 ))}
               </div>
             </div>
-            
+
             {/* Health Protocols */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
@@ -407,7 +407,7 @@ export default function EditBreedingProgramPage({ params }: { params: { id: stri
                 ))}
               </div>
             </div>
-            
+
             {/* Special Considerations */}
             <div className="space-y-2">
               <Label htmlFor="specialConsiderations">Special Considerations</Label>

@@ -20,7 +20,7 @@ interface HealthProtocol {
   frequency: string;
 }
 
-export default function EditHealthProtocolsPage({ params }: { params: { id: string } }) {
+export default function EditHealthProtocolsPage({ params }) {
   const router = useRouter();
   const [program, setProgram] = useState<BreedingProgram | null>(null);
   const [healthProtocols, setHealthProtocols] = useState<HealthProtocol[]>([{
@@ -32,19 +32,19 @@ export default function EditHealthProtocolsPage({ params }: { params: { id: stri
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  
+
   useEffect(() => {
     const fetchBreedingProgram = async () => {
       try {
         const response = await fetch(`/api/breeding-programs/${params.id}`);
-        
+
         if (!response.ok) {
           throw new Error('Failed to fetch breeding program');
         }
-        
+
         const data = await response.json();
         setProgram(data);
-        
+
         // Initialize health protocols with fetched data
         if (data.healthProtocols && data.healthProtocols.length > 0) {
           setHealthProtocols(data.healthProtocols);
@@ -56,10 +56,10 @@ export default function EditHealthProtocolsPage({ params }: { params: { id: stri
         setLoading(false);
       }
     };
-    
+
     fetchBreedingProgram();
   }, [params.id]);
-  
+
   const addHealthProtocol = () => {
     setHealthProtocols([...healthProtocols, {
       protocolName: '',
@@ -82,21 +82,21 @@ export default function EditHealthProtocolsPage({ params }: { params: { id: stri
       setHealthProtocols(updatedProtocols);
     }
   };
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
-    
+
     try {
       // Filter out incomplete protocols
-      const validProtocols = healthProtocols.filter(protocol => 
+      const validProtocols = healthProtocols.filter(protocol =>
         protocol.protocolName.trim() !== ''
       );
-      
+
       if (!program) {
         throw new Error('Program data not available');
       }
-      
+
       // Update the program with the new health protocols
       const response = await fetch(`/api/breeding-programs/${params.id}`, {
         method: 'PATCH',
@@ -124,7 +124,7 @@ export default function EditHealthProtocolsPage({ params }: { params: { id: stri
         title: 'Success',
         description: 'Health protocols updated successfully',
       });
-      
+
       router.push(`/dashboard/breeding-programs/${params.id}`);
     } catch (error) {
       console.error('Error updating health protocols:', error);
@@ -137,7 +137,7 @@ export default function EditHealthProtocolsPage({ params }: { params: { id: stri
       setSaving(false);
     }
   };
-  
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -145,7 +145,7 @@ export default function EditHealthProtocolsPage({ params }: { params: { id: stri
       </div>
     );
   }
-  
+
   if (error || !program) {
     return (
       <div className="space-y-4">
@@ -164,9 +164,9 @@ export default function EditHealthProtocolsPage({ params }: { params: { id: stri
               <h3 className="font-medium">Error</h3>
             </div>
             <p>{error || 'Failed to load breeding program'}</p>
-            <Button 
-              className="mt-4" 
-              variant="outline" 
+            <Button
+              className="mt-4"
+              variant="outline"
               onClick={() => router.refresh()}
             >
               Try Again
@@ -176,7 +176,7 @@ export default function EditHealthProtocolsPage({ params }: { params: { id: stri
       </div>
     );
   }
-  
+
   return (
     <div className="space-y-6">
       <div className="flex items-center space-x-2">
@@ -187,14 +187,14 @@ export default function EditHealthProtocolsPage({ params }: { params: { id: stri
           </Button>
         </Link>
       </div>
-      
+
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Health Testing Protocols</h1>
         <p className="text-muted-foreground">
           Manage health testing protocols for <span className="font-medium">{program.name}</span>
         </p>
       </div>
-      
+
       <form onSubmit={handleSubmit}>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between">
@@ -229,7 +229,7 @@ export default function EditHealthProtocolsPage({ params }: { params: { id: stri
                         <Trash2 className="h-4 w-4 text-destructive" />
                       </Button>
                     </div>
-                    
+
                     <div className="space-y-4">
                       <div className="space-y-2">
                         <Label>Protocol Name</Label>
@@ -240,7 +240,7 @@ export default function EditHealthProtocolsPage({ params }: { params: { id: stri
                           required
                         />
                       </div>
-                      
+
                       <div className="space-y-2">
                         <Label>Description</Label>
                         <Textarea
@@ -250,7 +250,7 @@ export default function EditHealthProtocolsPage({ params }: { params: { id: stri
                           rows={2}
                         />
                       </div>
-                      
+
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
                           <Label>Frequency</Label>
@@ -260,7 +260,7 @@ export default function EditHealthProtocolsPage({ params }: { params: { id: stri
                             placeholder="Once per year"
                           />
                         </div>
-                        
+
                         <div className="flex items-center space-x-2 pt-8">
                           <Checkbox
                             id={`required-${index}`}

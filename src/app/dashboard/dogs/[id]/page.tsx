@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { Dog } from "@/types";
 import Link from "next/link";
 import { DogProfileImageUpload } from "@/components/DogProfileImageUpload";
+import { PageComponentProps } from "@/app/page-types";
 import {
   Activity,
   Calendar,
@@ -26,7 +27,7 @@ import {
   FileText,
 } from "lucide-react";
 
-export default function DogProfilePage({ params }: { params: { id: string } }) {
+export default function DogProfilePage({ params }: PageComponentProps<{ id: string }>) {
   const router = useRouter();
   const [dog, setDog] = useState<Dog | null>(null);
   const [loading, setLoading] = useState(true);

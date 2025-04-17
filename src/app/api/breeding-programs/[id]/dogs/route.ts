@@ -1,23 +1,36 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 
-export interface BreedingProgramDogsParams {
-  params: {
-    id: string;
-  };
+export async function GET(request: Request) {
+  const url = new URL(request.url);
+  const id = url.pathname.match(/\/id\/(\d+)/)?.[1];
+  
+  if (!id) {
+    return NextResponse.json(
+      { error: 'Invalid path: id parameter is required' },
+      { status: 400 }
+    );
+  }
+
+  // Example response
+  return NextResponse.json({
+    message: 'Successfully accessed breeding program dogs endpoint',
+    id: id,
+    breed: 'Bulldog'
+  });
 }
 
-export async function POST(
-  request: NextRequest,
-  context: BreedingProgramDogsParams
-) {
-  const { id } = context.params;
-  return NextResponse.json({ id, message: "Add dogs to breeding program" });
-}
-
-export async function DELETE(
-  request: NextRequest,
-  context: BreedingProgramDogsParams
-) {
-  const { id } = context.params;
-  return NextResponse.json({ id, message: "Remove dog from breeding program" });
-}
+export const generateStaticParams = async () => {
+  // Replace this with actual data fetching logic
+  return [
+    {
+      params: {
+        id: '1'
+      }
+    },
+    {
+      params: {
+        id: '2'
+      }
+    }
+  ];
+};

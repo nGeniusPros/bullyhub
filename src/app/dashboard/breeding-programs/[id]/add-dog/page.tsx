@@ -20,7 +20,7 @@ interface DogType {
   breeding_program_id?: string | null;
 }
 
-export default function AddDogToBreedingProgramPage({ params }: { params: { id: string } }) {
+export default function AddDogToBreedingProgramPage({ params }) {
   const router = useRouter();
   const [dogs, setDogs] = useState<DogType[]>([]);
   const [filteredDogs, setFilteredDogs] = useState<DogType[]>([]);
@@ -30,27 +30,27 @@ export default function AddDogToBreedingProgramPage({ params }: { params: { id: 
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [programName, setProgramName] = useState('');
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         // Fetch the breeding program to get its name
         const programResponse = await fetch(`/api/breeding-programs/${params.id}`);
-        
+
         if (!programResponse.ok) {
           throw new Error('Failed to fetch breeding program');
         }
-        
+
         const programData = await programResponse.json();
         setProgramName(programData.name);
-        
+
         // Fetch all dogs owned by the user
         const dogsResponse = await fetch('/api/dogs');
-        
+
         if (!dogsResponse.ok) {
           throw new Error('Failed to fetch dogs');
         }
-        
+
         const dogsData = await dogsResponse.json();
         setDogs(dogsData);
         setFilteredDogs(dogsData);
@@ -61,28 +61,28 @@ export default function AddDogToBreedingProgramPage({ params }: { params: { id: 
         setLoading(false);
       }
     };
-    
+
     fetchData();
   }, [params.id]);
-  
+
   useEffect(() => {
     // Filter dogs based on search query
-    const filtered = dogs.filter(dog => 
+    const filtered = dogs.filter(dog =>
       dog.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       dog.breed.toLowerCase().includes(searchQuery.toLowerCase()) ||
       dog.color.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setFilteredDogs(filtered);
   }, [searchQuery, dogs]);
-  
+
   const handleToggleDog = (dogId: string) => {
-    setSelectedDogs(prev => 
+    setSelectedDogs(prev =>
       prev.includes(dogId)
         ? prev.filter(id => id !== dogId)
         : [...prev, dogId]
     );
   };
-  
+
   const handleAddDogs = async () => {
     if (selectedDogs.length === 0) {
       toast({
@@ -92,9 +92,9 @@ export default function AddDogToBreedingProgramPage({ params }: { params: { id: 
       });
       return;
     }
-    
+
     setSaving(true);
-    
+
     try {
       const response = await fetch(`/api/breeding-programs/${params.id}/dogs`, {
         method: 'POST',
@@ -103,17 +103,17 @@ export default function AddDogToBreedingProgramPage({ params }: { params: { id: 
         },
         body: JSON.stringify({ dogIds: selectedDogs }),
       });
-      
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || 'Failed to add dogs to breeding program');
       }
-      
+
       toast({
         title: 'Success',
         description: `${selectedDogs.length} dog(s) added to breeding program`,
       });
-      
+
       router.push(`/dashboard/breeding-programs/${params.id}`);
     } catch (error) {
       console.error('Error adding dogs to breeding program:', error);
@@ -126,7 +126,7 @@ export default function AddDogToBreedingProgramPage({ params }: { params: { id: 
       setSaving(false);
     }
   };
-  
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -134,7 +134,7 @@ export default function AddDogToBreedingProgramPage({ params }: { params: { id: 
       </div>
     );
   }
-  
+
   if (error) {
     return (
       <div className="space-y-4">
@@ -153,9 +153,9 @@ export default function AddDogToBreedingProgramPage({ params }: { params: { id: 
               <h3 className="font-medium">Error</h3>
             </div>
             <p>{error}</p>
-            <Button 
-              className="mt-4" 
-              variant="outline" 
+            <Button
+              className="mt-4"
+              variant="outline"
               onClick={() => router.refresh()}
             >
               Try Again
@@ -165,7 +165,7 @@ export default function AddDogToBreedingProgramPage({ params }: { params: { id: 
       </div>
     );
   }
-  
+
   return (
     <div className="space-y-6">
       <div className="flex items-center space-x-2">
@@ -176,14 +176,14 @@ export default function AddDogToBreedingProgramPage({ params }: { params: { id: 
           </Button>
         </Link>
       </div>
-      
+
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Add Dogs to Program</h1>
         <p className="text-muted-foreground">
           Select dogs to add to <span className="font-medium">{programName}</span>
         </p>
       </div>
-      
+
       <Card>
         <CardHeader>
           <CardTitle>Your Dogs</CardTitle>
@@ -203,8 +203,8 @@ export default function AddDogToBreedingProgramPage({ params }: { params: { id: 
               <Dog className="h-10 w-10 text-muted-foreground mx-auto mb-4" />
               <h3 className="text-lg font-medium">No Dogs Found</h3>
               <p className="text-muted-foreground mt-1">
-                {searchQuery 
-                  ? 'No dogs match your search criteria' 
+                {searchQuery
+                  ? 'No dogs match your search criteria'
                   : 'You haven\'t added any dogs yet'}
               </p>
               {!searchQuery && (
@@ -223,11 +223,11 @@ export default function AddDogToBreedingProgramPage({ params }: { params: { id: 
                   {selectedDogs.length} selected
                 </div>
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {filteredDogs.map((dog) => (
-                  <div 
-                    key={dog.id} 
+                  <div
+                    key={dog.id}
                     className={`border rounded-md p-4 ${
                       dog.breeding_program_id === params.id
                         ? 'bg-primary/5 border-primary/20'
@@ -247,7 +247,7 @@ export default function AddDogToBreedingProgramPage({ params }: { params: { id: 
                           />
                         )}
                         <div>
-                          <Label 
+                          <Label
                             htmlFor={`dog-${dog.id}`}
                             className="text-base font-medium"
                           >
@@ -263,11 +263,11 @@ export default function AddDogToBreedingProgramPage({ params }: { params: { id: 
                           )}
                         </div>
                       </div>
-                      
+
                       {dog.breeding_program_id && (
                         <div className="text-xs bg-muted px-2 py-1 rounded-md">
-                          {dog.breeding_program_id === params.id 
-                            ? 'Already in this program' 
+                          {dog.breeding_program_id === params.id
+                            ? 'Already in this program'
                             : 'In another program'}
                         </div>
                       )}
@@ -286,8 +286,8 @@ export default function AddDogToBreedingProgramPage({ params }: { params: { id: 
           >
             Cancel
           </Button>
-          <Button 
-            onClick={handleAddDogs} 
+          <Button
+            onClick={handleAddDogs}
             disabled={saving || selectedDogs.length === 0}
           >
             {saving ? 'Adding...' : `Add ${selectedDogs.length} Dog(s) to Program`}
